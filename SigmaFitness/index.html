@@ -9,12 +9,10 @@
     <script>
       const SUPABASE_URL = 'https://dvdwyblykbczjwzhdzta.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_WxjRNFMi2dRnAGQp1EtknQ_gKDEe_1I';
-      let supabase;
-      try {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-      } catch (err) {
-        console.error("Error al inicializar Supabase:", err);
-      }
+      
+      // Inicialización corregida para evitar el "undefined"
+      const { createClient } = window.supabase;
+      const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
     <style>
         :root {
@@ -596,21 +594,19 @@
             }
 
             try {
-                const { data, error } = await supabase.auth.signInWithPassword({
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
 
                 if (error) {
-                    alert('Error de Supabase: ' + error.message);
+                    alert('Aviso de Supabase: ' + error.message);
                 } else if (data && data.user) {
                     alert('¡Acceso concedido!');
                     mostrarAplicacion(data.user);
-                } else {
-                    alert('No se pudo verificar el usuario.');
                 }
             } catch (err) {
-                alert('Excepción en la solicitud: ' + err.message);
+                alert('Error de conexión: ' + err.message);
             }
         }
 
@@ -624,7 +620,7 @@
             }
 
             try {
-                const { data, error } = await supabase.auth.signUp({
+                const { data, error } = await supabaseClient.auth.signUp({
                     email: email,
                     password: password
                 });
@@ -635,7 +631,7 @@
                     alert('¡Cuenta registrada! Intenta iniciar sesión.');
                 }
             } catch (err) {
-                alert('Excepción en registro: ' + err.message);
+                alert('Error al registrar: ' + err.message);
             }
         }
 
@@ -647,7 +643,7 @@
         }
 
         async function cerrarSesion() {
-            await supabase.auth.signOut();
+            await supabaseClient.auth.signOut();
             document.getElementById('app-main-core').style.display = 'none';
             document.getElementById('auth-gate-screen').style.display = 'flex';
         }
@@ -656,9 +652,9 @@
             const contenido = document.getElementById('postInput').value;
             if (!contenido) return;
 
-            const user = (await supabase.auth.getUser()).data.user;
+            const user = (await supabaseClient.auth.getUser()).data.user;
 
-            const { error } = await supabase.from('posts').insert([
+            const { error } = await supabaseClient.from('posts').insert([
                 { content: contenido, user_email: user ? user.email : 'Atleta Anónimo' }
             ]);
 
@@ -671,7 +667,7 @@
         }
 
         async function cargarPosts() {
-            const { data: posts, error } = await supabase
+            const { data: posts, error } = await supabaseClient
                 .from('posts')
                 .select('*')
                 .order('created_at', { ascending: false });
