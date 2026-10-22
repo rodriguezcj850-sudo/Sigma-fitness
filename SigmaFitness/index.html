@@ -9,7 +9,12 @@
     <script>
       const SUPABASE_URL = 'https://dvdwyblykbczjwzhdzta.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_WxjRNFMi2dRnAGQp1EtknQ_gKDEe_1I';
-      const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      let supabase;
+      try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } catch (err) {
+        console.error("Error al inicializar Supabase:", err);
+      }
     </script>
     <style>
         :root {
@@ -86,7 +91,6 @@
             text-transform: uppercase;
         }
 
-        /* PANTALLA DE ACCESO INICIAL */
         #auth-gate-screen {
             display: flex;
             flex-direction: column;
@@ -122,7 +126,6 @@
             margin-bottom: 20px;
         }
 
-        /* NÚCLEO DE LA APLICACIÓN */
         #app-main-core {
             display: none;
             width: 100%;
@@ -131,7 +134,6 @@
             gap: 12px;
         }
 
-        /* RELOJ DE DESCANSO FLOTANTE */
         .timer-bar {
             position: sticky;
             top: 10px;
@@ -181,7 +183,6 @@
             color: var(--accent-orange);
         }
 
-        /* BARRA INFERIOR ESTILO NATIVO SIGMA */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -594,18 +595,22 @@
                 return;
             }
 
-            alert('Conectando a Supabase...');
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
 
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                alert('Aviso de Supabase: ' + error.message);
-            } else if (data.user) {
-                alert('¡Acceso concedido!');
-                mostrarAplicacion(data.user);
+                if (error) {
+                    alert('Error de Supabase: ' + error.message);
+                } else if (data && data.user) {
+                    alert('¡Acceso concedido!');
+                    mostrarAplicacion(data.user);
+                } else {
+                    alert('No se pudo verificar el usuario.');
+                }
+            } catch (err) {
+                alert('Excepción en la solicitud: ' + err.message);
             }
         }
 
@@ -618,17 +623,19 @@
                 return;
             }
 
-            alert('Enviando registro...');
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password
+                });
 
-            const { data, error } = await supabase.auth.signUp({
-                email: email,
-                password: password
-            });
-
-            if (error) {
-                alert('Error en registro: ' + error.message);
-            } else {
-                alert('¡Cuenta registrada! Si tienes la confirmación activa en Supabase revisa tu correo, o intenta iniciar sesión.');
+                if (error) {
+                    alert('Error en registro: ' + error.message);
+                } else {
+                    alert('¡Cuenta registrada! Intenta iniciar sesión.');
+                }
+            } catch (err) {
+                alert('Excepción en registro: ' + err.message);
             }
         }
 
