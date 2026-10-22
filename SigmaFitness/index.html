@@ -420,8 +420,8 @@
                 <input type="password" id="auth-password" class="form-control" placeholder="••••••••">
             </div>
             
-            <button class="btn-action" onclick="iniciarSesion()">Iniciar Sesión</button>
-            <button class="btn-secondary" onclick="registrarUsuario()">Crear Cuenta</button>
+            <button class="btn-action" type="button" onclick="ejecutarLogin()">Iniciar Sesión</button>
+            <button class="btn-secondary" type="button" onclick="ejecutarRegistro()">Crear Cuenta</button>
         </div>
     </div>
 
@@ -585,9 +585,16 @@
             }
         }
 
-        async function iniciarSesion() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
+        async function ejecutarLogin() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+
+            if (!email || !password) {
+                alert('Por favor introduce tu correo y contraseña.');
+                return;
+            }
+
+            alert('Conectando a Supabase...');
 
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: email,
@@ -595,15 +602,93 @@
             });
 
             if (error) {
-                alert('Error de acceso: ' + error.message);
-            } else {
+                alert('Aviso de Supabase: ' + error.message);
+            } else if (data.user) {
+                alert('¡Acceso concedido!');
                 mostrarAplicacion(data.user);
             }
         }
 
-        async function registrarUsuario() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
+        async function ejecutarRegistro() {
+            const email = document.getElementById('auth-email').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+
+            if (!email || !password) {
+                alert('Por favor llena ambos campos.');
+                return;
+            }
+
+            alert('Enviando registro...');
 
             const { data, error } = await supabase.auth.signUp({
-     
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                alert('Error en registro: ' + error.message);
+            } else {
+                alert('¡Cuenta registrada! Si tienes la confirmación activa en Supabase revisa tu correo, o intenta iniciar sesión.');
+            }
+        }
+
+        function mostrarAplicacion(user) {
+            document.getElementById('auth-gate-screen').style.display = 'none';
+            document.getElementById('app-main-core').style.display = 'flex';
+            document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
+            cargarPosts();
+        }
+
+        async function cerrarSesion() {
+            await supabase.auth.signOut();
+            document.getElementById('app-main-core').style.display = 'none';
+            document.getElementById('auth-gate-screen').style.display = 'flex';
+        }
+
+        async function publicarPost() {
+            const contenido = document.getElementById('postInput').value;
+            if (!contenido) return;
+
+            const user = (await supabase.auth.getUser()).data.user;
+
+            const { error } = await supabase.from('posts').insert([
+                { content: contenido, user_email: user ? user.email : 'Atleta Anónimo' }
+            ]);
+
+            if (error) {
+                alert('Error al publicar: ' + error.message);
+            } else {
+                document.getElementById('postInput').value = '';
+                cargarPosts();
+            }
+        }
+
+        async function cargarPosts() {
+            const { data: posts, error } = await supabase
+                .from('posts')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            const feedContainer = document.getElementById('feedPosts');
+            feedContainer.innerHTML = '';
+
+            if (posts) {
+                posts.forEach(post => {
+                    const postEl = document.createElement('div');
+                    postEl.className = 'post-card';
+                    postEl.innerHTML = `
+                        <div class="post-header">
+                            <div class="post-avatar">Σ</div>
+                            <div>
+                                <div class="post-author">${post.user_email || 'Atleta'}</div>
+                            </div>
+                        </div>
+                        <div class="post-content">${post.content}</div>
+                    `;
+                    feedContainer.appendChild(postEl);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
