@@ -265,7 +265,6 @@
             background: var(--accent-orange);
             box-shadow: 0 0 8px var(--accent-orange);
         }
-
         .container {
             width: 100%;
             max-width: 500px;
@@ -356,6 +355,10 @@
             width: 100%;
             margin-top: 6px;
             text-transform: uppercase;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            box-sizing: border-box;
         }
 
         .form-group {
@@ -433,6 +436,26 @@
             margin-top: 5px;
             letter-spacing: 1px;
             text-transform: uppercase;
+        }
+
+        .ex-item {
+            background: #090909;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-orange);
+            margin-bottom: 8px;
+        }
+
+        .ex-item strong {
+            font-size: 12px;
+            color: #fff;
+            display: block;
+        }
+
+        .ex-item p {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin: 3px 0 0 0;
         }
     </style>
 </head>
@@ -541,22 +564,30 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">📚 Biblioteca de Movimientos</span>
+                        <span class="card-title">⚙️ Sistema Seleccionado</span>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">Fundamentos biomecánicos para culturismo y fuerza.</p>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
-                            <strong style="font-size: 12px; color: #fff;">Sentadilla Libre (Squat)</strong>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Patrón dominante de rodilla. Máxima activación de cuádriceps y cadena posterior.</p>
-                        </div>
-                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
-                            <strong style="font-size: 12px; color: #fff;">Press de Banca (Bench Press)</strong>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Empuje horizontal enfocado en pectoral mayor, tríceps y deltoides anterior.</p>
-                        </div>
-                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
-                            <strong style="font-size: 12px; color: #fff;">Peso Muerto (Deadlift)</strong>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Bisagra de cadera pura. Reclutamiento masivo de toda la cadena posterior.</p>
-                        </div>
+                    <p id="sistemaActivoInfo" style="font-size: 11px; color: var(--accent-orange); font-weight: bold; margin-bottom: 8px;">Sistema Predeterminado: Weider</p>
+                    <div class="ex-item">
+                        <strong id="sysEx1">Parámetros de Carga:</strong>
+                        <p id="sysDesc1">3-4 series por ejercicio con descanso de 90 segundos.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📚 Enciclopedia de Ejercicios</span>
+                    </div>
+                    <div class="filter-container">
+                        <button class="filter-chip active" onclick="filtrarEjercicios('TODOS', this)">Todos</button>
+                        <button class="filter-chip" onclick="filtrarEjercicios('PECTORAL', this)">Pectoral</button>
+                        <button class="filter-chip" onclick="filtrarEjercicios('ESPALDA', this)">Espalda</button>
+                        <button class="filter-chip" onclick="filtrarEjercicios('PIERNAS', this)">Piernas</button>
+                        <button class="filter-chip" onclick="filtrarEjercicios('HOMBROS', this)">Hombros</button>
+                        <button class="filter-chip" onclick="filtrarEjercicios('BRAZOS', this)">Brazos</button>
+                    </div>
+
+                    <div id="listaEjerciciosMasiva">
+                        <!-- Ejercicios cargados dinámicamente -->
                     </div>
                 </div>
             </div>
@@ -566,26 +597,43 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Sistemas de Entrenamiento</span>
-                        <span class="badge">Pro</span>
+                        <span class="badge">Metodologías</span>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Programas estructurados para hipertrofia y ganancia de fuerza.</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Selecciona un sistema para cargar sus pautas biomecánicas en la sección de Ejercicios.</p>
                     
                     <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Rutina PPL (Push / Pull / Legs)</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 8px 0;">Frecuencia 2 ideal para culturismo natural y máxima síntesis proteica.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">6 días / semana</span>
+                        <div onclick="seleccionarSistema('Heavy Duty (Mentzer)', '1-2 series efectivas al fallo muscular absoluto + repeticiones forzadas.', '3 a 5 minutos de descanso completo entre series.')" style="background: #0d0d0d; border: 1px solid var(--accent-orange); padding: 12px; border-radius: 8px; cursor: pointer;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Heavy Duty</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Alta intensidad neuromuscular, volumen ultra bajo, recuperación profunda.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
                         </div>
 
-                        <div style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Torso / Pierna (Powerbuilding)</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 8px 0;">Enfoque híbrido combinando bloques de fuerza pesada con accesorios de hipertrofia.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">4 días / semana</span>
+                        <div onclick="seleccionarSistema('FST-7 (Hany Rambod)', '7 series de bombeo al final del músculo objetivo con 30-45s de descanso.', '30 a 45 segundos strictly entre series de bombeo.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">FST-7</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Estiramiento de la fascia muscular mediante máxima congestión sanguínea.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
+                        </div>
+
+                        <div onclick="seleccionarSistema('Weider Clásico', '3-4 series por ejercicio, rango de 8-12 repeticiones (RPE 8-9).', '90 segundos de descanso estándar.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Weider Clásico</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">División por grupos musculares y volumen moderado para hipertrofia.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
+                        </div>
+
+                        <div onclick="seleccionarSistema('Rest-Pause / Doggcrapp', '1 serie principal dividida en 3 mini-sets con 15 segundos de pausa activa.', '15 a 20 segundos de micropausa respiratoria.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Rest-Pause System</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Reclutamiento de fibras de alto umbral mediante pausas cortas al fallo.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
+                        </div>
+
+                        <div onclick="seleccionarSistema('5x5 Powerlifting', '5 series de 5 repeticiones con cargas pesadas al 80-85% 1RM.', '3 minutos entre series de alta carga.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">5x5 Fuerza Pura</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Sobrecarga progresiva pesada en movimientos multiarticulares.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- SECCIÓN COACHES -->
             <div id="sec-coaches" class="section">
                 <div class="card">
@@ -605,7 +653,7 @@
                                 </div>
                             </div>
                             <p style="font-size: 11px; color: #dfdfdf; margin: 0;">Asesoría personalizada online y presencial, ajuste nutricional y revisión técnica de levantamientos.</p>
-                            <button class="btn-secondary" onclick="alert('Contactando a Coach Juan Rodríguez vía WhatsApp / Telegram...')">💬 Contactar Asesoría</button>
+                            <a href="https://wa.me/584145574866?text=Hola%20Coach%20Juan,%20quiero%20información%20sobre%20tus%20asesorías%20en%20Sigma%20Fitness" target="_blank" class="btn-secondary">💬 Contactar por WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -653,12 +701,73 @@
         let temporizadorInterval = null;
         let filtroActual = 'TODOS';
 
+        const baseEjercicios = [
+            { grupo: 'PECTORAL', nombre: 'Press Plano con Barra', desc: 'Empuje horizontal multiarticular clave para volumen global.' },
+            { grupo: 'PECTORAL', nombre: 'Press Inclinado con Mancuernas', desc: 'Énfasis en el haz clavicular del pectoral mayor.' },
+            { grupo: 'PECTORAL', nombre: 'Cruce de Poleas (Aperturas)', desc: 'Aislamiento con tensión constante en posición acortada.' },
+            { grupo: 'PECTORAL', nombre: 'Fondos en Paralelas (Dips)', desc: 'Reclutamiento del pectoral inferior y tríceps con peso corporal.' },
+            
+            { grupo: 'ESPALDA', nombre: 'Jalón al Pecho en Polea Alta', desc: 'Tracción vertical dominante para amplitud del dorsal ancho.' },
+            { grupo: 'ESPALDA', nombre: 'Remo con Barra (Pendlay/Pronado)', desc: 'Tracción horizontal para densidad de la zona media de la espalda.' },
+            { grupo: 'ESPALDA', nombre: 'Remo Gironda Unilateral', desc: 'Aislamiento del dorsal con recorrido profundo.' },
+            { grupo: 'ESPALDA', nombre: 'Peso Muerto Convencional', desc: 'Cadena posterior total y fuerza de erectores espinales.' },
+
+            { grupo: 'PIERNAS', nombre: 'Sentadilla Libre con Barra', desc: 'Patrón dominante de rodilla para cuádriceps y glúteos.' },
+            { grupo: 'PIERNAS', nombre: 'Prensa 45°', desc: 'Carga pesada guiada para cuádriceps sin fatiga lumbar.' },
+            { grupo: 'PIERNAS', nombre: 'Peso Muerto Rumano', desc: 'Bisagra de cadera centrada en isquiotibiales y glúteos.' },
+            { grupo: 'PIERNAS', nombre: 'Sissy Squat / Extensión de Piernas', desc: 'Aislamiento puro del recto femoral.' },
+
+            { grupo: 'HOMBROS', nombre: 'Press Militar OverHead', desc: 'Empuje vertical para fuerza e hipertrofia del deltoides anterior.' },
+            { grupo: 'HOMBROS', nombre: 'Elevaciones Laterales con Polea/Mancuerna', desc: 'Aislamiento del deltoides lateral para anchura.' },
+            { grupo: 'HOMBROS', nombre: 'Pájaro en Polea (Rear Delt Fly)', desc: 'Énfasis en la cabeza posterior del deltoides.' },
+
+            { grupo: 'BRAZOS', nombre: 'Curl de Biceps con Barra Z', desc: 'Flexión de codo pesada para la cabeza corta y larga.' },
+            { grupo: 'BRAZOS', nombre: 'Curl Martillo', desc: 'Activación del braquial anterior y braquiorradial.' },
+            { grupo: 'BRAZOS', nombre: 'Press Francés en Banco Plano', desc: 'Extensión de codo pesada para las cabezas del tríceps.' },
+            { grupo: 'BRAZOS', nombre: 'Extensión de Tríceps en Polea', desc: 'Aislamiento continuo para la cabeza lateral del tríceps.' }
+        ];
+
         function switchTab(tabName, element) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             
             document.getElementById('sec-' + tabName).classList.add('active');
             element.classList.add('active');
+
+            if (tabName === 'ejercicios') {
+                renderizarEjercicios('TODOS');
+            }
+        }
+
+        function renderizarEjercicios(grupoFiltro) {
+            const container = document.getElementById('listaEjerciciosMasiva');
+            container.innerHTML = '';
+
+            const filtrados = grupoFiltro === 'TODOS' ? baseEjercicios : baseEjercicios.filter(e => e.grupo === grupoFiltro);
+
+            filtrados.forEach(ex => {
+                const item = document.createElement('div');
+                item.className = 'ex-item';
+                item.innerHTML = `
+                    <strong>${ex.nombre} <span style="font-size:9px; color:var(--accent-orange);">[${ex.grupo}]</span></strong>
+                    <p>${ex.desc}</p>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function filtrarEjercicios(grupo, element) {
+            document.querySelectorAll('#sec-ejercicios .filter-chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            renderizarEjercicios(grupo);
+        }
+
+        function seleccionarSistema(nombre, pautas, descanso) {
+            document.getElementById('sistemaActivoInfo').innerText = 'Sistema Activo: ' + nombre;
+            document.getElementById('sysEx1').innerText = pautas;
+            document.getElementById('sysDesc1').innerText = 'Descanso recomendado: ' + descanso;
+            alert('¡Sistema ' + nombre + ' cargado! Mira las pautas y ejercicios.');
+            switchTab('ejercicios', document.getElementById('btn-ejercicios'));
         }
 
         function iniciarTemporizador(segundos) {
@@ -699,7 +808,7 @@
 
         function filtrarFeed(categoria, element) {
             filtroActual = categoria;
-            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+            document.querySelectorAll('#sec-comunidad .filter-chip').forEach(chip => chip.classList.remove('active'));
             element.classList.add('active');
             cargarPosts();
         }
@@ -760,6 +869,7 @@
             document.getElementById('app-main-core').style.display = 'flex';
             document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
             cargarPosts();
+            renderizarEjercicios('TODOS');
         }
 
         async function cerrarSesion() {
