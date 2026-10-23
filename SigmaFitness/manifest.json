@@ -2,23 +2,23 @@
   "short_name": "Sigma",
   "name": "Sigma Fitness",
   "description": "Fitness para todxs en cualquier lugar",
-  "icons": [
-    {
-      "src": "https://raw.githubusercontent.com/pwabuilder/resources/main/icons/pwa-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://raw.githubusercontent.com/pwabuilder/resources/main/icons/pwa-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ],
   "start_url": "/",
   "background_color": "#050505",
   "theme_color": "#ff5500",
   "display": "standalone",
-  "orientation": "any"
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192' width='192' height='192'><rect width='192' height='192' rx='40' fill='%23050505'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='85' fill='%23ff5500'>SF</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'><rect width='512' height='512' rx='100' fill='%23050505'/><text x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='220' fill='%23ff5500'>SF</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
