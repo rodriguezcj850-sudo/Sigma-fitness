@@ -180,7 +180,6 @@
             color: var(--accent-orange);
         }
 
-        /* FILTROS DE FEED */
         .filter-container {
             display: flex;
             gap: 6px;
@@ -490,7 +489,6 @@
             <!-- SECCIÓN COMUNIDAD -->
             <div id="sec-comunidad" class="section active">
                 
-                <!-- BARRAS DE FILTROS CATEOGORIZADAS -->
                 <div class="filter-container">
                     <button class="filter-chip active" onclick="filtrarFeed('TODOS', this)">🌐 Todos</button>
                     <button class="filter-chip" onclick="filtrarFeed('FUERZA', this)">💪 Fuerza / PRs</button>
@@ -540,6 +538,27 @@
                     <button class="btn-action" onclick="calcularRM()">Calcular Estima</button>
                     <div id="resultadoRM" style="margin-top:10px; font-weight:bold; color:var(--accent-orange);"></div>
                 </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">📚 Biblioteca de Movimientos</span>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 10px;">Fundamentos biomecánicos para culturismo y fuerza.</p>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                            <strong style="font-size: 12px; color: #fff;">Sentadilla Libre (Squat)</strong>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Patrón dominante de rodilla. Máxima activación de cuádriceps y cadena posterior.</p>
+                        </div>
+                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                            <strong style="font-size: 12px; color: #fff;">Press de Banca (Bench Press)</strong>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Empuje horizontal enfocado en pectoral mayor, tríceps y deltoides anterior.</p>
+                        </div>
+                        <div style="background: #090909; padding: 10px; border-radius: 8px; border-left: 3px solid var(--accent-orange);">
+                            <strong style="font-size: 12px; color: #fff;">Peso Muerto (Deadlift)</strong>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 0 0;">Bisagra de cadera pura. Reclutamiento masivo de toda la cadena posterior.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- SECCIÓN SISTEMAS -->
@@ -547,8 +566,23 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Sistemas de Entrenamiento</span>
+                        <span class="badge">Pro</span>
                     </div>
-                    <p class="card-desc">Rutinas preestablecidas y programas de hipertrofia.</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Programas estructurados para hipertrofia y ganancia de fuerza.</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Rutina PPL (Push / Pull / Legs)</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 8px 0;">Frecuencia 2 ideal para culturismo natural y máxima síntesis proteica.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">6 días / semana</span>
+                        </div>
+
+                        <div style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px;">
+                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Torso / Pierna (Powerbuilding)</span>
+                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 8px 0;">Enfoque híbrido combinando bloques de fuerza pesada con accesorios de hipertrofia.</p>
+                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">4 días / semana</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -557,8 +591,23 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Asesoría de Coaches</span>
+                        <span class="badge">Verificados</span>
                     </div>
-                    <p class="card-desc">Conecta con los entrenadores verificados de la red.</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Conecta directamente con entrenadores certificados de la red.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="background: #0d0d0d; border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 35px; height: 35px; border-radius: 50%; background: #1a1a1a; border: 2px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); font-size: 12px;">JR</div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Juan Rodríguez <span style="color: var(--accent-green); font-size: 10px;">✔ COACH</span></div>
+                                    <div style="font-size: 10px; color: var(--text-muted);">Especialista en Biomecánica y Hipertrofia</div>
+                                </div>
+                            </div>
+                            <p style="font-size: 11px; color: #dfdfdf; margin: 0;">Asesoría personalizada online y presencial, ajuste nutricional y revisión técnica de levantamientos.</p>
+                            <button class="btn-secondary" onclick="alert('Contactando a Coach Juan Rodríguez vía WhatsApp / Telegram...')">💬 Contactar Asesoría</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -568,7 +617,7 @@
                     <div class="card-header">
                         <span class="card-title">Perfil de Atleta</span>
                     </div>
-                    <p id="userEmailDisplay" class="card-desc">Cargando datos del usuario...</p>
+                    <p id="userEmailDisplay" class="card-desc" style="font-size: 12px; color: #fff; margin-bottom: 10px;">Cargando datos del usuario...</p>
                     <button class="btn-secondary" onclick="cerrarSesion()">Cerrar Sesión</button>
                 </div>
             </div>
