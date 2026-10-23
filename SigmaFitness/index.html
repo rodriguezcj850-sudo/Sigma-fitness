@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sigma Fitness</title>
+    <!-- Configuración PWA e Icono de App -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#ff5500">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="/icon.png">
+    
     <!-- Librería oficial de Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -212,7 +219,6 @@
             border-color: var(--accent-orange);
             box-shadow: 0 0 8px var(--orange-glow);
         }
-
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -222,7 +228,7 @@
             max-width: 500px;
             background: rgba(8, 8, 8, 0.98);
             border-top: 1px solid #1c1c1c;
-            display: none;
+            display: flex;
             justify-content: space-around;
             padding: 10px 0 12px 0;
             z-index: 1000;
@@ -265,6 +271,7 @@
             background: var(--accent-orange);
             box-shadow: 0 0 8px var(--accent-orange);
         }
+
         .container {
             width: 100%;
             max-width: 500px;
@@ -437,13 +444,6 @@
             color: #fff;
         }
 
-        .post-content {
-            font-size: 12px;
-            color: #dfdfdf;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
         .status-cloud {
             font-size: 9px;
             color: var(--accent-green);
@@ -569,7 +569,6 @@
                     <!-- Posts cargados desde Supabase -->
                 </div>
             </div>
-
             <!-- SECCIÓN EJERCICIOS Y GYM MODE -->
             <div id="sec-ejercicios" class="section">
                 
@@ -644,7 +643,7 @@
 
                     <div id="listaEjerciciosMasiva">
                         <!-- Ejercicios cargados dinámicamente -->
-                    </div>
+  </div>
                 </div>
             </div>
 
@@ -677,7 +676,8 @@
                         </div>
 
                         <div onclick="seleccionarSistema('Rest-Pause / Doggcrapp', '1 serie principal dividida en 3 mini-sets con 15 segundos de pausa activa.', '15 a 20 segundos de micropausa respiratoria.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Rest-Pause System</span>
+                            <span style="font-size
+ : 12px; font-weight: bold; color: var(--accent-orange);">Rest-Pause System</span>
                             <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Reclutamiento de fibras de alto umbral mediante pausas cortas al fallo.</p>
                             <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
                         </div>
@@ -690,6 +690,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- SECCIÓN COACHES MULTI-DIRECTORIO -->
             <div id="sec-coaches" class="section">
                 <div class="card">
@@ -707,7 +708,7 @@
                     </div>
 
                     <div id="directorioCoachesContainer">
-                        <!-- Carga dinámica de múltiples coaches -->
+                        <!-- Carga dinámica de coaches -->
                     </div>
                 </div>
             </div>
@@ -725,7 +726,7 @@
         </div>
 
         <!-- BARRA INFERIOR ESTILO SIGMA -->
-        <div id="bottomNav" class="nav-tabs" style="display: flex;">
+        <div id="bottomNav" class="nav-tabs">
             <button id="btn-comunidad" class="tab-btn active" onclick="switchTab('comunidad', this)">
                 <span class="icon">💀</span>
                 <span>Comunidad</span>
@@ -748,9 +749,9 @@
             </button>
         </div>
     </div>
-
-    <!-- LÓGICA DE LA APLICACIÓN Y SUPABASE -->
+         <!-- LÓGICA DE LA APLICACIÓN Y SUPABASE -->
     <script>
+        const ADMIN_EMAIL = 'Rodriguezcj850@gmail.com';
         let temporizadorInterval = null;
         let filtroActual = 'TODOS';
         let seriesGymRegistradas = [];
@@ -762,22 +763,6 @@
                 especialidadTag: 'HIPERTROFIA',
                 titulo: 'Biomecánica & Culturismo Natural',
                 desc: 'Ajuste biomecánico de ejercicios, periodización de carga y planes de hipertrofia avanzada.',
-                telefono: '584145574866'
-            },
-            {
-                nombre: 'Carlos Silva',
-                iniciales: 'CS',
-                especialidadTag: 'FUERZA',
-                titulo: 'Coach de Powerlifting & RPE',
-                desc: 'Especialista en maximizar 1RM en banca, sentadilla y peso muerto con cálculo de fatiga.',
-                telefono: '584145574866'
-            },
-            {
-                nombre: 'María Delgado',
-                iniciales: 'MD',
-                especialidadTag: 'SALUD',
-                titulo: 'Recomposición Corporal & Nutrición',
-                desc: 'Optimización metabólica, pérdida de tejido graso y desarrollo de hábitos sostenibles.',
                 telefono: '584145574866'
             }
         ];
@@ -803,6 +788,10 @@
             { grupo: 'BRAZOS', nombre: 'Press Francés en Banco Plano', desc: 'Extensión de codo pesada para las cabezas del tríceps.' },
             { grupo: 'BRAZOS', nombre: 'Extensión de Tríceps en Polea', desc: 'Aislamiento continuo para la cabeza lateral del tríceps.' }
         ];
+
+        function esAdmin(email) {
+            return email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+        }
 
         function switchTab(tabName, element) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
@@ -998,7 +987,16 @@
         function mostrarAplicacion(user) {
             document.getElementById('auth-gate-screen').style.display = 'none';
             document.getElementById('app-main-core').style.display = 'flex';
-            document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
+            
+            if (esAdmin(user.email)) {
+                document.getElementById('userEmailDisplay').innerHTML = `
+                    Atleta: ${user.email} <br>
+                    <span style="color: var(--accent-orange); font-weight: bold; font-size: 11px;">👑 FUNDADOR / SUPER ADMIN</span>
+                `;
+            } else {
+                document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
+            }
+
             cargarPosts();
             renderizarEjercicios('TODOS');
             renderizarCoaches('TODOS');
@@ -1056,11 +1054,14 @@
                     if (post.category === 'COMEDIA') tagTexto = '🎭 Humor Gym';
                     if (post.category === 'SALUD') tagTexto = '🥗 Salud / Fit';
 
+                    const esAutorAdmin = esAdmin(post.user_email);
+                    const autorDisplay = esAutorAdmin ? `${post.user_email} <span style="color:var(--accent-orange); font-size:10px;">👑 ADMIN</span>` : post.user_email;
+
                     postEl.innerHTML = `
                         <div class="post-header">
                             <div class="post-avatar">Σ</div>
                             <div>
-                                <div class="post-author">${post.user_email || 'Atleta'}</div>
+                                <div class="post-author">${autorDisplay || 'Atleta'}</div>
                                 <span class="post-tag">${tagTexto}</span>
                             </div>
                         </div>
@@ -1073,3 +1074,4 @@
     </script>
 </body>
 </html>
+            
