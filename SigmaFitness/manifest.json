@@ -9,13 +9,13 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/pwabuilder/resources/main/icons/pwa-192.png",
+      "src": "https://via.placeholder.com/192/050505/ff5500.png?text=SF",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://raw.githubusercontent.com/pwabuilder/resources/main/icons/pwa-512.png",
+      "src": "https://via.placeholder.com/512/050505/ff5500.png?text=SF",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
