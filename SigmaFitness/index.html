@@ -10,7 +10,6 @@
       const SUPABASE_URL = 'https://dvdwyblykbczjwzhdzta.supabase.co';
       const SUPABASE_ANON_KEY = 'sb_publishable_WxjRNFMi2dRnAGQp1EtknQ_gKDEe_1I';
       
-      // Inicialización corregida para evitar el "undefined"
       const { createClient } = window.supabase;
       const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     </script>
@@ -181,6 +180,40 @@
             color: var(--accent-orange);
         }
 
+        /* FILTROS DE FEED */
+        .filter-container {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        .filter-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            background: #141414;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip.active {
+            background: var(--accent-orange);
+            color: #000;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 8px var(--orange-glow);
+        }
+
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -283,6 +316,17 @@
             border-radius: 4px;
             font-weight: bold;
             text-transform: uppercase;
+        }
+
+        .post-tag {
+            display: inline-block;
+            background: #1f1f1f;
+            color: var(--accent-orange);
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 4px;
         }
 
         .btn-action {
@@ -445,13 +489,32 @@
         <div class="container">
             <!-- SECCIÓN COMUNIDAD -->
             <div id="sec-comunidad" class="section active">
+                
+                <!-- BARRAS DE FILTROS CATEOGORIZADAS -->
+                <div class="filter-container">
+                    <button class="filter-chip active" onclick="filtrarFeed('TODOS', this)">🌐 Todos</button>
+                    <button class="filter-chip" onclick="filtrarFeed('FUERZA', this)">💪 Fuerza / PRs</button>
+                    <button class="filter-chip" onclick="filtrarFeed('HIPERTROFIA', this)">🏋️‍♂️ Hipertrofia</button>
+                    <button class="filter-chip" onclick="filtrarFeed('COMEDIA', this)">🎭 Humor / Memes</button>
+                    <button class="filter-chip" onclick="filtrarFeed('SALUD', this)">🥗 Salud / Fit</button>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Muro de la Red Sigma</span>
                         <span class="badge">En Vivo</span>
                     </div>
                     <div class="form-group">
-                        <textarea id="postInput" class="form-control" rows="3" placeholder="Comparte tu entrenamiento o récord..."></textarea>
+                        <textarea id="postInput" class="form-control" rows="3" placeholder="Comparte tu marca o una broma del gym..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoría de la publicación:</label>
+                        <select id="postCategory" class="form-control">
+                            <option value="FUERZA">💪 Fuerza / Powerlifting</option>
+                            <option value="HIPERTROFIA">🏋️‍♂️ Hipertrofia / Culturismo</option>
+                            <option value="COMEDIA" selected>🎭 Comedia / Humor Gym</option>
+                            <option value="SALUD">🥗 Salud / Pérdida de Peso</option>
+                        </select>
                     </div>
                     <button class="btn-action" onclick="publicarPost()">Publicar</button>
                 </div>
@@ -539,6 +602,7 @@
     <!-- LÓGICA DE LA APLICACIÓN Y SUPABASE -->
     <script>
         let temporizadorInterval = null;
+        let filtroActual = 'TODOS';
 
         function switchTab(tabName, element) {
             document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
@@ -582,6 +646,13 @@
                 const rm = Math.round(peso * (1 + reps / 30));
                 document.getElementById('resultadoRM').innerText = `Tu 1RM Estimado es: ${rm} kg`;
             }
+        }
+
+        function filtrarFeed(categoria, element) {
+            filtroActual = categoria;
+            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+            element.classList.add('active');
+            cargarPosts();
         }
 
         async function ejecutarLogin() {
@@ -650,16 +721,21 @@
 
         async function publicarPost() {
             const contenido = document.getElementById('postInput').value;
+            const categoria = document.getElementById('postCategory').value;
             if (!contenido) return;
 
             const user = (await supabaseClient.auth.getUser()).data.user;
 
             const { error } = await supabaseClient.from('posts').insert([
-                { content: contenido, user_email: user ? user.email : 'Atleta Anónimo' }
+                { 
+                    content: contenido, 
+                    user_email: user ? user.email : 'Atleta Anónimo',
+                    category: categoria
+                }
             ]);
 
             if (error) {
-                alert('Error al publicar: ' + error.message);
+                alert('Aviso al publicar: ' + error.message);
             } else {
                 document.getElementById('postInput').value = '';
                 cargarPosts();
@@ -667,10 +743,13 @@
         }
 
         async function cargarPosts() {
-            const { data: posts, error } = await supabaseClient
-                .from('posts')
-                .select('*')
-                .order('created_at', { ascending: false });
+            let query = supabaseClient.from('posts').select('*').order('created_at', { ascending: false });
+
+            if (filtroActual !== 'TODOS') {
+                query = query.eq('category', filtroActual);
+            }
+
+            const { data: posts, error } = await query;
 
             const feedContainer = document.getElementById('feedPosts');
             feedContainer.innerHTML = '';
@@ -679,11 +758,19 @@
                 posts.forEach(post => {
                     const postEl = document.createElement('div');
                     postEl.className = 'post-card';
+                    
+                    let tagTexto = '🌐 General';
+                    if (post.category === 'FUERZA') tagTexto = '💪 Fuerza / Powerlifting';
+                    if (post.category === 'HIPERTROFIA') tagTexto = '🏋️‍♂️ Hipertrofia';
+                    if (post.category === 'COMEDIA') tagTexto = '🎭 Humor Gym';
+                    if (post.category === 'SALUD') tagTexto = '🥗 Salud / Fit';
+
                     postEl.innerHTML = `
                         <div class="post-header">
                             <div class="post-avatar">Σ</div>
                             <div>
                                 <div class="post-author">${post.user_email || 'Atleta'}</div>
+                                <span class="post-tag">${tagTexto}</span>
                             </div>
                         </div>
                         <div class="post-content">${post.content}</div>
