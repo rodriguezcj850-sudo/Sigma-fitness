@@ -327,6 +327,21 @@
             margin-top: 4px;
         }
 
+        .promo-banner {
+            background: rgba(255, 85, 0, 0.08);
+            border: 1px dashed var(--accent-orange);
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 10px;
+            color: #dfdfdf;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        .promo-banner strong {
+            color: var(--accent-orange);
+        }
+
         .btn-action {
             background: linear-gradient(135deg, #ff5500, #c43b00);
             color: #fff;
@@ -457,6 +472,17 @@
             color: var(--text-muted);
             margin: 3px 0 0 0;
         }
+
+        .coach-card {
+            background: #0d0d0d;
+            border: 1px solid var(--card-border);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -544,8 +570,38 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN EJERCICIOS -->
+            <!-- SECCIÓN EJERCICIOS Y GYM MODE -->
             <div id="sec-ejercicios" class="section">
+                
+                <!-- BANNER PROMOCIONAL ESTRATÉGICO -->
+                <div class="promo-banner">
+                    💡 <strong>Tip Sigma:</strong> Puedes registrar tu entrenamiento en tiempo real activando el <strong>Gym Mode</strong>, o contactar a nuestros coaches para una experiencia, rutina y corrección técnica personalizada más completa.
+                </div>
+
+                <!-- CARDA GYM MODE -->
+                <div class="card" style="border-color: var(--accent-orange);">
+                    <div class="card-header">
+                        <span class="card-title">🏋️‍♂️ Gym Mode (Registro Activo)</span>
+                        <span class="badge">En Vivo</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Ejercicio Activo:</label>
+                        <input type="text" id="gymEjercicio" class="form-control" placeholder="Ej: Press Plano con Barra">
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Peso (kg):</label>
+                            <input type="number" id="gymPeso" class="form-control" placeholder="80">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Reps:</label>
+                            <input type="number" id="gymReps" class="form-control" placeholder="10">
+                        </div>
+                    </div>
+                    <button class="btn-action" onclick="guardarSerieGym()">Anotar Serie & Iniciar Descanso</button>
+                    <div id="historialGymMode" style="margin-top: 10px;"></div>
+                </div>
+
                 <div class="card">
                     <div class="card-header">
                         <span class="card-title">Calculadora de 1RM</span>
@@ -608,7 +664,7 @@
                             <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
                         </div>
 
-                        <div onclick="seleccionarSistema('FST-7 (Hany Rambod)', '7 series de bombeo al final del músculo objetivo con 30-45s de descanso.', '30 a 45 segundos strictly entre series de bombeo.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
+                        <div onclick="seleccionarSistema('FST-7 (Hany Rambod)', '7 series de bombeo al final del músculo objetivo con 30-45s de descanso.', '30 a 45 segundos estrictos entre series de bombeo.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
                             <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">FST-7</span>
                             <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Estiramiento de la fascia muscular mediante máxima congestión sanguínea.</p>
                             <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
@@ -634,27 +690,24 @@
                     </div>
                 </div>
             </div>
-            <!-- SECCIÓN COACHES -->
+            <!-- SECCIÓN COACHES MULTI-DIRECTORIO -->
             <div id="sec-coaches" class="section">
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Asesoría de Coaches</span>
-                        <span class="badge">Verificados</span>
+                        <span class="card-title">Directorio de Coaches</span>
+                        <span class="badge">Red Sigma</span>
                     </div>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Conecta directamente con entrenadores certificados de la red.</p>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Selecciona al especialista certificado adecuado para tus objetivos.</p>
 
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
-                        <div style="background: #0d0d0d; border: 1px solid var(--card-border); padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px;">
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="width: 35px; height: 35px; border-radius: 50%; background: #1a1a1a; border: 2px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); font-size: 12px;">JR</div>
-                                <div>
-                                    <div style="font-size: 13px; font-weight: bold; color: #fff;">Juan Rodríguez <span style="color: var(--accent-green); font-size: 10px;">✔ COACH</span></div>
-                                    <div style="font-size: 10px; color: var(--text-muted);">Especialista en Biomecánica y Hipertrofia</div>
-                                </div>
-                            </div>
-                            <p style="font-size: 11px; color: #dfdfdf; margin: 0;">Asesoría personalizada online y presencial, ajuste nutricional y revisión técnica de levantamientos.</p>
-                            <a href="https://wa.me/584145574866?text=Hola%20Coach%20Juan,%20quiero%20información%20sobre%20tus%20asesorías%20en%20Sigma%20Fitness" target="_blank" class="btn-secondary">💬 Contactar por WhatsApp</a>
-                        </div>
+                    <div class="filter-container">
+                        <button class="filter-chip active" onclick="filtrarCoaches('TODOS', this)">Todos</button>
+                        <button class="filter-chip" onclick="filtrarCoaches('HIPERTROFIA', this)">Hipertrofia</button>
+                        <button class="filter-chip" onclick="filtrarCoaches('FUERZA', this)">Powerlifting</button>
+                        <button class="filter-chip" onclick="filtrarCoaches('SALUD', this)">Recomposición</button>
+                    </div>
+
+                    <div id="directorioCoachesContainer">
+                        <!-- Carga dinámica de múltiples coaches -->
                     </div>
                 </div>
             </div>
@@ -700,27 +753,51 @@
     <script>
         let temporizadorInterval = null;
         let filtroActual = 'TODOS';
+        let seriesGymRegistradas = [];
+
+        const directorioCoaches = [
+            {
+                nombre: 'Juan Rodríguez',
+                iniciales: 'JR',
+                especialidadTag: 'HIPERTROFIA',
+                titulo: 'Biomecánica & Culturismo Natural',
+                desc: 'Ajuste biomecánico de ejercicios, periodización de carga y planes de hipertrofia avanzada.',
+                telefono: '584145574866'
+            },
+            {
+                nombre: 'Carlos Silva',
+                iniciales: 'CS',
+                especialidadTag: 'FUERZA',
+                titulo: 'Coach de Powerlifting & RPE',
+                desc: 'Especialista en maximizar 1RM en banca, sentadilla y peso muerto con cálculo de fatiga.',
+                telefono: '584145574866'
+            },
+            {
+                nombre: 'María Delgado',
+                iniciales: 'MD',
+                especialidadTag: 'SALUD',
+                titulo: 'Recomposición Corporal & Nutrición',
+                desc: 'Optimización metabólica, pérdida de tejido graso y desarrollo de hábitos sostenibles.',
+                telefono: '584145574866'
+            }
+        ];
 
         const baseEjercicios = [
             { grupo: 'PECTORAL', nombre: 'Press Plano con Barra', desc: 'Empuje horizontal multiarticular clave para volumen global.' },
             { grupo: 'PECTORAL', nombre: 'Press Inclinado con Mancuernas', desc: 'Énfasis en el haz clavicular del pectoral mayor.' },
             { grupo: 'PECTORAL', nombre: 'Cruce de Poleas (Aperturas)', desc: 'Aislamiento con tensión constante en posición acortada.' },
             { grupo: 'PECTORAL', nombre: 'Fondos en Paralelas (Dips)', desc: 'Reclutamiento del pectoral inferior y tríceps con peso corporal.' },
-            
             { grupo: 'ESPALDA', nombre: 'Jalón al Pecho en Polea Alta', desc: 'Tracción vertical dominante para amplitud del dorsal ancho.' },
             { grupo: 'ESPALDA', nombre: 'Remo con Barra (Pendlay/Pronado)', desc: 'Tracción horizontal para densidad de la zona media de la espalda.' },
             { grupo: 'ESPALDA', nombre: 'Remo Gironda Unilateral', desc: 'Aislamiento del dorsal con recorrido profundo.' },
             { grupo: 'ESPALDA', nombre: 'Peso Muerto Convencional', desc: 'Cadena posterior total y fuerza de erectores espinales.' },
-
             { grupo: 'PIERNAS', nombre: 'Sentadilla Libre con Barra', desc: 'Patrón dominante de rodilla para cuádriceps y glúteos.' },
             { grupo: 'PIERNAS', nombre: 'Prensa 45°', desc: 'Carga pesada guiada para cuádriceps sin fatiga lumbar.' },
             { grupo: 'PIERNAS', nombre: 'Peso Muerto Rumano', desc: 'Bisagra de cadera centrada en isquiotibiales y glúteos.' },
             { grupo: 'PIERNAS', nombre: 'Sissy Squat / Extensión de Piernas', desc: 'Aislamiento puro del recto femoral.' },
-
             { grupo: 'HOMBROS', nombre: 'Press Militar OverHead', desc: 'Empuje vertical para fuerza e hipertrofia del deltoides anterior.' },
             { grupo: 'HOMBROS', nombre: 'Elevaciones Laterales con Polea/Mancuerna', desc: 'Aislamiento del deltoides lateral para anchura.' },
             { grupo: 'HOMBROS', nombre: 'Pájaro en Polea (Rear Delt Fly)', desc: 'Énfasis en la cabeza posterior del deltoides.' },
-
             { grupo: 'BRAZOS', nombre: 'Curl de Biceps con Barra Z', desc: 'Flexión de codo pesada para la cabeza corta y larga.' },
             { grupo: 'BRAZOS', nombre: 'Curl Martillo', desc: 'Activación del braquial anterior y braquiorradial.' },
             { grupo: 'BRAZOS', nombre: 'Press Francés en Banco Plano', desc: 'Extensión de codo pesada para las cabezas del tríceps.' },
@@ -737,6 +814,60 @@
             if (tabName === 'ejercicios') {
                 renderizarEjercicios('TODOS');
             }
+            if (tabName === 'coaches') {
+                renderizarCoaches('TODOS');
+            }
+        }
+
+        function guardarSerieGym() {
+            const ej = document.getElementById('gymEjercicio').value.trim();
+            const peso = document.getElementById('gymPeso').value;
+            const reps = document.getElementById('gymReps').value;
+
+            if(!ej || !peso || !reps) {
+                alert('Completa el ejercicio, peso y repeticiones.');
+                return;
+            }
+
+            seriesGymRegistradas.push({ ej, peso, reps, hora: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
+            
+            const cont = document.getElementById('historialGymMode');
+            const item = document.createElement('div');
+            item.className = 'ex-item';
+            item.innerHTML = `<strong>${ej} - ${peso}kg x ${reps} reps</strong><p>Anotado a las ${seriesGymRegistradas[seriesGymRegistradas.length-1].hora}</p>`;
+            cont.prepend(item);
+
+            iniciarTemporizador(90);
+        }
+
+        function renderizarCoaches(filtro) {
+            const container = document.getElementById('directorioCoachesContainer');
+            container.innerHTML = '';
+
+            const filtrados = filtro === 'TODOS' ? directorioCoaches : directorioCoaches.filter(c => c.especialidadTag === filtro);
+
+            filtrados.forEach(c => {
+                const el = document.createElement('div');
+                el.className = 'coach-card';
+                el.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 35px; height: 35px; border-radius: 50%; background: #1a1a1a; border: 2px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); font-size: 12px;">${c.iniciales}</div>
+                        <div>
+                            <div style="font-size: 13px; font-weight: bold; color: #fff;">${c.nombre} <span style="color: var(--accent-green); font-size: 10px;">✔ COACH</span></div>
+                            <div style="font-size: 10px; color: var(--text-muted);">${c.titulo}</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 11px; color: #dfdfdf; margin: 0;">${c.desc}</p>
+                    <a href="https://wa.me/${c.telefono}?text=Hola%20Coach%20${encodeURIComponent(c.nombre)},%20quiero%20información%20sobre%20tus%20asesorías%20en%20Sigma%20Fitness" target="_blank" class="btn-secondary">💬 Contactar por WhatsApp</a>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        function filtrarCoaches(cat, element) {
+            document.querySelectorAll('#sec-coaches .filter-chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            renderizarCoaches(cat);
         }
 
         function renderizarEjercicios(grupoFiltro) {
@@ -870,6 +1001,7 @@
             document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
             cargarPosts();
             renderizarEjercicios('TODOS');
+            renderizarCoaches('TODOS');
         }
 
         async function cerrarSesion() {
