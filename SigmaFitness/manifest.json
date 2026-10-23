@@ -1,0 +1,16 @@
+{
+  "short_name": "Sigma",
+  "name": "Sigma Fitness",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/pwabuilder/resources/main/icons/pwa-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#050505",
+  "theme_color": "#ff5500",
+  "display": "standalone",
+  "orientation": "any"
+}
