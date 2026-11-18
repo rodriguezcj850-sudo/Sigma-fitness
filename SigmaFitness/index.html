@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Acceso y Registro</title>
+  <title>Sigma Fitness | Red Social</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -155,7 +155,6 @@
       border-color: var(--crimson);
     }
 
-    /* Botón para ver contraseña */
     .toggle-password {
       position: absolute;
       right: 12px;
@@ -387,24 +386,108 @@
       margin-bottom: 1rem;
     }
 
+    /* BARRA DE INTERACCIÓN COMPLETA */
     .post-footer {
       display: flex;
-      gap: 1.25rem;
+      justify-content: space-between;
+      align-items: center;
       border-top: 1px solid var(--border-color);
       padding-top: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .reactions-group {
+      display: flex;
+      gap: 0.65rem;
     }
 
     .action-btn {
-      background: none;
-      border: none;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
     }
 
-    .action-btn:hover, .action-btn.liked {
+    .action-btn:hover {
+      border-color: var(--crimson);
+      color: var(--text-main);
+    }
+
+    .action-btn.liked {
+      background-color: var(--crimson-glow);
+      border-color: var(--crimson);
       color: var(--crimson);
+    }
+
+    /* SECCIÓN DE COMENTARIOS DESPLEGABLE */
+    .comments-section {
+      display: none;
+      margin-top: 0.85rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .comments-section.open {
+      display: block;
+    }
+
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .comment-item {
+      background-color: var(--bg-input);
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .comment-item strong {
+      color: var(--crimson);
+      margin-right: 0.4rem;
+    }
+
+    .comment-input-box {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .comment-input {
+      flex: 1;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0.45rem 0.75rem;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .comment-input:focus {
+      border-color: var(--crimson);
+    }
+
+    .btn-send-comment {
+      background-color: var(--crimson);
+      color: white;
+      border: none;
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
     }
 
     nav {
@@ -442,7 +525,6 @@
       <div class="auth-subtitle">Disciplina Innegociable</div>
     </div>
 
-    <!-- Pestañas de cambio -->
     <div class="auth-tabs">
       <button class="auth-tab active" onclick="cambiarAuthTab('login', this)">Iniciar Sesión</button>
       <button class="auth-tab" onclick="cambiarAuthTab('register', this)">Registrarse</button>
@@ -530,7 +612,7 @@
         <div class="brand-icon-sm">SF</div>
         <div class="brand-title-sm">SIGMA <span>FITNESS</span></div>
       </div>
-      <button class="action-btn" onclick="cerrarSesion()" style="color: var(--crimson); font-weight: 700;">Salir</button>
+      <button class="action-btn" onclick="cerrarSesion()" style="color: var(--crimson); border-color: var(--crimson);">Salir</button>
     </header>
 
     <div class="container">
@@ -567,9 +649,28 @@
             <div class="post-body">
               Bienvenidos a la red social oficial de Sigma Fitness. Arrancamos con todo este proyecto hecho a pulso. ¡La disciplina es innegociable!
             </div>
+            
+            <!-- BARRA DE INTERACCIÓN -->
             <div class="post-footer">
-              <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>1</span>)</button>
-              <button class="action-btn">Comentar</button>
+              <div class="reactions-group">
+                <button class="action-btn" onclick="toggleReaccion(this)">🔥 Fuerza (<span>3</span>)</button>
+                <button class="action-btn" onclick="toggleReaccion(this)">💪 Respect (<span>1</span>)</button>
+              </div>
+              <div class="reactions-group">
+                <button class="action-btn" onclick="toggleComentarios(this)">💬 Comentar (<span class="comment-count">1</span>)</button>
+                <button class="action-btn" onclick="compartirPost(this)">↗ Compartir</button>
+              </div>
+            </div>
+
+            <!-- CAJA DE COMENTARIOS -->
+            <div class="comments-section">
+              <div class="comment-list">
+                <div class="comment-item"><strong>Atleta Sigma:</strong> ¡Excelente plataforma, a darle con todo!</div>
+              </div>
+              <div class="comment-input-box">
+                <input type="text" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') agregarComentario(this.nextElementSibling)">
+                <button class="btn-send-comment" onclick="agregarComentario(this)">Enviar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -622,7 +723,6 @@
   <script>
     let usuarioActual = "Juan Luis";
 
-    // Cambiar entre pestaña Iniciar Sesión y Registrarse
     function cambiarAuthTab(tab, boton) {
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -630,7 +730,6 @@
       document.getElementById('form-' + tab).classList.add('active');
     }
 
-    // Mostrar u Ocultar Contraseña
     function togglePassword(inputId, btnToggle) {
       const inputPass = document.getElementById(inputId);
       if (inputPass.type === 'password') {
@@ -642,7 +741,6 @@
       }
     }
 
-    // Registrar Nuevo Usuario
     function registrarUsuario() {
       const nombre = document.getElementById('regName').value.trim();
       const correo = document.getElementById('regEmail').value.trim();
@@ -664,7 +762,6 @@
       iniciarSesion();
     }
 
-    // Recuperar Contraseña
     function recuperarPassword() {
       const correo = prompt('Ingresa tu correo registrado para enviar instrucciones de recuperación:');
       if (correo) {
@@ -672,7 +769,6 @@
       }
     }
 
-    // Iniciar Sesión
     function iniciarSesion() {
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('app-screen').classList.add('active');
@@ -688,7 +784,6 @@
       document.getElementById('auth-screen').style.display = 'block';
     }
 
-    // Navegación de la App
     function cambiarVista(nombreVista, boton) {
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
@@ -696,6 +791,7 @@
       boton.classList.add('active');
     }
 
+    // Crear nueva publicación con barra de interacción completa
     function crearPublicacion() {
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
@@ -717,15 +813,29 @@
         </div>
         <div class="post-body">${texto}</div>
         <div class="post-footer">
-          <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>0</span>)</button>
-          <button class="action-btn">Comentar</button>
+          <div class="reactions-group">
+            <button class="action-btn" onclick="toggleReaccion(this)">🔥 Fuerza (<span>0</span>)</button>
+            <button class="action-btn" onclick="toggleReaccion(this)">💪 Respect (<span>0</span>)</button>
+          </div>
+          <div class="reactions-group">
+            <button class="action-btn" onclick="toggleComentarios(this)">💬 Comentar (<span class="comment-count">0</span>)</button>
+            <button class="action-btn" onclick="compartirPost(this)">↗ Compartir</button>
+          </div>
+        </div>
+        <div class="comments-section">
+          <div class="comment-list"></div>
+          <div class="comment-input-box">
+            <input type="text" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') agregarComentario(this.nextElementSibling)">
+            <button class="btn-send-comment" onclick="agregarComentario(this)">Enviar</button>
+          </div>
         </div>
       `;
       feed.prepend(tarjeta);
       input.value = '';
     }
 
-    function darFuerza(boton) {
+    // Reacciones interactivas (Fuerza / Respect)
+    function toggleReaccion(boton) {
       const span = boton.querySelector('span');
       let conteo = parseInt(span.innerText);
       if (boton.classList.contains('liked')) {
@@ -734,6 +844,53 @@
       } else {
         boton.classList.add('liked');
         span.innerText = conteo + 1;
+      }
+    }
+
+    // Desplegar/Ocultar caja de comentarios
+    function toggleComentarios(boton) {
+      const card = boton.closest('.card');
+      const section = card.querySelector('.comments-section');
+      section.classList.toggle('open');
+    }
+
+    // Publicar comentario en tiempo real
+    function agregarComentario(boton) {
+      const card = boton.closest('.card');
+      const input = card.querySelector('.comment-input');
+      const texto = input.value.trim();
+      if (!texto) return;
+
+      const list = card.querySelector('.comment-list');
+      const nuevoComentario = document.createElement('div');
+      nuevoComentario.className = 'comment-item';
+      nuevoComentario.innerHTML = `<strong>${usuarioActual}:</strong> ${texto}`;
+      list.appendChild(nuevoComentario);
+
+      // Actualizar contador de comentarios
+      const countSpan = card.querySelector('.comment-count');
+      countSpan.innerText = parseInt(countSpan.innerText) + 1;
+
+      input.value = '';
+    }
+
+    // Compartir publicación
+    function compartirPost(boton) {
+      const card = boton.closest('.card');
+      const textoPost = card.querySelector('.post-body').innerText;
+      const textoCompartir = `Sigma Fitness: "${textoPost}" - Únete a la disciplina innegociable.`;
+      
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textoCompartir);
+        const textoOriginal = boton.innerText;
+        boton.innerText = "✔ Copiado";
+        boton.style.color = "var(--crimson)";
+        setTimeout(() => {
+          boton.innerText = textoOriginal;
+          boton.style.color = "";
+        }, 2000);
+      } else {
+        alert("Listo para compartir:\n\n" + textoCompartir);
       }
     }
 
