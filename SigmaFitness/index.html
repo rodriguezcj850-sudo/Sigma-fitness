@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Acceso Biométrico Real</title>
+  <title>Sigma Fitness | Red Social</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -15,6 +15,7 @@
       --border-color: #27272A;
       --text-main: #F4F4F5;
       --text-muted: #A1A1AA;
+      --whatsapp-green: #25D366;
     }
 
     * {
@@ -189,7 +190,6 @@
       background-color: var(--crimson-dark);
     }
 
-    /* BOTÓN BIOMÉTRICO ESTILO BANCO */
     .btn-biometric-bank {
       background: linear-gradient(135deg, var(--bg-input), #1E1E24);
       border: 1px solid var(--crimson);
@@ -212,6 +212,33 @@
     .btn-biometric-bank:hover {
       background-color: var(--crimson-glow);
       box-shadow: 0 0 12px var(--crimson-glow);
+    }
+
+    /* BOTÓN WHATSAPP */
+    .btn-whatsapp {
+      background-color: rgba(37, 211, 102, 0.15);
+      border: 1px solid var(--whatsapp-green);
+      color: var(--whatsapp-green);
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      margin-top: 1rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: var(--whatsapp-green);
+      color: #000;
+      box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
     }
 
     .auth-footer {
@@ -565,8 +592,6 @@
       </div>
 
       <button class="btn-primary" onclick="iniciarSesion()">Ingresar</button>
-
-      <!-- BOTÓN DE HUELLA DIGITAL / BIOMETRÍA REAL (ESTILO BANCO) -->
       <button type="button" class="btn-biometric-bank" onclick="autenticarBiometriaReal()">
         <span style="font-size: 1.2rem;">🔒</span> Usar Huella / Biometría
       </button>
@@ -729,6 +754,11 @@
               <div id="profileFocus" style="font-size: 0.8rem; color: var(--text-muted);">Fundador & Desarrollador • Venezuela</div>
             </div>
           </div>
+
+          <!-- BOTÓN DE CONTACTO WHATSAPP CON TU NÚMERO REAL -->
+          <a href="https://wa.me/584145574866?text=Hola%20Juan,%20vi%20tu%20perfil%20en%20Sigma%20Fitness%20y%20quiero%20contactarte%20como%20entrenador." target="_blank" class="btn-whatsapp">
+            💬 Contactar por WhatsApp
+          </a>
         </div>
       </section>
     </div>
@@ -790,12 +820,9 @@
       }
     }
 
-    /* AUTENTICACIÓN BIOMÉTRICA REAL (WEBAUTHN / NATIVA) */
     async function autenticarBiometriaReal() {
-      // Verifica si el navegador soporta autenticación biométrica (huella/FaceID)
       if (window.PublicKeyCredential) {
         try {
-          // Solicitud de credencial biométrica al sistema operativo (huella del teléfono o PC)
           const publicKey = {
             challenge: new Uint8Array([21, 31, 105, 18, 45, 77]),
             rp: { name: "Sigma Fitness" },
@@ -809,13 +836,10 @@
             authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" }
           };
 
-          // Intenta abrir el lector biométrico real del dispositivo
           await navigator.credentials.create({ publicKey });
           alert("¡Huella verificada correctamente por el sistema!");
           iniciarSesion();
         } catch (error) {
-          // Si el usuario cancela o el dispositivo no tiene huella configurada, usamos respaldo seguro tipo banco
-          console.log("Biometría nativa no completada, usando validación de respaldo.");
           verificarBiometriaRespaldoBanco();
         }
       } else {
@@ -823,7 +847,6 @@
       }
     }
 
-    // Método de respaldo estilo banco (exige verificación de dispositivo/PIN si no hay huella física)
     function verificarBiometriaRespaldoBanco() {
       const pinConfirmado = confirm("Sigma Fitness - Seguridad Biométrica:\n\n¿Autorizar acceso mediante el sistema seguro del dispositivo (PIN / Patrón / Huella)?");
       if (pinConfirmado) {
