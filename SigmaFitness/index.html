@@ -1,1087 +1,417 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sigma Fitness</title>
-    <!-- Configuración PWA e Icono de App -->
-    <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#ff5500">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/icon.png">
-    
-    <!-- Librería oficial de Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script>
-      const SUPABASE_URL = 'https://dvdwyblykbczjwzhdzta.supabase.co';
-      const SUPABASE_ANON_KEY = 'sb_publishable_WxjRNFMi2dRnAGQp1EtknQ_gKDEe_1I';
-      
-      const { createClient } = window.supabase;
-      const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    </script>
-    <style>
-        :root {
-            --bg-color: #050505;
-            --card-bg: #101010;
-            --card-border: #1f1f1f;
-            --text-main: #ffffff;
-            --text-muted: #777777;
-            --accent-orange: #ff5500;
-            --orange-glow: rgba(255, 85, 0, 0.4);
-            --accent-green: #17c964;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sigma Fitness | Red Social</title>
+  <style>
+    :root {
+      --crimson: #DC143C;
+      --crimson-dark: #9B0D29;
+      --crimson-glow: rgba(220, 20, 60, 0.25);
+      --bg-main: #09090B;
+      --bg-card: #121215;
+      --bg-input: #1A1A1E;
+      --border-color: #27272A;
+      --text-main: #F4F4F5;
+      --text-muted: #A1A1AA;
+    }
 
-        body {
-            background: var(--bg-color);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 85, 0, 0.12), transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(15, 15, 15, 0.9), transparent 50%);
-            background-attachment: fixed;
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 15px;
-            width: 100%;
-            max-width: 500px;
-            background: rgba(14, 14, 14, 0.9);
-            border: 1px solid var(--card-border);
-            padding: 14px;
-            border-radius: 12px;
-        }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
 
-        .header-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+    /* Barra Superior */
+    header {
+      background-color: var(--bg-card);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-        .sigma-symbol {
-            font-size: 28px;
-            color: var(--accent-orange);
-            text-shadow: 0 0 12px var(--accent-orange);
-            line-height: 1;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-        .header h1 {
-            color: #ffffff;
-            font-size: 24px;
-            margin: 0;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 900;
-        }
+    .brand-icon {
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: white;
+      font-weight: 900;
+      font-size: 1.2rem;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      letter-spacing: -1px;
+      box-shadow: 0 0 12px var(--crimson-glow);
+    }
 
-        .header h1 span {
-            color: var(--accent-orange);
-            text-shadow: 0 0 10px var(--orange-glow);
-        }
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
 
-        .header p {
-            color: var(--text-muted);
-            font-size: 10px;
-            margin-top: 5px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
+    .brand-title span {
+      color: var(--crimson);
+    }
 
-        #auth-gate-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-        }
+    .btn-biometric {
+      background-color: transparent;
+      border: 1px solid var(--crimson);
+      color: var(--text-main);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
 
-        .auth-gate-card {
-            background: #0d0d0d;
-            border: 1px solid var(--accent-orange);
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            box-sizing: border-box;
-            box-shadow: 0 10px 30px rgba(255, 85, 0, 0.2);
-            text-align: center;
-        }
+    .btn-biometric:hover {
+      background-color: var(--crimson);
+      box-shadow: 0 0 12px var(--crimson-glow);
+    }
 
-        .auth-gate-card h2 {
-            color: #fff;
-            font-size: 18px;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    /* Contenedor Principal */
+    .container {
+      max-width: 650px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      flex: 1;
+    }
 
-        .auth-gate-card p {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
+    /* Banner Eslogan */
+    .slogan-banner {
+      background: linear-gradient(90deg, rgba(220,20,60,0.15) 0%, rgba(18,18,21,1) 100%);
+      border-left: 4px solid var(--crimson);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: var(--text-main);
+    }
 
-        #app-main-core {
-            display: none;
-            width: 100%;
-            max-width: 500px;
-            flex-direction: column;
-            gap: 12px;
-        }
+    /* Caja para publicar en la red social */
+    .post-creator {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
 
-        .timer-bar {
-            position: sticky;
-            top: 10px;
-            z-index: 90;
-            width: 100%;
-            max-width: 500px;
-            background: rgba(12, 12, 12, 0.95);
-            border: 1px solid var(--accent-orange);
-            border-radius: 10px;
-            padding: 8px 12px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 20px var(--orange-glow);
-            backdrop-filter: blur(8px);
-        }
+    .post-creator textarea {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.85rem;
+      resize: none;
+      height: 85px;
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      outline: none;
+    }
 
-        .timer-display {
-            font-size: 22px;
-            font-weight: bold;
-            color: var(--accent-orange);
-            font-family: 'Courier New', Courier, monospace;
-            text-shadow: 0 0 8px var(--accent-orange);
-        }
+    .post-creator textarea:focus {
+      border-color: var(--crimson);
+    }
 
-        .timer-controls {
-            display: flex;
-            gap: 5px;
-        }
+    .creator-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .btn-timer-action {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 5px 8px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+    .tag-select {
+      background-color: var(--bg-input);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      outline: none;
+    }
 
-        .btn-timer-action:hover {
-            border-color: var(--accent-orange);
-            color: var(--accent-orange);
-        }
+    .btn-primary {
+      background-color: var(--crimson);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.1s;
+    }
 
-        .filter-container {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-            scrollbar-width: none;
-        }
+    .btn-primary:hover {
+      background-color: var(--crimson-dark);
+    }
 
-        .filter-container::-webkit-scrollbar {
-            display: none;
-        }
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
 
-        .filter-chip {
-            background: #141414;
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: bold;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+    /* Feed de Publicaciones */
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        .filter-chip.active {
-            background: var(--accent-orange);
-            color: #000;
-            border-color: var(--accent-orange);
-            box-shadow: 0 0 8px var(--orange-glow);
-        }
-        .nav-tabs {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 500px;
-            background: rgba(8, 8, 8, 0.98);
-            border-top: 1px solid #1c1c1c;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0 12px 0;
-            z-index: 1000;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.8);
-        }
+    .post-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.2rem;
+    }
 
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-weight: 700;
-            font-size: 9px;
-            letter-spacing: 1px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s ease;
-            position: relative;
-        }
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
 
-        .tab-btn span.icon {
-            font-size: 16px;
-        }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
 
-        .tab-btn.active {
-            color: var(--accent-orange);
-        }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--bg-input);
+      border: 2px solid var(--crimson);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+      color: var(--crimson);
+    }
 
-        .tab-btn.active::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            width: 20px;
-            height: 2px;
-            background: var(--accent-orange);
-            box-shadow: 0 0 8px var(--accent-orange);
-        }
+    .username {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-bottom: 75px;
-        }
+    .badge-pro {
+      background-color: var(--crimson);
+      color: white;
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
 
-        .section {
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-        }
+    .post-tag {
+      font-size: 0.75rem;
+      color: var(--crimson);
+      background-color: var(--crimson-glow);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
 
-        .section.active {
-            display: flex;
-        }
+    .post-body {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #E4E4E7;
+      margin-bottom: 1rem;
+    }
 
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        }
+    .post-footer {
+      display: flex;
+      gap: 1.25rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+    }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: color 0.2s;
+    }
 
-        .card-title {
-            font-size: 15px;
-            font-weight: bold;
-            margin: 0;
-            color: #ffffff;
-        }
+    .action-btn:hover, .action-btn.liked {
+      color: var(--crimson);
+    }
 
-        .badge {
-            background: var(--accent-orange);
-            color: #000;
-            font-size: 9px;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+    /* Barra de Navegación Inferior */
+    nav {
+      background-color: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      padding: 0.75rem 0;
+      position: sticky;
+      bottom: 0;
+    }
 
-        .post-tag {
-            display: inline-block;
-            background: #1f1f1f;
-            color: var(--accent-orange);
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-top: 4px;
-        }
+    .nav-item {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
 
-        .promo-banner {
-            background: rgba(255, 85, 0, 0.08);
-            border: 1px dashed var(--accent-orange);
-            border-radius: 10px;
-            padding: 10px;
-            font-size: 10px;
-            color: #dfdfdf;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-
-        .promo-banner strong {
-            color: var(--accent-orange);
-        }
-
-        .btn-action {
-            background: linear-gradient(135deg, #ff5500, #c43b00);
-            color: #fff;
-            border: none;
-            padding: 11px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 11px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
-        }
-
-        .btn-secondary {
-            background: #181818;
-            color: #fff;
-            border: 1px solid var(--card-border);
-            padding: 9px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 10px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 6px;
-            text-transform: uppercase;
-            text-align: center;
-            display: block;
-            text-decoration: none;
-            box-sizing: border-box;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .form-group label {
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .form-control {
-            background: #080808;
-            border: 1px solid #222;
-            color: #fff;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .post-card {
-            background: rgba(14, 14, 14, 0.95);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 12px;
-            margin-bottom: 10px;
-        }
-
-        .post-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .post-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #161616;
-            border: 2px solid var(--accent-orange);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--accent-orange);
-            font-size: 13px;
-        }
-
-        .post-author {
-            font-size: 13px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .status-cloud {
-            font-size: 9px;
-            color: var(--accent-green);
-            text-align: center;
-            margin-top: 5px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .ex-item {
-            background: #090909;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-orange);
-            margin-bottom: 8px;
-        }
-
-        .ex-item strong {
-            font-size: 12px;
-            color: #fff;
-            display: block;
-        }
-
-        .ex-item p {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin: 3px 0 0 0;
-        }
-
-        .coach-card {
-            background: #0d0d0d;
-            border: 1px solid var(--card-border);
-            padding: 12px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-    </style>
+    .nav-item.active {
+      color: var(--crimson);
+    }
+  </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="header-logo">
-            <span class="sigma-symbol">Σ</span>
-            <h1>SIGMA <span>FITNESS</span></h1>
-        </div>
-        <p>Fitness para todxs en cualquier lugar</p>
-        <div id="cloudStatus" class="status-cloud">⚡ Conectado a Supabase Cloud</div>
+  <header>
+    <div class="brand">
+      <div class="brand-icon">SF</div>
+      <div class="brand-title">SIGMA <span>FITNESS</span></div>
+    </div>
+    <button class="btn-biometric" onclick="simularBiometria()">Acceso Biométrico</button>
+  </header>
+
+  <div class="container">
+    <div class="slogan-banner">
+      "Donde la voluntad se convierte en fuerza y la disciplina es innegociable"
     </div>
 
-    <!-- PANTALLA DE ACCESO INICIAL -->
-    <div id="auth-gate-screen">
-        <div class="auth-gate-card">
-            <h2>Acceso de Atleta</h2>
-            <p>Conéctate a la Red Sigma en tiempo real.</p>
-            
-            <div class="form-group">
-                <label>Correo Electrónico:</label>
-                <input type="email" id="auth-email" class="form-control" placeholder="tu@email.com">
-            </div>
-            <div class="form-group">
-                <label>Contraseña:</label>
-                <input type="password" id="auth-password" class="form-control" placeholder="••••••••">
-            </div>
-            
-            <button class="btn-action" type="button" onclick="ejecutarLogin()">Iniciar Sesión</button>
-            <button class="btn-secondary" type="button" onclick="ejecutarRegistro()">Crear Cuenta</button>
-        </div>
+    <!-- Creador de publicaciones -->
+    <div class="post-creator">
+      <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
+      <div class="creator-actions">
+        <select id="postCategory" class="tag-select">
+          <option value="Entrenamiento">Entrenamiento</option>
+          <option value="Récord Personal">Récord Personal</option>
+          <option value="Nutrición">Nutrición</option>
+          <option value="Mentalidad">Mentalidad Sigma</option>
+        </select>
+        <button class="btn-primary" onclick="crearPublicacion()">Publicar</button>
+      </div>
     </div>
 
-    <!-- NÚCLEO DE LA APLICACIÓN -->
-    <div id="app-main-core">
-
-        <!-- RELOJ DE DESCANSO FLOTANTE -->
-        <div class="timer-bar">
+    <!-- Feed de la comunidad -->
+    <div class="feed" id="feedContainer">
+      <div class="post-card">
+        <div class="post-header">
+          <div class="user-info">
+            <div class="avatar">JL</div>
             <div>
-                <span style="font-size: 8px; color: var(--text-muted); display: block; letter-spacing: 1px;">DESCANSO ENTRE SERIES</span>
-                <span id="timerDisplay" class="timer-display">00:00</span>
+              <span class="username">Fundador Sigma <span class="badge-pro">SIGMA PRO</span></span>
             </div>
-            <div class="timer-controls">
-                <button class="btn-timer-action" onclick="iniciarTemporizador(30)">30s</button>
-                <button class="btn-timer-action" onclick="iniciarTemporizador(60)">60s</button>
-                <button class="btn-timer-action" onclick="iniciarTemporizador(90)">90s</button>
-                <button class="btn-timer-action" onclick="iniciarTemporizador(180)">3m</button>
-                <button class="btn-timer-action" style="background: #2a0000; border-color: #ff0000;" onclick="detenerTemporizador()">X</button>
-            </div>
+          </div>
+          <span class="post-tag">Mentalidad Sigma</span>
         </div>
-
-        <div class="container">
-            <!-- SECCIÓN COMUNIDAD -->
-            <div id="sec-comunidad" class="section active">
-                
-                <div class="filter-container">
-                    <button class="filter-chip active" onclick="filtrarFeed('TODOS', this)">🌐 Todos</button>
-                    <button class="filter-chip" onclick="filtrarFeed('FUERZA', this)">💪 Fuerza / PRs</button>
-                    <button class="filter-chip" onclick="filtrarFeed('HIPERTROFIA', this)">🏋️‍♂️ Hipertrofia</button>
-                    <button class="filter-chip" onclick="filtrarFeed('COMEDIA', this)">🎭 Humor / Memes</button>
-                    <button class="filter-chip" onclick="filtrarFeed('SALUD', this)">🥗 Salud / Fit</button>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Muro de la Red Sigma</span>
-                        <span class="badge">En Vivo</span>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="postInput" class="form-control" rows="3" placeholder="Comparte tu marca o una broma del gym..."></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Categoría de la publicación:</label>
-                        <select id="postCategory" class="form-control">
-                            <option value="FUERZA">💪 Fuerza / Powerlifting</option>
-                            <option value="HIPERTROFIA">🏋️‍♂️ Hipertrofia / Culturismo</option>
-                            <option value="COMEDIA" selected>🎭 Comedia / Humor Gym</option>
-                            <option value="SALUD">🥗 Salud / Pérdida de Peso</option>
-                        </select>
-                    </div>
-                    <button class="btn-action" onclick="publicarPost()">Publicar</button>
-                </div>
-                <div id="feedPosts">
-                    <!-- Posts cargados desde Supabase -->
-                </div>
-            </div>
-            <!-- SECCIÓN EJERCICIOS Y GYM MODE -->
-            <div id="sec-ejercicios" class="section">
-                
-                <!-- BANNER PROMOCIONAL ESTRATÉGICO -->
-                <div class="promo-banner">
-                    💡 <strong>Tip Sigma:</strong> Puedes registrar tu entrenamiento en tiempo real activando el <strong>Gym Mode</strong>, o contactar a nuestros coaches para una experiencia, rutina y corrección técnica personalizada más completa.
-                </div>
-
-                <!-- CARDA GYM MODE -->
-                <div class="card" style="border-color: var(--accent-orange);">
-                    <div class="card-header">
-                        <span class="card-title">🏋️‍♂️ Gym Mode (Registro Activo)</span>
-                        <span class="badge">En Vivo</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Ejercicio Activo:</label>
-                        <input type="text" id="gymEjercicio" class="form-control" placeholder="Ej: Press Plano con Barra">
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <div class="form-group" style="flex:1;">
-                            <label>Peso (kg):</label>
-                            <input type="number" id="gymPeso" class="form-control" placeholder="80">
-                        </div>
-                        <div class="form-group" style="flex:1;">
-                            <label>Reps:</label>
-                            <input type="number" id="gymReps" class="form-control" placeholder="10">
-                        </div>
-                    </div>
-                    <button class="btn-action" onclick="guardarSerieGym()">Anotar Serie & Iniciar Descanso</button>
-                    <div id="historialGymMode" style="margin-top: 10px;"></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Calculadora de 1RM</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Peso Levantado (kg):</label>
-                        <input type="number" id="rmPeso" class="form-control" placeholder="100">
-                    </div>
-                    <div class="form-group">
-                        <label>Repeticiones:</label>
-                        <input type="number" id="rmReps" class="form-control" placeholder="5">
-                    </div>
-                    <button class="btn-action" onclick="calcularRM()">Calcular Estima</button>
-                    <div id="resultadoRM" style="margin-top:10px; font-weight:bold; color:var(--accent-orange);"></div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">⚙️ Sistema Seleccionado</span>
-                    </div>
-                    <p id="sistemaActivoInfo" style="font-size: 11px; color: var(--accent-orange); font-weight: bold; margin-bottom: 8px;">Sistema Predeterminado: Weider</p>
-                    <div class="ex-item">
-                        <strong id="sysEx1">Parámetros de Carga:</strong>
-                        <p id="sysDesc1">3-4 series por ejercicio con descanso de 90 segundos.</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">📚 Enciclopedia de Ejercicios</span>
-                    </div>
-                    <div class="filter-container">
-                        <button class="filter-chip active" onclick="filtrarEjercicios('TODOS', this)">Todos</button>
-                        <button class="filter-chip" onclick="filtrarEjercicios('PECTORAL', this)">Pectoral</button>
-                        <button class="filter-chip" onclick="filtrarEjercicios('ESPALDA', this)">Espalda</button>
-                        <button class="filter-chip" onclick="filtrarEjercicios('PIERNAS', this)">Piernas</button>
-                        <button class="filter-chip" onclick="filtrarEjercicios('HOMBROS', this)">Hombros</button>
-                        <button class="filter-chip" onclick="filtrarEjercicios('BRAZOS', this)">Brazos</button>
-                    </div>
-
-                    <div id="listaEjerciciosMasiva">
-                        <!-- Ejercicios cargados dinámicamente -->
-  </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN SISTEMAS -->
-            <div id="sec-sistemas" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Sistemas de Entrenamiento</span>
-                        <span class="badge">Metodologías</span>
-                    </div>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Selecciona un sistema para cargar sus pautas biomecánicas en la sección de Ejercicios.</p>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <div onclick="seleccionarSistema('Heavy Duty (Mentzer)', '1-2 series efectivas al fallo muscular absoluto + repeticiones forzadas.', '3 a 5 minutos de descanso completo entre series.')" style="background: #0d0d0d; border: 1px solid var(--accent-orange); padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Heavy Duty</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Alta intensidad neuromuscular, volumen ultra bajo, recuperación profunda.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
-                        </div>
-
-                        <div onclick="seleccionarSistema('FST-7 (Hany Rambod)', '7 series de bombeo al final del músculo objetivo con 30-45s de descanso.', '30 a 45 segundos estrictos entre series de bombeo.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">FST-7</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Estiramiento de la fascia muscular mediante máxima congestión sanguínea.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
-                        </div>
-
-                        <div onclick="seleccionarSistema('Weider Clásico', '3-4 series por ejercicio, rango de 8-12 repeticiones (RPE 8-9).', '90 segundos de descanso estándar.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">Weider Clásico</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">División por grupos musculares y volumen moderado para hipertrofia.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
-                        </div>
-
-                        <div onclick="seleccionarSistema('Rest-Pause / Doggcrapp', '1 serie principal dividida en 3 mini-sets con 15 segundos de pausa activa.', '15 a 20 segundos de micropausa respiratoria.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size
- : 12px; font-weight: bold; color: var(--accent-orange);">Rest-Pause System</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Reclutamiento de fibras de alto umbral mediante pausas cortas al fallo.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
-                        </div>
-
-                        <div onclick="seleccionarSistema('5x5 Powerlifting', '5 series de 5 repeticiones con cargas pesadas al 80-85% 1RM.', '3 minutos entre series de alta carga.')" style="background: #0d0d0d; border: 1px solid #222; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            <span style="font-size: 12px; font-weight: bold; color: var(--accent-orange);">5x5 Fuerza Pura</span>
-                            <p style="font-size: 10px; color: var(--text-muted); margin: 4px 0 6px 0;">Sobrecarga progresiva pesada en movimientos multiarticulares.</p>
-                            <span style="font-size: 9px; background: #1a1a1a; padding: 3px 6px; border-radius: 4px; color: #fff;">Activar Sistema</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN COACHES MULTI-DIRECTORIO -->
-            <div id="sec-coaches" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Directorio de Coaches</span>
-                        <span class="badge">Red Sigma</span>
-                    </div>
-                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Selecciona al especialista certificado adecuado para tus objetivos.</p>
-
-                    <div class="filter-container">
-                        <button class="filter-chip active" onclick="filtrarCoaches('TODOS', this)">Todos</button>
-                        <button class="filter-chip" onclick="filtrarCoaches('HIPERTROFIA', this)">Hipertrofia</button>
-                        <button class="filter-chip" onclick="filtrarCoaches('FUERZA', this)">Powerlifting</button>
-                        <button class="filter-chip" onclick="filtrarCoaches('SALUD', this)">Recomposición</button>
-                    </div>
-
-                    <div id="directorioCoachesContainer">
-                        <!-- Carga dinámica de coaches -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECCIÓN PERFIL -->
-            <div id="sec-perfil" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Perfil de Atleta</span>
-                    </div>
-                    <p id="userEmailDisplay" class="card-desc" style="font-size: 12px; color: #fff; margin-bottom: 10px;">Cargando datos del usuario...</p>
-                    <button class="btn-secondary" onclick="cerrarSesion()">Cerrar Sesión</button>
-                </div>
-            </div>
+        <div class="post-body">
+          Bienvenidos a la comunidad oficial de Sigma Fitness. Aquí no venimos a buscar excusas, venimos a construir disciplina real día tras día.
         </div>
-
-        <!-- BARRA INFERIOR ESTILO SIGMA -->
-        <div id="bottomNav" class="nav-tabs">
-            <button id="btn-comunidad" class="tab-btn active" onclick="switchTab('comunidad', this)">
-                <span class="icon">💀</span>
-                <span>Comunidad</span>
-            </button>
-            <button id="btn-ejercicios" class="tab-btn" onclick="switchTab('ejercicios', this)">
-                <span class="icon">⚡</span>
-                <span>Ejercicios</span>
-            </button>
-            <button id="btn-sistemas" class="tab-btn" onclick="switchTab('sistemas', this)">
-                <span class="icon">🛡️</span>
-                <span>Sistemas</span>
-            </button>
-            <button id="btn-coaches" class="tab-btn" onclick="switchTab('coaches', this)">
-                <span class="icon">🦾</span>
-                <span>Coaches</span>
-            </button>
-            <button id="btn-perfil" class="tab-btn" onclick="switchTab('perfil', this)">
-                <span class="icon">👤</span>
-                <span>Perfil</span>
-            </button>
+        <div class="post-footer">
+          <button class="action-btn" onclick="darFuerza(this)">🔥 Fuerza (<span>1</span>)</button>
+          <button class="action-btn">💬 Comentar</button>
         </div>
+      </div>
     </div>
-         <!-- LÓGICA DE LA APLICACIÓN Y SUPABASE -->
-    <script>
-        const ADMIN_EMAIL = 'Rodriguezcj850@gmail.com';
-        let temporizadorInterval = null;
-        let filtroActual = 'TODOS';
-        let seriesGymRegistradas = [];
+  </div>
 
-        const directorioCoaches = [
-            {
-                nombre: 'Juan Rodríguez',
-                iniciales: 'JR',
-                especialidadTag: 'HIPERTROFIA',
-                titulo: 'Biomecánica & Culturismo Natural',
-                desc: 'Ajuste biomecánico de ejercicios, periodización de carga y planes de hipertrofia avanzada.',
-                telefono: '584145574866'
-            }
-        ];
+  <nav>
+    <button class="nav-item active">Comunidad</button>
+    <button class="nav-item">Retos</button>
+    <button class="nav-item">Sigma Pro</button>
+    <button class="nav-item">Perfil</button>
+  </nav>
 
-        const baseEjercicios = [
-            { grupo: 'PECTORAL', nombre: 'Press Plano con Barra', desc: 'Empuje horizontal multiarticular clave para volumen global.' },
-            { grupo: 'PECTORAL', nombre: 'Press Inclinado con Mancuernas', desc: 'Énfasis en el haz clavicular del pectoral mayor.' },
-            { grupo: 'PECTORAL', nombre: 'Cruce de Poleas (Aperturas)', desc: 'Aislamiento con tensión constante en posición acortada.' },
-            { grupo: 'PECTORAL', nombre: 'Fondos en Paralelas (Dips)', desc: 'Reclutamiento del pectoral inferior y tríceps con peso corporal.' },
-            { grupo: 'ESPALDA', nombre: 'Jalón al Pecho en Polea Alta', desc: 'Tracción vertical dominante para amplitud del dorsal ancho.' },
-            { grupo: 'ESPALDA', nombre: 'Remo con Barra (Pendlay/Pronado)', desc: 'Tracción horizontal para densidad de la zona media de la espalda.' },
-            { grupo: 'ESPALDA', nombre: 'Remo Gironda Unilateral', desc: 'Aislamiento del dorsal con recorrido profundo.' },
-            { grupo: 'ESPALDA', nombre: 'Peso Muerto Convencional', desc: 'Cadena posterior total y fuerza de erectores espinales.' },
-            { grupo: 'PIERNAS', nombre: 'Sentadilla Libre con Barra', desc: 'Patrón dominante de rodilla para cuádriceps y glúteos.' },
-            { grupo: 'PIERNAS', nombre: 'Prensa 45°', desc: 'Carga pesada guiada para cuádriceps sin fatiga lumbar.' },
-            { grupo: 'PIERNAS', nombre: 'Peso Muerto Rumano', desc: 'Bisagra de cadera centrada en isquiotibiales y glúteos.' },
-            { grupo: 'PIERNAS', nombre: 'Sissy Squat / Extensión de Piernas', desc: 'Aislamiento puro del recto femoral.' },
-            { grupo: 'HOMBROS', nombre: 'Press Militar OverHead', desc: 'Empuje vertical para fuerza e hipertrofia del deltoides anterior.' },
-            { grupo: 'HOMBROS', nombre: 'Elevaciones Laterales con Polea/Mancuerna', desc: 'Aislamiento del deltoides lateral para anchura.' },
-            { grupo: 'HOMBROS', nombre: 'Pájaro en Polea (Rear Delt Fly)', desc: 'Énfasis en la cabeza posterior del deltoides.' },
-            { grupo: 'BRAZOS', nombre: 'Curl de Biceps con Barra Z', desc: 'Flexión de codo pesada para la cabeza corta y larga.' },
-            { grupo: 'BRAZOS', nombre: 'Curl Martillo', desc: 'Activación del braquial anterior y braquiorradial.' },
-            { grupo: 'BRAZOS', nombre: 'Press Francés en Banco Plano', desc: 'Extensión de codo pesada para las cabezas del tríceps.' },
-            { grupo: 'BRAZOS', nombre: 'Extensión de Tríceps en Polea', desc: 'Aislamiento continuo para la cabeza lateral del tríceps.' }
-        ];
+  <script>
+    function crearPublicacion() {
+      const input = document.getElementById('postInput');
+      const category = document.getElementById('postCategory').value;
+      const texto = input.value.trim();
 
-        function esAdmin(email) {
-            return email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-        }
+      if (!texto) return;
 
-        function switchTab(tabName, element) {
-            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById('sec-' + tabName).classList.add('active');
-            element.classList.add('active');
+      const feed = document.getElementById('feedContainer');
+      const nuevaTarjeta = document.createElement('div');
+      nuevaTarjeta.className = 'post-card';
 
-            if (tabName === 'ejercicios') {
-                renderizarEjercicios('TODOS');
-            }
-            if (tabName === 'coaches') {
-                renderizarCoaches('TODOS');
-            }
-        }
+      nuevaTarjeta.innerHTML = `
+        <div class="post-header">
+          <div class="user-info">
+            <div class="avatar">SF</div>
+            <div>
+              <span class="username">Atleta Sigma <span class="badge-pro">SIGMA PRO</span></span>
+            </div>
+          </div>
+          <span class="post-tag">${category}</span>
+        </div>
+        <div class="post-body">${texto}</div>
+        <div class="post-footer">
+          <button class="action-btn" onclick="darFuerza(this)">🔥 Fuerza (<span>0</span>)</button>
+          <button class="action-btn">💬 Comentar</button>
+        </div>
+      `;
 
-        function guardarSerieGym() {
-            const ej = document.getElementById('gymEjercicio').value.trim();
-            const peso = document.getElementById('gymPeso').value;
-            const reps = document.getElementById('gymReps').value;
+      feed.prepend(nuevaTarjeta);
+      input.value = '';
+    }
 
-            if(!ej || !peso || !reps) {
-                alert('Completa el ejercicio, peso y repeticiones.');
-                return;
-            }
+    function darFuerza(boton) {
+      const span = boton.querySelector('span');
+      let conteo = parseInt(span.innerText);
+      if (boton.classList.contains('liked')) {
+        boton.classList.remove('liked');
+        span.innerText = conteo - 1;
+      } else {
+        boton.classList.add('liked');
+        span.innerText = conteo + 1;
+      }
+    }
 
-            seriesGymRegistradas.push({ ej, peso, reps, hora: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
-            
-            const cont = document.getElementById('historialGymMode');
-            const item = document.createElement('div');
-            item.className = 'ex-item';
-            item.innerHTML = `<strong>${ej} - ${peso}kg x ${reps} reps</strong><p>Anotado a las ${seriesGymRegistradas[seriesGymRegistradas.length-1].hora}</p>`;
-            cont.prepend(item);
-
-            iniciarTemporizador(90);
-        }
-
-        function renderizarCoaches(filtro) {
-            const container = document.getElementById('directorioCoachesContainer');
-            container.innerHTML = '';
-
-            const filtrados = filtro === 'TODOS' ? directorioCoaches : directorioCoaches.filter(c => c.especialidadTag === filtro);
-
-            filtrados.forEach(c => {
-                const el = document.createElement('div');
-                el.className = 'coach-card';
-                el.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 35px; height: 35px; border-radius: 50%; background: #1a1a1a; border: 2px solid var(--accent-orange); display: flex; align-items: center; justify-content: center; font-weight: bold; color: var(--accent-orange); font-size: 12px;">${c.iniciales}</div>
-                        <div>
-                            <div style="font-size: 13px; font-weight: bold; color: #fff;">${c.nombre} <span style="color: var(--accent-green); font-size: 10px;">✔ COACH</span></div>
-                            <div style="font-size: 10px; color: var(--text-muted);">${c.titulo}</div>
-                        </div>
-                    </div>
-                    <p style="font-size: 11px; color: #dfdfdf; margin: 0;">${c.desc}</p>
-                    <a href="https://wa.me/${c.telefono}?text=Hola%20Coach%20${encodeURIComponent(c.nombre)},%20quiero%20información%20sobre%20tus%20asesorías%20en%20Sigma%20Fitness" target="_blank" class="btn-secondary">💬 Contactar por WhatsApp</a>
-                `;
-                container.appendChild(el);
-            });
-        }
-
-        function filtrarCoaches(cat, element) {
-            document.querySelectorAll('#sec-coaches .filter-chip').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-            renderizarCoaches(cat);
-        }
-
-        function renderizarEjercicios(grupoFiltro) {
-            const container = document.getElementById('listaEjerciciosMasiva');
-            container.innerHTML = '';
-
-            const filtrados = grupoFiltro === 'TODOS' ? baseEjercicios : baseEjercicios.filter(e => e.grupo === grupoFiltro);
-
-            filtrados.forEach(ex => {
-                const item = document.createElement('div');
-                item.className = 'ex-item';
-                item.innerHTML = `
-                    <strong>${ex.nombre} <span style="font-size:9px; color:var(--accent-orange);">[${ex.grupo}]</span></strong>
-                    <p>${ex.desc}</p>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function filtrarEjercicios(grupo, element) {
-            document.querySelectorAll('#sec-ejercicios .filter-chip').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-            renderizarEjercicios(grupo);
-        }
-
-        function seleccionarSistema(nombre, pautas, descanso) {
-            document.getElementById('sistemaActivoInfo').innerText = 'Sistema Activo: ' + nombre;
-            document.getElementById('sysEx1').innerText = pautas;
-            document.getElementById('sysDesc1').innerText = 'Descanso recomendado: ' + descanso;
-            alert('¡Sistema ' + nombre + ' cargado! Mira las pautas y ejercicios.');
-            switchTab('ejercicios', document.getElementById('btn-ejercicios'));
-        }
-
-        function iniciarTemporizador(segundos) {
-            clearInterval(temporizadorInterval);
-            let tiempoRestante = segundos;
-            actualizarDisplayTimer(tiempoRestante);
-
-            temporizadorInterval = setInterval(() => {
-                tiempoRestante--;
-                actualizarDisplayTimer(tiempoRestante);
-                if (tiempoRestante <= 0) {
-                    clearInterval(temporizadorInterval);
-                    alert('¡Tiempo de descanso finalizado! A la siguiente serie.');
-                }
-            }, 1000);
-        }
-
-        function detenerTemporizador() {
-            clearInterval(temporizadorInterval);
-            actualizarDisplayTimer(0);
-        }
-
-        function actualizarDisplayTimer(seg) {
-            const mins = Math.floor(seg / 60);
-            const secs = seg % 60;
-            document.getElementById('timerDisplay').innerText = 
-                `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-
-        function calcularRM() {
-            const peso = parseFloat(document.getElementById('rmPeso').value);
-            const reps = parseFloat(document.getElementById('rmReps').value);
-            if (peso && reps) {
-                const rm = Math.round(peso * (1 + reps / 30));
-                document.getElementById('resultadoRM').innerText = `Tu 1RM Estimado es: ${rm} kg`;
-            }
-        }
-
-        function filtrarFeed(categoria, element) {
-            filtroActual = categoria;
-            document.querySelectorAll('#sec-comunidad .filter-chip').forEach(chip => chip.classList.remove('active'));
-            element.classList.add('active');
-            cargarPosts();
-        }
-
-        async function ejecutarLogin() {
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-password').value.trim();
-
-            if (!email || !password) {
-                alert('Por favor introduce tu correo y contraseña.');
-                return;
-            }
-
-            try {
-                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-                if (error) {
-                    alert('Aviso de Supabase: ' + error.message);
-                } else if (data && data.user) {
-                    alert('¡Acceso concedido!');
-                    mostrarAplicacion(data.user);
-                }
-            } catch (err) {
-                alert('Error de conexión: ' + err.message);
-            }
-        }
-
-        async function ejecutarRegistro() {
-            const email = document.getElementById('auth-email').value.trim();
-            const password = document.getElementById('auth-password').value.trim();
-
-            if (!email || !password) {
-                alert('Por favor llena ambos campos.');
-                return;
-            }
-
-            try {
-                const { data, error } = await supabaseClient.auth.signUp({
-                    email: email,
-                    password: password
-                });
-
-                if (error) {
-                    alert('Error en registro: ' + error.message);
-                } else {
-                    alert('¡Cuenta registrada! Intenta iniciar sesión.');
-                }
-            } catch (err) {
-                alert('Error al registrar: ' + err.message);
-            }
-        }
-
-        function mostrarAplicacion(user) {
-            document.getElementById('auth-gate-screen').style.display = 'none';
-            document.getElementById('app-main-core').style.display = 'flex';
-            
-            if (esAdmin(user.email)) {
-                document.getElementById('userEmailDisplay').innerHTML = `
-                    Atleta: ${user.email} <br>
-                    <span style="color: var(--accent-orange); font-weight: bold; font-size: 11px;">👑 FUNDADOR / SUPER ADMIN</span>
-                `;
-            } else {
-                document.getElementById('userEmailDisplay').innerText = 'Atleta: ' + user.email;
-            }
-
-            cargarPosts();
-            renderizarEjercicios('TODOS');
-            renderizarCoaches('TODOS');
-        }
-
-        async function cerrarSesion() {
-            await supabaseClient.auth.signOut();
-            document.getElementById('app-main-core').style.display = 'none';
-            document.getElementById('auth-gate-screen').style.display = 'flex';
-        }
-
-        async function publicarPost() {
-            const contenido = document.getElementById('postInput').value;
-            const categoria = document.getElementById('postCategory').value;
-            if (!contenido) return;
-
-            const user = (await supabaseClient.auth.getUser()).data.user;
-
-            const { error } = await supabaseClient.from('posts').insert([
-                { 
-                    content: contenido, 
-                    user_email: user ? user.email : 'Atleta Anónimo',
-                    category: categoria
-                }
-            ]);
-
-            if (error) {
-                alert('Aviso al publicar: ' + error.message);
-            } else {
-                document.getElementById('postInput').value = '';
-                cargarPosts();
-            }
-        }
-
-        async function cargarPosts() {
-            let query = supabaseClient.from('posts').select('*').order('created_at', { ascending: false });
-
-            if (filtroActual !== 'TODOS') {
-                query = query.eq('category', filtroActual);
-            }
-
-            const { data: posts, error } = await query;
-
-            const feedContainer = document.getElementById('feedPosts');
-            feedContainer.innerHTML = '';
-
-            if (posts) {
-                posts.forEach(post => {
-                    const postEl = document.createElement('div');
-                    postEl.className = 'post-card';
-                    
-                    let tagTexto = '🌐 General';
-                    if (post.category === 'FUERZA') tagTexto = '💪 Fuerza / Powerlifting';
-                    if (post.category === 'HIPERTROFIA') tagTexto = '🏋️‍♂️ Hipertrofia';
-                    if (post.category === 'COMEDIA') tagTexto = '🎭 Humor Gym';
-                    if (post.category === 'SALUD') tagTexto = '🥗 Salud / Fit';
-
-                    const esAutorAdmin = esAdmin(post.user_email);
-                    const autorDisplay = esAutorAdmin ? `${post.user_email} <span style="color:var(--accent-orange); font-size:10px;">👑 ADMIN</span>` : post.user_email;
-
-                    postEl.innerHTML = `
-                        <div class="post-header">
-                            <div class="post-avatar">Σ</div>
-                            <div>
-                                <div class="post-author">${autorDisplay || 'Atleta'}</div>
-                                <span class="post-tag">${tagTexto}</span>
-                            </div>
-                        </div>
-                        <div class="post-content">${post.content}</div>
-                    `;
-                    feedContainer.appendChild(postEl);
-                });
-            }
-        }
-    </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log("Service Worker registrado con éxito"))
-        .catch((err) => console.log("Error en Service Worker", err));
-    });
-  }
-</script>
-
+    function simularBiometria() {
+      alert('Módulo Biométrico (WebAuthn) listo para conectar con Supabase Auth.');
+    }
+  </script>
 </body>
 </html>
             
