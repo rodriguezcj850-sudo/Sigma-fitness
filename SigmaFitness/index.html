@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Red Social</title>
+  <title>Sigma Fitness | Acceso Seguro</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -84,7 +84,6 @@
       margin-top: 0.25rem;
     }
 
-    /* Pestañas de Login / Registro */
     .auth-tabs {
       display: flex;
       border-bottom: 1px solid var(--border-color);
@@ -110,7 +109,6 @@
       border-bottom-color: var(--crimson);
     }
 
-    /* Formularios */
     .auth-form {
       display: none;
     }
@@ -191,6 +189,54 @@
       background-color: var(--crimson-dark);
     }
 
+    /* MODAL DE ESCANEO BIOMÉTRICO */
+    .biometric-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(9, 9, 11, 0.85);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .biometric-modal.active {
+      display: flex;
+    }
+
+    .biometric-box {
+      background-color: var(--bg-card);
+      border: 1px solid var(--crimson);
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+      max-width: 320px;
+      width: 100%;
+      box-shadow: 0 0 25px var(--crimson-glow);
+    }
+
+    .fingerprint-icon {
+      font-size: 3rem;
+      color: var(--crimson);
+      margin-bottom: 1rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 0.4; }
+    }
+
+    .biometric-box p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
     .auth-footer {
       display: flex;
       justify-content: space-between;
@@ -210,7 +256,7 @@
       color: var(--crimson);
     }
 
-    /* Vistas de Autenticación vs App */
+    /* Vistas de la App */
     .app-screen {
       display: none;
       width: 100%;
@@ -223,7 +269,6 @@
       display: flex;
     }
 
-    /* Estilos internos de la app */
     header {
       background-color: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -253,7 +298,6 @@
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      letter-spacing: -1px;
     }
 
     .brand-title-sm {
@@ -386,7 +430,6 @@
       margin-bottom: 1rem;
     }
 
-    /* BARRA DE INTERACCIÓN COMPLETA */
     .post-footer {
       display: flex;
       justify-content: space-between;
@@ -428,7 +471,6 @@
       color: var(--crimson);
     }
 
-    /* SECCIÓN DE COMENTARIOS DESPLEGABLE */
     .comments-section {
       display: none;
       margin-top: 0.85rem;
@@ -549,7 +591,7 @@
 
       <div class="auth-footer">
         <a class="auth-link" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</a>
-        <a class="auth-link" onclick="simularBiometriaLogin()">Biometría</a>
+        <a class="auth-link" onclick="abrirBiometria()">Acceso Biométrico</a>
       </div>
     </div>
 
@@ -605,6 +647,17 @@
     </div>
   </div>
 
+  <!-- MODAL DE ESCANEO DE HUELLA (BIOMETRÍA) -->
+  <div id="biometricModal" class="biometric-modal">
+    <div class="biometric-box">
+      <div class="fingerprint-icon">🔒</div>
+      <h3 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 0.5rem;">Autenticación Biométrica</h3>
+      <p id="bioStatusText">Coloca tu dedo en el sensor o presiona para simular lectura...</p>
+      <button class="btn-primary" onclick="simularLecturaHuella()">Escanear Huella</button>
+      <button class="action-btn" style="width: 100%; justify-content: center; margin-top: 0.5rem; padding: 0.6rem;" onclick="cerrarBiometria()">Cancelar</button>
+    </div>
+  </div>
+
   <!-- PANTALLA PRINCIPAL DE LA APLICACIÓN -->
   <div id="app-screen" class="app-screen">
     <header>
@@ -650,7 +703,6 @@
               Bienvenidos a la red social oficial de Sigma Fitness. Arrancamos con todo este proyecto hecho a pulso. ¡La disciplina es innegociable!
             </div>
             
-            <!-- BARRA DE INTERACCIÓN -->
             <div class="post-footer">
               <div class="reactions-group">
                 <button class="action-btn" onclick="toggleReaccion(this)">🔥 Fuerza (<span>3</span>)</button>
@@ -662,7 +714,6 @@
               </div>
             </div>
 
-            <!-- CAJA DE COMENTARIOS -->
             <div class="comments-section">
               <div class="comment-list">
                 <div class="comment-item"><strong>Atleta Sigma:</strong> ¡Excelente plataforma, a darle con todo!</div>
@@ -769,14 +820,32 @@
       }
     }
 
+    // FLUJO BIOMÉTRICO SEGURO
+    function abrirBiometria() {
+      document.getElementById('biometricModal').classList.add('active');
+      document.getElementById('bioStatusText').innerText = "Coloca tu dedo en el sensor...";
+    }
+
+    function cerrarBiometria() {
+      document.getElementById('biometricModal').classList.remove('active');
+    }
+
+    function simularLecturaHuella() {
+      const statusText = document.getElementById('bioStatusText');
+      statusText.innerText = "Escaneando huella biométrica...";
+      
+      setTimeout(() => {
+        statusText.innerText = "¡Huella verificada con éxito!";
+        setTimeout(() => {
+          cerrarBiometria();
+          iniciarSesion();
+        }, 800);
+      }, 1200);
+    }
+
     function iniciarSesion() {
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('app-screen').classList.add('active');
-    }
-
-    function simularBiometriaLogin() {
-      alert('Autenticación biométrica exitosa.');
-      iniciarSesion();
     }
 
     function cerrarSesion() {
@@ -791,7 +860,6 @@
       boton.classList.add('active');
     }
 
-    // Crear nueva publicación con barra de interacción completa
     function crearPublicacion() {
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
@@ -834,7 +902,6 @@
       input.value = '';
     }
 
-    // Reacciones interactivas (Fuerza / Respect)
     function toggleReaccion(boton) {
       const span = boton.querySelector('span');
       let conteo = parseInt(span.innerText);
@@ -847,14 +914,12 @@
       }
     }
 
-    // Desplegar/Ocultar caja de comentarios
     function toggleComentarios(boton) {
       const card = boton.closest('.card');
       const section = card.querySelector('.comments-section');
       section.classList.toggle('open');
     }
 
-    // Publicar comentario en tiempo real
     function agregarComentario(boton) {
       const card = boton.closest('.card');
       const input = card.querySelector('.comment-input');
@@ -867,14 +932,12 @@
       nuevoComentario.innerHTML = `<strong>${usuarioActual}:</strong> ${texto}`;
       list.appendChild(nuevoComentario);
 
-      // Actualizar contador de comentarios
       const countSpan = card.querySelector('.comment-count');
       countSpan.innerText = parseInt(countSpan.innerText) + 1;
 
       input.value = '';
     }
 
-    // Compartir publicación
     function compartirPost(boton) {
       const card = boton.closest('.card');
       const textoPost = card.querySelector('.post-body').innerText;
