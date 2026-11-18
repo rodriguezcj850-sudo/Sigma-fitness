@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Red Social</title>
+  <title>Sigma Fitness | Acceso</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -30,9 +30,167 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
     }
 
-    /* Barra Superior */
+    /* Contenedor de Autenticación */
+    .auth-container {
+      width: 100%;
+      max-width: 400px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    .auth-brand {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .brand-icon-lg {
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: white;
+      font-weight: 900;
+      font-size: 1.8rem;
+      width: 56px;
+      height: 56px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      letter-spacing: -1px;
+      box-shadow: 0 0 16px var(--crimson-glow);
+      margin-bottom: 0.75rem;
+    }
+
+    .auth-title {
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .auth-title span {
+      color: var(--crimson);
+    }
+
+    .auth-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Formularios */
+    .form-group {
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input {
+      width: 100%;
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--crimson);
+    }
+
+    /* Botón para ver contraseña */
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .toggle-password:hover {
+      color: var(--crimson);
+    }
+
+    .btn-primary {
+      background-color: var(--crimson);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 0.85rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--crimson-dark);
+    }
+
+    .auth-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    .auth-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .auth-link:hover {
+      color: var(--crimson);
+    }
+
+    /* Vistas de Autenticación vs App */
+    .app-screen {
+      display: none;
+      width: 100%;
+      max-width: 650px;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .app-screen.active {
+      display: flex;
+    }
+
+    /* Estilos internos de la app */
     header {
       background-color: var(--bg-card);
       border-bottom: 1px solid var(--border-color);
@@ -45,65 +203,41 @@
       z-index: 100;
     }
 
-    .brand {
+    .brand-header {
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .brand-icon {
+    .brand-icon-sm {
       background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
       color: white;
       font-weight: 900;
-      font-size: 1.2rem;
-      width: 38px;
-      height: 38px;
+      font-size: 1.1rem;
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 8px;
       letter-spacing: -1px;
-      box-shadow: 0 0 12px var(--crimson-glow);
     }
 
-    .brand-title {
+    .brand-title-sm {
       font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.5px;
+      font-size: 1.15rem;
       text-transform: uppercase;
     }
 
-    .brand-title span {
+    .brand-title-sm span {
       color: var(--crimson);
     }
 
-    .btn-biometric {
-      background-color: transparent;
-      border: 1px solid var(--crimson);
-      color: var(--text-main);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-biometric:hover {
-      background-color: var(--crimson);
-      box-shadow: 0 0 12px var(--crimson-glow);
-    }
-
-    /* Contenedor Principal */
     .container {
-      max-width: 650px;
-      width: 100%;
-      margin: 0 auto;
       padding: 1.5rem 1rem;
       flex: 1;
     }
 
-    /* Control de Secciones */
     .view-section {
       display: none;
     }
@@ -112,7 +246,6 @@
       display: block;
     }
 
-    /* Banner Eslogan */
     .slogan-banner {
       background: linear-gradient(90deg, rgba(220,20,60,0.15) 0%, rgba(18,18,21,1) 100%);
       border-left: 4px solid var(--crimson);
@@ -121,11 +254,9 @@
       margin-bottom: 1.5rem;
       font-size: 0.9rem;
       font-weight: 600;
-      letter-spacing: 0.3px;
       color: var(--text-main);
     }
 
-    /* Tarjetas Generales */
     .card {
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -134,21 +265,6 @@
       margin-bottom: 1rem;
     }
 
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      color: var(--text-main);
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 0.5rem;
-    }
-
-    .section-title span {
-      color: var(--crimson);
-    }
-
-    /* Caja para publicar en la red social */
     .post-creator textarea {
       width: 100%;
       background-color: var(--bg-input);
@@ -161,10 +277,6 @@
       font-size: 0.95rem;
       margin-bottom: 0.75rem;
       outline: none;
-    }
-
-    .post-creator textarea:focus {
-      border-color: var(--crimson);
     }
 
     .creator-actions {
@@ -181,31 +293,6 @@
       border-radius: 6px;
       font-size: 0.85rem;
       outline: none;
-    }
-
-    .btn-primary {
-      background-color: var(--crimson);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: background 0.2s, transform 0.1s;
-    }
-
-    .btn-primary:hover {
-      background-color: var(--crimson-dark);
-    }
-
-    /* Feed de Publicaciones */
-    .feed {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
     }
 
     .post-header {
@@ -248,7 +335,6 @@
       border-radius: 4px;
       font-weight: 800;
       margin-left: 5px;
-      vertical-align: middle;
     }
 
     .post-tag {
@@ -281,77 +367,12 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: color 0.2s;
     }
 
     .action-btn:hover, .action-btn.liked {
       color: var(--crimson);
     }
 
-    /* Estilos para Retos, Pro y Perfil */
-    .reto-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .reto-info h3 {
-      font-size: 1rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .reto-info p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .pro-list {
-      list-style: none;
-      margin: 1rem 0 1.5rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.65rem;
-      font-size: 0.9rem;
-    }
-
-    .pro-list li::before {
-      content: "▪ ";
-      color: var(--crimson);
-      font-weight: bold;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
-      text-align: center;
-    }
-
-    .stat-box {
-      background-color: var(--bg-input);
-      padding: 0.75rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-    }
-
-    .stat-box strong {
-      display: block;
-      font-size: 1.2rem;
-      color: var(--crimson);
-    }
-
-    .stat-box span {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    /* Barra de Navegación Inferior */
     nav {
       background-color: var(--bg-card);
       border-top: 1px solid var(--border-color);
@@ -370,7 +391,6 @@
       font-weight: 700;
       cursor: pointer;
       text-transform: uppercase;
-      transition: color 0.2s;
     }
 
     .nav-item.active {
@@ -380,134 +400,173 @@
 </head>
 <body>
 
-  <header>
-    <div class="brand">
-      <div class="brand-icon">SF</div>
-      <div class="brand-title">SIGMA <span>FITNESS</span></div>
-    </div>
-    <button class="btn-biometric" onclick="simularBiometria()">Acceso Biométrico</button>
-  </header>
-
-  <div class="container">
-    <div class="slogan-banner">
-      "Donde la voluntad se convierte en fuerza y la disciplina es innegociable"
+  <!-- PANTALLA DE LOGIN -->
+  <div id="auth-screen" class="auth-container">
+    <div class="auth-brand">
+      <div class="brand-icon-lg">SF</div>
+      <div class="auth-title">SIGMA <span>FITNESS</span></div>
+      <div class="auth-subtitle">Disciplina Innegociable</div>
     </div>
 
-    <!-- VISTA 1: COMUNIDAD -->
-    <section id="view-comunidad" class="view-section active">
-      <div class="card post-creator">
-        <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
-        <div class="creator-actions">
-          <select id="postCategory" class="tag-select">
-            <option value="Entrenamiento">Entrenamiento</option>
-            <option value="Récord Personal">Récord Personal</option>
-            <option value="Nutrición">Nutrición</option>
-            <option value="Mentalidad Sigma">Mentalidad Sigma</option>
-          </select>
-          <button class="btn-primary" onclick="crearPublicacion()">Publicar</button>
-        </div>
-      </div>
+    <div class="form-group">
+      <label class="form-label">Correo o Usuario</label>
+      <input type="text" id="loginUser" class="form-input" placeholder="atleta@sigmafit.com">
+    </div>
 
-      <div class="feed" id="feedContainer">
-        <div class="card">
-          <div class="post-header">
-            <div class="user-info">
-              <div class="avatar">JL</div>
-              <div>
-                <span class="username">Fundador Sigma <span class="badge-pro">SIGMA PRO</span></span>
-              </div>
-            </div>
-            <span class="post-tag">Mentalidad Sigma</span>
-          </div>
-          <div class="post-body">
-            Bienvenidos a la comunidad oficial de Sigma Fitness. Aquí no venimos a buscar excusas, venimos a construir disciplina real día tras día.
-          </div>
-          <div class="post-footer">
-            <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>1</span>)</button>
-            <button class="action-btn">Comentar</button>
-          </div>
-        </div>
+    <div class="form-group">
+      <label class="form-label">Contraseña</label>
+      <div class="input-wrapper">
+        <input type="password" id="loginPass" class="form-input" placeholder="••••••••">
+        <button type="button" class="toggle-password" onclick="togglePassword()">Ver</button>
       </div>
-    </section>
+    </div>
 
-    <!-- VISTA 2: RETOS -->
-    <section id="view-retos" class="view-section">
-      <h2 class="section-title">Retos <span>Activos</span></h2>
-      <div class="card reto-item">
-        <div class="reto-info">
-          <h3>30 Días de Hierro Innegociable</h3>
-          <p>Registra tu entrenamiento diario sin fallar un solo día durante un mes.</p>
-        </div>
-        <button class="btn-primary" onclick="unirseReto(this)">Unirse</button>
-      </div>
-      <div class="card reto-item">
-        <div class="reto-info">
-          <h3>Club de Fuerza Natural</h3>
-          <p>Supera tus marcas personales en levantamientos básicos y compártelo.</p>
-        </div>
-        <button class="btn-primary" onclick="unirseReto(this)">Unirse</button>
-      </div>
-    </section>
+    <button class="btn-primary" onclick="iniciarSesion()">Ingresar</button>
 
-    <!-- VISTA 3: SIGMA PRO -->
-    <section id="view-pro" class="view-section">
-      <h2 class="section-title">Membresía <span>Sigma Pro</span></h2>
-      <div class="card">
-        <p style="color: var(--text-muted); font-size: 0.9rem;">Lleva tu rendimiento y presencia dentro de la red al máximo nivel.</p>
-        <ul class="pro-list">
-          <li>Insignia exclusiva <strong>SIGMA PRO</strong> en todas tus publicaciones.</li>
-          <li>Estadísticas avanzadas de progreso físico y levantamientos.</li>
-          <li>Acceso prioritario a retos oficiales y clasificaciones globales.</li>
-          <li>Seguridad biométrica reforzada en todos tus dispositivos.</li>
-        </ul>
-        <button class="btn-primary" style="width: 100%;" onclick="alert('Pasarela de suscripción Sigma Pro lista para integrar.')">Activar Sigma Pro</button>
-      </div>
-    </section>
-
-    <!-- VISTA 4: PERFIL -->
-    <section id="view-perfil" class="view-section">
-      <h2 class="section-title">Perfil de <span>Atleta</span></h2>
-      <div class="card">
-        <div class="user-info" style="margin-bottom: 1rem;">
-          <div class="avatar" style="width: 50px; height: 50px; font-size: 1.1rem;">JL</div>
-          <div>
-            <div class="username" style="font-size: 1.1rem;">Juan Luis <span class="badge-pro">FUNDADOR</span></div>
-            <div style="font-size: 0.8rem; color: var(--text-muted);">Culturismo Natural • Disciplina Innegociable</div>
-          </div>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-box">
-            <strong>12</strong>
-            <span>Racha (Días)</span>
-          </div>
-          <div class="stat-box">
-            <strong>86 kg</strong>
-            <span>Meta Física</span>
-          </div>
-          <div class="stat-box">
-            <strong>PRO</strong>
-            <span>Estatus</span>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="auth-footer">
+      <a class="auth-link" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</a>
+      <a class="auth-link" onclick="simularBiometriaLogin()">Biometría</a>
+    </div>
   </div>
 
-  <nav>
-    <button class="nav-item active" onclick="cambiarVista('comunidad', this)">Comunidad</button>
-    <button class="nav-item" onclick="cambiarVista('retos', this)">Retos</button>
-    <button class="nav-item" onclick="cambiarVista('pro', this)">Sigma Pro</button>
-    <button class="nav-item" onclick="cambiarVista('perfil', this)">Perfil</button>
-  </nav>
+  <!-- PANTALLA PRINCIPAL DE LA APLICACIÓN -->
+  <div id="app-screen" class="app-screen">
+    <header>
+      <div class="brand-header">
+        <div class="brand-icon-sm">SF</div>
+        <div class="brand-title-sm">SIGMA <span>FITNESS</span></div>
+      </div>
+      <button class="action-btn" onclick="cerrarSesion()" style="color: var(--crimson); font-weight: 700;">Salir</button>
+    </header>
+
+    <div class="container">
+      <div class="slogan-banner">
+        "Donde la voluntad se convierte en fuerza y la disciplina es innegociable"
+      </div>
+
+      <!-- VISTA: COMUNIDAD -->
+      <section id="view-comunidad" class="view-section active">
+        <div class="card post-creator">
+          <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
+          <div class="creator-actions">
+            <select id="postCategory" class="tag-select">
+              <option value="Entrenamiento">Entrenamiento</option>
+              <option value="Récord Personal">Récord Personal</option>
+              <option value="Nutrición">Nutrición</option>
+              <option value="Mentalidad">Mentalidad Sigma</option>
+            </select>
+            <button class="btn-primary" style="width: auto; padding: 0.6rem 1.4rem; margin: 0;" onclick="crearPublicacion()">Publicar</button>
+          </div>
+        </div>
+
+        <div class="feed" id="feedContainer">
+          <div class="card">
+            <div class="post-header">
+              <div class="user-info">
+                <div class="avatar">JL</div>
+                <div>
+                  <span class="username">Juan Luis <span class="badge-pro">FUNDADOR</span></span>
+                </div>
+              </div>
+              <span class="post-tag">Mentalidad Sigma</span>
+            </div>
+            <div class="post-body">
+              Bienvenidos a la red social oficial de Sigma Fitness. Arrancamos con todo este proyecto hecho a pulso. ¡La disciplina es innegociable!
+            </div>
+            <div class="post-footer">
+              <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>1</span>)</button>
+              <button class="action-btn">Comentar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VISTA: RETOS -->
+      <section id="view-retos" class="view-section">
+        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Retos <span>Activos</span></h2>
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h3 style="font-size: 1rem; margin-bottom: 0.3rem;">30 Días de Hierro Innegociable</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Constancia absoluta en tu rutina diaria.</p>
+          </div>
+          <button class="btn-primary" style="width: auto; padding: 0.5rem 1rem; margin: 0;" onclick="unirseReto(this)">Unirse</button>
+        </div>
+      </section>
+
+      <!-- VISTA: SIGMA PRO -->
+      <section id="view-pro" class="view-section">
+        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Membresía <span>Sigma Pro</span></h2>
+        <div class="card">
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Lleva tu estatus al nivel superior dentro de la red.</p>
+          <button class="btn-primary" onclick="alert('Pasarela Sigma Pro lista para integrar.')">Activar Sigma Pro</button>
+        </div>
+      </section>
+
+      <!-- VISTA: PERFIL -->
+      <section id="view-perfil" class="view-section">
+        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Perfil de <span>Atleta</span></h2>
+        <div class="card">
+          <div class="user-info">
+            <div class="avatar" style="width: 45px; height: 45px;">JL</div>
+            <div>
+              <div class="username" style="font-size: 1.05rem;">Juan Luis Rodríguez <span class="badge-pro">PRO</span></div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Fundador & Desarrollador</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <nav>
+      <button class="nav-item active" onclick="cambiarVista('comunidad', this)">Comunidad</button>
+      <button class="nav-item" onclick="cambiarVista('retos', this)">Retos</button>
+      <button class="nav-item" onclick="cambiarVista('pro', this)">Sigma Pro</button>
+      <button class="nav-item" onclick="cambiarVista('perfil', this)">Perfil</button>
+    </nav>
+  </div>
 
   <script>
+    // Mostrar u Ocultar Contraseña
+    function togglePassword() {
+      const inputPass = document.getElementById('loginPass');
+      const btnToggle = document.querySelector('.toggle-password');
+      if (inputPass.type === 'password') {
+        inputPass.type = 'text';
+        btnToggle.innerText = 'Ocultar';
+      } else {
+        inputPass.type = 'password';
+        btnToggle.innerText = 'Ver';
+      }
+    }
+
+    // Recuperar Contraseña
+    function recuperarPassword() {
+      const correo = prompt('Ingresa tu correo registrado para enviar instrucciones de recuperación:');
+      if (correo) {
+        alert('Se han enviado instrucciones de recuperación a: ' + correo);
+      }
+    }
+
+    // Iniciar Sesión (Salto a la App)
+    function iniciarSesion() {
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('app-screen').classList.add('active');
+    }
+
+    function simularBiometriaLogin() {
+      alert('Autenticación biométrica exitosa.');
+      iniciarSesion();
+    }
+
+    function cerrarSesion() {
+      document.getElementById('app-screen').classList.remove('active');
+      document.getElementById('auth-screen').style.display = 'block';
+    }
+
+    // Navegación de la App
     function cambiarVista(nombreVista, boton) {
-      // Ocultar todas las vistas
       document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-      // Quitar estado activo de los botones
       document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-      
-      // Mostrar la vista elegida y marcar el botón en rojo carmesí
       document.getElementById('view-' + nombreVista).classList.add('active');
       boton.classList.add('active');
     }
@@ -516,20 +575,16 @@
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
       const texto = input.value.trim();
-
       if (!texto) return;
 
       const feed = document.getElementById('feedContainer');
-      const nuevaTarjeta = document.createElement('div');
-      nuevaTarjeta.className = 'card';
-
-      nuevaTarjeta.innerHTML = `
+      const tarjeta = document.createElement('div');
+      tarjeta.className = 'card';
+      tarjeta.innerHTML = `
         <div class="post-header">
           <div class="user-info">
             <div class="avatar">JL</div>
-            <div>
-              <span class="username">Juan Luis <span class="badge-pro">SIGMA PRO</span></span>
-            </div>
+            <div><span class="username">Juan Luis <span class="badge-pro">SIGMA PRO</span></span></div>
           </div>
           <span class="post-tag">${category}</span>
         </div>
@@ -539,8 +594,7 @@
           <button class="action-btn">Comentar</button>
         </div>
       `;
-
-      feed.prepend(nuevaTarjeta);
+      feed.prepend(tarjeta);
       input.value = '';
     }
 
@@ -560,10 +614,6 @@
       boton.innerText = "Inscrito";
       boton.style.backgroundColor = "#27272A";
       boton.disabled = true;
-    }
-
-    function simularBiometria() {
-      alert('Módulo Biométrico (WebAuthn) listo para conectar con Supabase Auth.');
     }
   </script>
 </body>
