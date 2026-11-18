@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Acceso</title>
+  <title>Sigma Fitness | Acceso y Registro</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -84,19 +84,53 @@
       margin-top: 0.25rem;
     }
 
+    /* Pestañas de Login / Registro */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.75rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .auth-tab.active {
+      color: var(--crimson);
+      border-bottom-color: var(--crimson);
+    }
+
     /* Formularios */
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
     .form-group {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.1rem;
       position: relative;
     }
 
     .form-label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.45rem;
     }
 
     .input-wrapper {
@@ -111,8 +145,8 @@
       border: 1px solid var(--border-color);
       border-radius: 8px;
       color: var(--text-main);
-      padding: 0.85rem 1rem;
-      font-size: 0.95rem;
+      padding: 0.8rem 1rem;
+      font-size: 0.92rem;
       outline: none;
       transition: border-color 0.2s;
     }
@@ -129,7 +163,7 @@
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
     }
@@ -163,7 +197,7 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 1.25rem;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
     .auth-link {
@@ -400,7 +434,7 @@
 </head>
 <body>
 
-  <!-- PANTALLA DE LOGIN -->
+  <!-- PANTALLA DE ACCESO Y REGISTRO -->
   <div id="auth-screen" class="auth-container">
     <div class="auth-brand">
       <div class="brand-icon-lg">SF</div>
@@ -408,24 +442,84 @@
       <div class="auth-subtitle">Disciplina Innegociable</div>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Correo o Usuario</label>
-      <input type="text" id="loginUser" class="form-input" placeholder="atleta@sigmafit.com">
+    <!-- Pestañas de cambio -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="cambiarAuthTab('login', this)">Iniciar Sesión</button>
+      <button class="auth-tab" onclick="cambiarAuthTab('register', this)">Registrarse</button>
     </div>
 
-    <div class="form-group">
-      <label class="form-label">Contraseña</label>
-      <div class="input-wrapper">
-        <input type="password" id="loginPass" class="form-input" placeholder="••••••••">
-        <button type="button" class="toggle-password" onclick="togglePassword()">Ver</button>
+    <!-- FORMULARIO: INICIAR SESIÓN -->
+    <div id="form-login" class="auth-form active">
+      <div class="form-group">
+        <label class="form-label">Correo o Usuario</label>
+        <input type="text" id="loginUser" class="form-input" placeholder="atleta@sigmafit.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="loginPass" class="form-input" placeholder="••••••••">
+          <button type="button" class="toggle-password" onclick="togglePassword('loginPass', this)">Ver</button>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="iniciarSesion()">Ingresar</button>
+
+      <div class="auth-footer">
+        <a class="auth-link" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</a>
+        <a class="auth-link" onclick="simularBiometriaLogin()">Biometría</a>
       </div>
     </div>
 
-    <button class="btn-primary" onclick="iniciarSesion()">Ingresar</button>
+    <!-- FORMULARIO: REGISTRARSE -->
+    <div id="form-register" class="auth-form">
+      <div class="form-group">
+        <label class="form-label">Nombre de Atleta</label>
+        <input type="text" id="regName" class="form-input" placeholder="Ej. Juan Luis">
+      </div>
 
-    <div class="auth-footer">
-      <a class="auth-link" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</a>
-      <a class="auth-link" onclick="simularBiometriaLogin()">Biometría</a>
+      <div class="form-group">
+        <label class="form-label">Correo Electrónico</label>
+        <input type="email" id="regEmail" class="form-input" placeholder="tu@correo.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Crear Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="regPass" class="form-input" placeholder="Mínimo 6 caracteres">
+          <button type="button" class="toggle-password" onclick="togglePassword('regPass', this)">Ver</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">País</label>
+        <select id="regCountry" class="form-input">
+          <option value="" disabled selected>Selecciona tu país</option>
+          <option value="Venezuela">Venezuela</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Argentina">Argentina</option>
+          <option value="México">México</option>
+          <option value="Chile">Chile</option>
+          <option value="Perú">Perú</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="España">España</option>
+          <option value="Estados Unidos">Estados Unidos</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Enfoque Principal</label>
+        <select id="regFocus" class="form-input">
+          <option value="Fitness en General">Fitness en General</option>
+          <option value="Culturismo Natural">Culturismo Natural</option>
+          <option value="Fuerza / Powerlifting">Fuerza / Powerlifting</option>
+          <option value="Halterofilia">Halterofilia</option>
+          <option value="Acondicionamiento General">Acondicionamiento General</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" onclick="registrarUsuario()">Crear Cuenta Sigma</button>
     </div>
   </div>
 
@@ -453,7 +547,7 @@
               <option value="Entrenamiento">Entrenamiento</option>
               <option value="Récord Personal">Récord Personal</option>
               <option value="Nutrición">Nutrición</option>
-              <option value="Mentalidad">Mentalidad Sigma</option>
+              <option value="Mentalidad Sigma">Mentalidad Sigma</option>
             </select>
             <button class="btn-primary" style="width: auto; padding: 0.6rem 1.4rem; margin: 0;" onclick="crearPublicacion()">Publicar</button>
           </div>
@@ -507,10 +601,10 @@
         <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Perfil de <span>Atleta</span></h2>
         <div class="card">
           <div class="user-info">
-            <div class="avatar" style="width: 45px; height: 45px;">JL</div>
+            <div class="avatar" id="profileAvatar" style="width: 45px; height: 45px;">JL</div>
             <div>
-              <div class="username" style="font-size: 1.05rem;">Juan Luis Rodríguez <span class="badge-pro">PRO</span></div>
-              <div style="font-size: 0.8rem; color: var(--text-muted);">Fundador & Desarrollador</div>
+              <div class="username" id="profileName" style="font-size: 1.05rem;">Juan Luis Rodríguez <span class="badge-pro">PRO</span></div>
+              <div id="profileFocus" style="font-size: 0.8rem; color: var(--text-muted);">Fundador & Desarrollador • Venezuela</div>
             </div>
           </div>
         </div>
@@ -526,10 +620,19 @@
   </div>
 
   <script>
+    let usuarioActual = "Juan Luis";
+
+    // Cambiar entre pestaña Iniciar Sesión y Registrarse
+    function cambiarAuthTab(tab, boton) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+      boton.classList.add('active');
+      document.getElementById('form-' + tab).classList.add('active');
+    }
+
     // Mostrar u Ocultar Contraseña
-    function togglePassword() {
-      const inputPass = document.getElementById('loginPass');
-      const btnToggle = document.querySelector('.toggle-password');
+    function togglePassword(inputId, btnToggle) {
+      const inputPass = document.getElementById(inputId);
       if (inputPass.type === 'password') {
         inputPass.type = 'text';
         btnToggle.innerText = 'Ocultar';
@@ -537,6 +640,28 @@
         inputPass.type = 'password';
         btnToggle.innerText = 'Ver';
       }
+    }
+
+    // Registrar Nuevo Usuario
+    function registrarUsuario() {
+      const nombre = document.getElementById('regName').value.trim();
+      const correo = document.getElementById('regEmail').value.trim();
+      const pass = document.getElementById('regPass').value.trim();
+      const pais = document.getElementById('regCountry').value;
+      const enfoque = document.getElementById('regFocus').value;
+
+      if (!nombre || !correo || pass.length < 6 || !pais) {
+        alert('Por favor completa todos los campos (incluyendo tu país) y usa una contraseña de al menos 6 caracteres.');
+        return;
+      }
+
+      usuarioActual = nombre;
+      document.getElementById('profileName').innerHTML = `${nombre} <span class="badge-pro">ATLETA</span>`;
+      document.getElementById('profileFocus').innerText = `${enfoque} • ${pais}`;
+      document.getElementById('profileAvatar').innerText = nombre.substring(0, 2).toUpperCase();
+
+      alert('¡Cuenta creada con éxito! Bienvenido a Sigma Fitness, ' + nombre + '.');
+      iniciarSesion();
     }
 
     // Recuperar Contraseña
@@ -547,7 +672,7 @@
       }
     }
 
-    // Iniciar Sesión (Salto a la App)
+    // Iniciar Sesión
     function iniciarSesion() {
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('app-screen').classList.add('active');
@@ -580,11 +705,13 @@
       const feed = document.getElementById('feedContainer');
       const tarjeta = document.createElement('div');
       tarjeta.className = 'card';
+      const iniciales = usuarioActual.substring(0, 2).toUpperCase();
+
       tarjeta.innerHTML = `
         <div class="post-header">
           <div class="user-info">
-            <div class="avatar">JL</div>
-            <div><span class="username">Juan Luis <span class="badge-pro">SIGMA PRO</span></span></div>
+            <div class="avatar">${iniciales}</div>
+            <div><span class="username">${usuarioActual} <span class="badge-pro">SIGMA</span></span></div>
           </div>
           <span class="post-tag">${category}</span>
         </div>
