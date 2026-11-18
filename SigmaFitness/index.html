@@ -103,6 +103,15 @@
       flex: 1;
     }
 
+    /* Control de Secciones */
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
     /* Banner Eslogan */
     .slogan-banner {
       background: linear-gradient(90deg, rgba(220,20,60,0.15) 0%, rgba(18,18,21,1) 100%);
@@ -116,15 +125,30 @@
       color: var(--text-main);
     }
 
-    /* Caja para publicar en la red social */
-    .post-creator {
+    /* Tarjetas Generales */
+    .card {
       background-color: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
     }
 
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .section-title span {
+      color: var(--crimson);
+    }
+
+    /* Caja para publicar en la red social */
     .post-creator textarea {
       width: 100%;
       background-color: var(--bg-input);
@@ -166,7 +190,7 @@
       padding: 0.6rem 1.4rem;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -177,22 +201,11 @@
       background-color: var(--crimson-dark);
     }
 
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
     /* Feed de Publicaciones */
     .feed {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-    }
-
-    .post-card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.2rem;
     }
 
     .post-header {
@@ -278,13 +291,73 @@
       color: var(--crimson);
     }
 
+    /* Estilos para Retos, Pro y Perfil */
+    .reto-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .reto-info h3 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .reto-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .pro-list {
+      list-style: none;
+      margin: 1rem 0 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      font-size: 0.9rem;
+    }
+
+    .pro-list li::before {
+      content: "▪ ";
+      color: var(--crimson);
+      font-weight: bold;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .stat-box {
+      background-color: var(--bg-input);
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.2rem;
+      color: var(--crimson);
+    }
+
+    .stat-box span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
     /* Barra de Navegación Inferior */
     nav {
       background-color: var(--bg-card);
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
-      padding: 0.75rem 0;
+      padding: 0.85rem 0;
       position: sticky;
       bottom: 0;
     }
@@ -297,6 +370,7 @@
       font-weight: 700;
       cursor: pointer;
       text-transform: uppercase;
+      transition: color 0.2s;
     }
 
     .nav-item.active {
@@ -319,51 +393,125 @@
       "Donde la voluntad se convierte en fuerza y la disciplina es innegociable"
     </div>
 
-    <!-- Creador de publicaciones -->
-    <div class="post-creator">
-      <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
-      <div class="creator-actions">
-        <select id="postCategory" class="tag-select">
-          <option value="Entrenamiento">Entrenamiento</option>
-          <option value="Récord Personal">Récord Personal</option>
-          <option value="Nutrición">Nutrición</option>
-          <option value="Mentalidad">Mentalidad Sigma</option>
-        </select>
-        <button class="btn-primary" onclick="crearPublicacion()">Publicar</button>
+    <!-- VISTA 1: COMUNIDAD -->
+    <section id="view-comunidad" class="view-section active">
+      <div class="card post-creator">
+        <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
+        <div class="creator-actions">
+          <select id="postCategory" class="tag-select">
+            <option value="Entrenamiento">Entrenamiento</option>
+            <option value="Récord Personal">Récord Personal</option>
+            <option value="Nutrición">Nutrición</option>
+            <option value="Mentalidad Sigma">Mentalidad Sigma</option>
+          </select>
+          <button class="btn-primary" onclick="crearPublicacion()">Publicar</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Feed de la comunidad -->
-    <div class="feed" id="feedContainer">
-      <div class="post-card">
-        <div class="post-header">
-          <div class="user-info">
-            <div class="avatar">JL</div>
-            <div>
-              <span class="username">Fundador Sigma <span class="badge-pro">SIGMA PRO</span></span>
+      <div class="feed" id="feedContainer">
+        <div class="card">
+          <div class="post-header">
+            <div class="user-info">
+              <div class="avatar">JL</div>
+              <div>
+                <span class="username">Fundador Sigma <span class="badge-pro">SIGMA PRO</span></span>
+              </div>
             </div>
+            <span class="post-tag">Mentalidad Sigma</span>
           </div>
-          <span class="post-tag">Mentalidad Sigma</span>
-        </div>
-        <div class="post-body">
-          Bienvenidos a la comunidad oficial de Sigma Fitness. Aquí no venimos a buscar excusas, venimos a construir disciplina real día tras día.
-        </div>
-        <div class="post-footer">
-          <button class="action-btn" onclick="darFuerza(this)">🔥 Fuerza (<span>1</span>)</button>
-          <button class="action-btn">💬 Comentar</button>
+          <div class="post-body">
+            Bienvenidos a la comunidad oficial de Sigma Fitness. Aquí no venimos a buscar excusas, venimos a construir disciplina real día tras día.
+          </div>
+          <div class="post-footer">
+            <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>1</span>)</button>
+            <button class="action-btn">Comentar</button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- VISTA 2: RETOS -->
+    <section id="view-retos" class="view-section">
+      <h2 class="section-title">Retos <span>Activos</span></h2>
+      <div class="card reto-item">
+        <div class="reto-info">
+          <h3>30 Días de Hierro Innegociable</h3>
+          <p>Registra tu entrenamiento diario sin fallar un solo día durante un mes.</p>
+        </div>
+        <button class="btn-primary" onclick="unirseReto(this)">Unirse</button>
+      </div>
+      <div class="card reto-item">
+        <div class="reto-info">
+          <h3>Club de Fuerza Natural</h3>
+          <p>Supera tus marcas personales en levantamientos básicos y compártelo.</p>
+        </div>
+        <button class="btn-primary" onclick="unirseReto(this)">Unirse</button>
+      </div>
+    </section>
+
+    <!-- VISTA 3: SIGMA PRO -->
+    <section id="view-pro" class="view-section">
+      <h2 class="section-title">Membresía <span>Sigma Pro</span></h2>
+      <div class="card">
+        <p style="color: var(--text-muted); font-size: 0.9rem;">Lleva tu rendimiento y presencia dentro de la red al máximo nivel.</p>
+        <ul class="pro-list">
+          <li>Insignia exclusiva <strong>SIGMA PRO</strong> en todas tus publicaciones.</li>
+          <li>Estadísticas avanzadas de progreso físico y levantamientos.</li>
+          <li>Acceso prioritario a retos oficiales y clasificaciones globales.</li>
+          <li>Seguridad biométrica reforzada en todos tus dispositivos.</li>
+        </ul>
+        <button class="btn-primary" style="width: 100%;" onclick="alert('Pasarela de suscripción Sigma Pro lista para integrar.')">Activar Sigma Pro</button>
+      </div>
+    </section>
+
+    <!-- VISTA 4: PERFIL -->
+    <section id="view-perfil" class="view-section">
+      <h2 class="section-title">Perfil de <span>Atleta</span></h2>
+      <div class="card">
+        <div class="user-info" style="margin-bottom: 1rem;">
+          <div class="avatar" style="width: 50px; height: 50px; font-size: 1.1rem;">JL</div>
+          <div>
+            <div class="username" style="font-size: 1.1rem;">Juan Luis <span class="badge-pro">FUNDADOR</span></div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">Culturismo Natural • Disciplina Innegociable</div>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <strong>12</strong>
+            <span>Racha (Días)</span>
+          </div>
+          <div class="stat-box">
+            <strong>86 kg</strong>
+            <span>Meta Física</span>
+          </div>
+          <div class="stat-box">
+            <strong>PRO</strong>
+            <span>Estatus</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <nav>
-    <button class="nav-item active">Comunidad</button>
-    <button class="nav-item">Retos</button>
-    <button class="nav-item">Sigma Pro</button>
-    <button class="nav-item">Perfil</button>
+    <button class="nav-item active" onclick="cambiarVista('comunidad', this)">Comunidad</button>
+    <button class="nav-item" onclick="cambiarVista('retos', this)">Retos</button>
+    <button class="nav-item" onclick="cambiarVista('pro', this)">Sigma Pro</button>
+    <button class="nav-item" onclick="cambiarVista('perfil', this)">Perfil</button>
   </nav>
 
   <script>
+    function cambiarVista(nombreVista, boton) {
+      // Ocultar todas las vistas
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+      // Quitar estado activo de los botones
+      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+      
+      // Mostrar la vista elegida y marcar el botón en rojo carmesí
+      document.getElementById('view-' + nombreVista).classList.add('active');
+      boton.classList.add('active');
+    }
+
     function crearPublicacion() {
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
@@ -373,22 +521,22 @@
 
       const feed = document.getElementById('feedContainer');
       const nuevaTarjeta = document.createElement('div');
-      nuevaTarjeta.className = 'post-card';
+      nuevaTarjeta.className = 'card';
 
       nuevaTarjeta.innerHTML = `
         <div class="post-header">
           <div class="user-info">
-            <div class="avatar">SF</div>
+            <div class="avatar">JL</div>
             <div>
-              <span class="username">Atleta Sigma <span class="badge-pro">SIGMA PRO</span></span>
+              <span class="username">Juan Luis <span class="badge-pro">SIGMA PRO</span></span>
             </div>
           </div>
           <span class="post-tag">${category}</span>
         </div>
         <div class="post-body">${texto}</div>
         <div class="post-footer">
-          <button class="action-btn" onclick="darFuerza(this)">🔥 Fuerza (<span>0</span>)</button>
-          <button class="action-btn">💬 Comentar</button>
+          <button class="action-btn" onclick="darFuerza(this)">Fuerza (<span>0</span>)</button>
+          <button class="action-btn">Comentar</button>
         </div>
       `;
 
@@ -408,10 +556,15 @@
       }
     }
 
+    function unirseReto(boton) {
+      boton.innerText = "Inscrito";
+      boton.style.backgroundColor = "#27272A";
+      boton.disabled = true;
+    }
+
     function simularBiometria() {
       alert('Módulo Biométrico (WebAuthn) listo para conectar con Supabase Auth.');
     }
   </script>
 </body>
 </html>
-            
