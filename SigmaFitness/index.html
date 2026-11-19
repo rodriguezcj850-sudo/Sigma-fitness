@@ -188,24 +188,6 @@
       display: block;
     }
 
-    .otp-banner {
-      background-color: #16161C;
-      border: 1px dashed var(--crimson);
-      border-radius: 8px;
-      padding: 0.7rem;
-      text-align: center;
-      margin-bottom: 0.9rem;
-      font-size: 0.82rem;
-    }
-
-    .otp-code-display {
-      font-size: 1.35rem;
-      font-weight: 900;
-      letter-spacing: 5px;
-      color: var(--crimson);
-      margin-top: 0.25rem;
-    }
-
     .channel-selector {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -239,6 +221,42 @@
       border-color: var(--whatsapp-green);
       background-color: rgba(37, 211, 102, 0.15);
       color: var(--whatsapp-green);
+    }
+
+    .btn-reopen-wa {
+      display: none;
+      width: 100%;
+      background-color: rgba(37, 211, 102, 0.14);
+      border: 1px solid var(--whatsapp-green);
+      color: var(--whatsapp-green);
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-reopen-wa.visible {
+      display: block;
+    }
+
+    .btn-reopen-wa:hover {
+      background-color: var(--whatsapp-green);
+      color: #000;
+    }
+
+    .new-pass-fields {
+      display: none;
+      margin-top: 0.5rem;
+      padding-top: 0.85rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .new-pass-fields.unlocked {
+      display: block;
     }
 
     .toggle-password {
@@ -1102,54 +1120,58 @@
 
     <!-- PASO 1: VALIDAR CORREO O WHATSAPP EN BASE DE DATOS -->
     <div id="recovery-step-1">
-      <label class="form-label">Método de envío del código</label>
+      <label class="form-label">Canal de envío del código</label>
       <div class="channel-selector">
-        <button type="button" id="btnChannelEmail" class="channel-btn active" onclick="seleccionarCanalRecuperacion('email')">
-          ✉️ Correo
-        </button>
-        <button type="button" id="btnChannelWhatsapp" class="channel-btn" onclick="seleccionarCanalRecuperacion('whatsapp')">
+        <button type="button" id="btnChannelWhatsapp" class="channel-btn whatsapp-active" onclick="seleccionarCanalRecuperacion('whatsapp')">
           💬 WhatsApp
         </button>
+        <button type="button" id="btnChannelEmail" class="channel-btn" onclick="seleccionarCanalRecuperacion('email')">
+          ✉️ Correo
+        </button>
       </div>
 
       <div class="form-group">
-        <label class="form-label" id="recoveryContactLabel">Correo Electrónico Registrado</label>
-        <input type="text" id="recoveryContactInput" class="form-input" placeholder="Ej. juanluis@sigmafit.com">
+        <label class="form-label" id="recoveryContactLabel">Número de WhatsApp Registrado</label>
+        <input type="text" id="recoveryContactInput" class="form-input" placeholder="Ej. +584145574866">
       </div>
 
-      <button type="button" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código de Verificación</button>
+      <button type="button" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código</button>
     </div>
 
-    <!-- PASO 2: VERIFICAR CÓDIGO OTP Y ESTABLECER NUEVA CONTRASEÑA -->
+    <!-- PASO 2: PEGAR CÓDIGO RECIBIDO Y CAMBIAR CONTRASEÑA -->
     <div id="recovery-step-2" style="display: none;">
-      <div class="otp-banner">
-        <div>Código enviado por <strong id="otpChannelText">Correo</strong>:</div>
-        <div class="otp-code-display" id="otpCodePreview">------</div>
-        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;">Código de seguridad válido por 5 minutos</div>
-      </div>
+      <a id="reopenWhatsappLink" href="#" target="_blank" class="btn-reopen-wa">
+        💬 Abrir WhatsApp para ver y copiar el código
+      </a>
 
       <div class="form-group">
-        <label class="form-label">Código de 6 Dígitos</label>
-        <input type="text" id="recoveryOtpInput" class="form-input" maxlength="6" placeholder="000000" style="text-align: center; letter-spacing: 4px; font-weight: 800;">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Nueva Contraseña</label>
-        <div class="input-wrapper">
-          <input type="password" id="recoveryNewPass" class="form-input" placeholder="Mínimo 6 caracteres">
-          <button type="button" class="toggle-password" onclick="togglePassword('recoveryNewPass', this)">Ver</button>
+        <label class="form-label">Pega o escribe el código recibido</label>
+        <div style="display: flex; gap: 0.45rem;">
+          <input type="text" id="recoveryOtpInput" class="form-input" maxlength="6" placeholder="Código de 6 dígitos" style="letter-spacing: 3px; font-weight: 800;">
+          <button type="button" class="btn-primary" style="width: auto; padding: 0 1rem; margin: 0;" onclick="validarCodigoOTP()">Verificar</button>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Confirmar Nueva Contraseña</label>
-        <div class="input-wrapper">
-          <input type="password" id="recoveryConfirmPass" class="form-input" placeholder="Repite la nueva contraseña">
-          <button type="button" class="toggle-password" onclick="togglePassword('recoveryConfirmPass', this)">Ver</button>
+      <!-- CAMPOS DE NUEVA CONTRASEÑA (SOLO SE DESBLOQUEAN SI EL CÓDIGO ES CORRECTO) -->
+      <div id="newPassFields" class="new-pass-fields">
+        <div class="form-group">
+          <label class="form-label">Nueva Contraseña</label>
+          <div class="input-wrapper">
+            <input type="password" id="recoveryNewPass" class="form-input" placeholder="Mínimo 6 caracteres">
+            <button type="button" class="toggle-password" onclick="togglePassword('recoveryNewPass', this)">Ver</button>
+          </div>
         </div>
-      </div>
 
-      <button type="button" class="btn-primary" onclick="confirmarCambioPassword()">Actualizar Contraseña</button>
+        <div class="form-group">
+          <label class="form-label">Confirmar Nueva Contraseña</label>
+          <div class="input-wrapper">
+            <input type="password" id="recoveryConfirmPass" class="form-input" placeholder="Repite la nueva contraseña">
+            <button type="button" class="toggle-password" onclick="togglePassword('recoveryConfirmPass', this)">Ver</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="confirmarCambioPassword()">Guardar Nueva Contraseña</button>
+      </div>
     </div>
 
     <button type="button" class="btn-secondary-dark" onclick="volverAlLogin()">← Volver a Iniciar Sesión</button>
@@ -1319,8 +1341,9 @@
   <script>
     let usuarioActual = "Juan Luis";
     let filtroActualBusqueda = "todos";
-    let canalRecuperacionActual = "email";
-    let codigoOTPGenerado = "";
+    let canalRecuperacionActual = "whatsapp";
+    let codigoOTPInterno = "";
+    let codigoVerificadoOk = false;
     let cuentaEnRecuperacion = null;
 
     // BASE DE DATOS INTERNA DE CUENTAS REGISTRADAS EN SIGMA FITNESS
@@ -1372,19 +1395,23 @@
       });
     }
 
-    // --- LÓGICA DEL SITIO ALTERNO DE RECUPERACIÓN DE CONTRASEÑA ---
+    // --- SITIO ALTERNO DE RECUPERACIÓN DE CONTRASEÑA ---
     function abrirVistaRecuperacion() {
       limpiarMensajesAuth();
       document.getElementById('auth-screen').style.display = 'none';
       document.getElementById('recovery-screen').style.display = 'block';
       document.getElementById('recovery-step-1').style.display = 'block';
       document.getElementById('recovery-step-2').style.display = 'none';
+      document.getElementById('newPassFields').classList.remove('unlocked');
+      document.getElementById('reopenWhatsappLink').classList.remove('visible');
       document.getElementById('recoveryContactInput').value = '';
       document.getElementById('recoveryOtpInput').value = '';
       document.getElementById('recoveryNewPass').value = '';
       document.getElementById('recoveryConfirmPass').value = '';
-      codigoOTPGenerado = "";
+      codigoOTPInterno = "";
+      codigoVerificadoOk = false;
       cuentaEnRecuperacion = null;
+      seleccionarCanalRecuperacion('whatsapp');
     }
 
     function volverAlLogin() {
@@ -1404,20 +1431,20 @@
       btnEmail.classList.remove('active');
       btnWa.classList.remove('whatsapp-active');
 
-      if (canal === 'email') {
-        btnEmail.classList.add('active');
-        label.innerText = "Correo Electrónico Registrado";
-        input.placeholder = "Ej. juanluis@sigmafit.com";
-      } else {
+      if (canal === 'whatsapp') {
         btnWa.classList.add('whatsapp-active');
         label.innerText = "Número de WhatsApp Registrado";
         input.placeholder = "Ej. +584145574866";
+      } else {
+        btnEmail.classList.add('active');
+        label.innerText = "Correo Electrónico Registrado";
+        input.placeholder = "Ej. juanluis@sigmafit.com";
       }
       input.value = '';
     }
 
     function normalizarTelefono(tel) {
-      return tel.replace(/[\s\-\(\)]/g, '');
+      return tel.replace(/[^\d]/g, '');
     }
 
     function solicitarCodigoRecuperacion() {
@@ -1425,13 +1452,12 @@
       const valorIngresado = document.getElementById('recoveryContactInput').value.trim();
 
       if (!valorIngresado) {
-        mostrarMensajeBox('recoveryError', canalRecuperacionActual === 'email'
-          ? 'Ingresa tu correo electrónico para verificarlo en la base de datos.'
-          : 'Ingresa tu número de WhatsApp registrado.');
+        mostrarMensajeBox('recoveryError', canalRecuperacionActual === 'whatsapp'
+          ? 'Ingresa tu número de WhatsApp registrado.'
+          : 'Ingresa tu correo electrónico registrado.');
         return;
       }
 
-      // Verificar si coincide con algún usuario registrado en la base de datos
       let usuarioEncontrado = null;
       if (canalRecuperacionActual === 'email') {
         usuarioEncontrado = baseDatosUsuarios.find(u => u.correo.toLowerCase() === valorIngresado.toLowerCase());
@@ -1441,22 +1467,54 @@
       }
 
       if (!usuarioEncontrado) {
-        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada en la base de datos de Sigma Fitness.');
+        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada en la base de datos.');
         return;
       }
 
-      // Generar código OTP aleatorio de 6 dígitos
       cuentaEnRecuperacion = usuarioEncontrado;
-      codigoOTPGenerado = Math.floor(100000 + Math.random() * 900000).toString();
-
-      document.getElementById('otpChannelText').innerText = canalRecuperacionActual === 'email'
-        ? `Correo (${usuarioEncontrado.correo})`
-        : `WhatsApp (${usuarioEncontrado.whatsapp})`;
-      document.getElementById('otpCodePreview').innerText = codigoOTPGenerado;
+      codigoOTPInterno = Math.floor(100000 + Math.random() * 900000).toString();
+      codigoVerificadoOk = false;
 
       document.getElementById('recovery-step-1').style.display = 'none';
       document.getElementById('recovery-step-2').style.display = 'block';
-      mostrarMensajeBox('recoverySuccess', `Identidad verificada para ${usuarioEncontrado.nombre}. Hemos enviado el código de seguridad.`);
+      document.getElementById('newPassFields').classList.remove('unlocked');
+
+      if (canalRecuperacionActual === 'whatsapp') {
+        const numLimpio = normalizarTelefono(usuarioEncontrado.whatsapp);
+        const mensajeWa = encodeURIComponent(`Sigma Fitness - Código de recuperación de contraseña: ${codigoOTPInterno}`);
+        const urlWa = `https://wa.me/${numLimpio}?text=${mensajeWa}`;
+
+        const linkWa = document.getElementById('reopenWhatsappLink');
+        linkWa.href = urlWa;
+        linkWa.classList.add('visible');
+
+        mostrarMensajeBox('recoverySuccess', `Código enviado a WhatsApp (${usuarioEncontrado.whatsapp}). Cópialo y pégalo aquí para continuar.`);
+        window.open(urlWa, '_blank');
+      } else {
+        document.getElementById('reopenWhatsappLink').classList.remove('visible');
+        mostrarMensajeBox('recoverySuccess', `Código enviado al correo (${usuarioEncontrado.correo}). Escríbelo o pégalo aquí para verificar.`);
+      }
+    }
+
+    function validarCodigoOTP() {
+      limpiarMensajesAuth();
+      const otpIngresado = document.getElementById('recoveryOtpInput').value.trim();
+
+      if (!codigoOTPInterno || !cuentaEnRecuperacion) {
+        mostrarMensajeBox('recoveryError', 'Primero debes solicitar el código de verificación.');
+        return;
+      }
+
+      if (!otpIngresado || otpIngresado !== codigoOTPInterno) {
+        codigoVerificadoOk = false;
+        document.getElementById('newPassFields').classList.remove('unlocked');
+        mostrarMensajeBox('recoveryError', 'Código incorrecto. Verifica el código que llegó a tu destino e inténtalo de nuevo.');
+        return;
+      }
+
+      codigoVerificadoOk = true;
+      document.getElementById('newPassFields').classList.add('unlocked');
+      mostrarMensajeBox('recoverySuccess', 'Código verificado correctamente. Ahora ingresa y confirma tu nueva contraseña.');
     }
 
     function confirmarCambioPassword() {
@@ -1465,13 +1523,8 @@
       const nuevaPass = document.getElementById('recoveryNewPass').value.trim();
       const confirmarPass = document.getElementById('recoveryConfirmPass').value.trim();
 
-      if (!cuentaEnRecuperacion || !codigoOTPGenerado) {
-        mostrarMensajeBox('recoveryError', 'Sesión de recuperación inválida. Vuelve a solicitar el código.');
-        return;
-      }
-
-      if (otpIngresado !== codigoOTPGenerado) {
-        mostrarMensajeBox('recoveryError', 'El código de verificación es incorrecto. Revisa el código enviado.');
+      if (!codigoVerificadoOk || otpIngresado !== codigoOTPInterno) {
+        mostrarMensajeBox('recoveryError', 'El código no ha sido validado correctamente.');
         return;
       }
 
@@ -1481,17 +1534,20 @@
       }
 
       if (nuevaPass !== confirmarPass) {
-        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden. Confírmala exactamente igual.');
+        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden. Escribe exactamente la misma clave en ambos campos.');
         return;
       }
 
-      // Actualizar contraseña en la base de datos
       cuentaEnRecuperacion.password = nuevaPass;
-      codigoOTPGenerado = "";
+      const correoActualizado = cuentaEnRecuperacion.correo;
+      const nombreActualizado = cuentaEnRecuperacion.nombre;
 
-      alert(`¡Contraseña actualizada con éxito para ${cuentaEnRecuperacion.nombre}! Ya puedes iniciar sesión con tu nueva clave.`);
+      codigoOTPInterno = "";
+      codigoVerificadoOk = false;
+
+      alert(`¡Contraseña actualizada con éxito para ${nombreActualizado}! Ya puedes iniciar sesión con tu nueva clave.`);
       volverAlLogin();
-      document.getElementById('loginUser').value = cuentaEnRecuperacion.correo;
+      document.getElementById('loginUser').value = correoActualizado;
       document.getElementById('loginPass').value = '';
     }
 
@@ -1713,7 +1769,6 @@
         return;
       }
 
-      // Buscar usuario registrado en la base de datos
       const usuarioValido = baseDatosUsuarios.find(u =>
         (u.correo.toLowerCase() === userInput.toLowerCase() || u.usuario.toLowerCase() === userInput.toLowerCase()) &&
         u.password === passInput
