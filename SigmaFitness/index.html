@@ -36,7 +36,7 @@
       padding: 0.85rem;
     }
 
-    /* Contenedor de Autenticación */
+    /* Contenedor de Autenticación y Recuperación */
     .auth-container {
       width: 100%;
       max-width: 400px;
@@ -119,7 +119,7 @@
     }
 
     .form-group {
-      margin-bottom: 1.1rem;
+      margin-bottom: 1.05rem;
       position: relative;
     }
 
@@ -161,13 +161,84 @@
       color: #FF8FA3;
       font-size: 0.8rem;
       font-weight: 600;
-      padding: 0.6rem 0.75rem;
+      padding: 0.65rem 0.75rem;
       border-radius: 8px;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.9rem;
+      line-height: 1.4;
     }
 
     .auth-error.visible {
       display: block;
+    }
+
+    .auth-success {
+      display: none;
+      background-color: rgba(37, 211, 102, 0.12);
+      border: 1px solid var(--whatsapp-green);
+      color: #86EFAC;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.65rem 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .auth-success.visible {
+      display: block;
+    }
+
+    .otp-banner {
+      background-color: #16161C;
+      border: 1px dashed var(--crimson);
+      border-radius: 8px;
+      padding: 0.7rem;
+      text-align: center;
+      margin-bottom: 0.9rem;
+      font-size: 0.82rem;
+    }
+
+    .otp-code-display {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+      color: var(--crimson);
+      margin-top: 0.25rem;
+    }
+
+    .channel-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .channel-btn {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.65rem 0.5rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    .channel-btn.active {
+      border-color: var(--crimson);
+      background-color: var(--crimson-glow);
+      color: white;
+    }
+
+    .channel-btn.whatsapp-active {
+      border-color: var(--whatsapp-green);
+      background-color: rgba(37, 211, 102, 0.15);
+      color: var(--whatsapp-green);
     }
 
     .toggle-password {
@@ -208,6 +279,26 @@
 
     .btn-primary:active {
       transform: scale(0.99);
+    }
+
+    .btn-secondary-dark {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 0.65rem;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary-dark:hover {
+      border-color: var(--crimson);
+      color: var(--text-main);
     }
 
     .btn-biometric-bank {
@@ -668,7 +759,7 @@
       word-break: break-word;
     }
 
-    /* BARRA MODERNA INTERNA DE ACCIONES (100% CONTENIDA EN EL POST) */
+    /* BARRA MODERNA INTERNA DE ACCIONES */
     .sigma-actions-bar {
       display: grid;
       grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr) minmax(0, 0.95fr);
@@ -935,7 +1026,7 @@
       </button>
 
       <div class="auth-footer">
-        <a class="auth-link" onclick="recuperarPassword()">¿Olvidaste tu contraseña?</a>
+        <a class="auth-link" onclick="abrirVistaRecuperacion()">¿Olvidaste tu contraseña?</a>
       </div>
     </div>
 
@@ -951,6 +1042,11 @@
       <div class="form-group">
         <label class="form-label">Correo Electrónico</label>
         <input type="email" id="regEmail" class="form-input" placeholder="tu@correo.com">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">WhatsApp (Para recuperación de cuenta)</label>
+        <input type="tel" id="regWhatsapp" class="form-input" placeholder="Ej. +584145574866">
       </div>
 
       <div class="form-group">
@@ -991,6 +1087,72 @@
 
       <button type="button" class="btn-primary" onclick="registrarUsuario()">Crear Cuenta Sigma</button>
     </div>
+  </div>
+
+  <!-- SITIO ALTERNO: RECUPERACIÓN DE CONTRASEÑA -->
+  <div id="recovery-screen" class="auth-container" style="display: none;">
+    <div class="auth-brand">
+      <div class="brand-icon-lg">🔐</div>
+      <div class="auth-title">RECUPERAR <span>ACCESO</span></div>
+      <div class="auth-subtitle">Verificación de Seguridad Sigma Fitness</div>
+    </div>
+
+    <div id="recoveryError" class="auth-error"></div>
+    <div id="recoverySuccess" class="auth-success"></div>
+
+    <!-- PASO 1: VALIDAR CORREO O WHATSAPP EN BASE DE DATOS -->
+    <div id="recovery-step-1">
+      <label class="form-label">Método de envío del código</label>
+      <div class="channel-selector">
+        <button type="button" id="btnChannelEmail" class="channel-btn active" onclick="seleccionarCanalRecuperacion('email')">
+          ✉️ Correo
+        </button>
+        <button type="button" id="btnChannelWhatsapp" class="channel-btn" onclick="seleccionarCanalRecuperacion('whatsapp')">
+          💬 WhatsApp
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" id="recoveryContactLabel">Correo Electrónico Registrado</label>
+        <input type="text" id="recoveryContactInput" class="form-input" placeholder="Ej. juanluis@sigmafit.com">
+      </div>
+
+      <button type="button" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código de Verificación</button>
+    </div>
+
+    <!-- PASO 2: VERIFICAR CÓDIGO OTP Y ESTABLECER NUEVA CONTRASEÑA -->
+    <div id="recovery-step-2" style="display: none;">
+      <div class="otp-banner">
+        <div>Código enviado por <strong id="otpChannelText">Correo</strong>:</div>
+        <div class="otp-code-display" id="otpCodePreview">------</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 3px;">Código de seguridad válido por 5 minutos</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Código de 6 Dígitos</label>
+        <input type="text" id="recoveryOtpInput" class="form-input" maxlength="6" placeholder="000000" style="text-align: center; letter-spacing: 4px; font-weight: 800;">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nueva Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="recoveryNewPass" class="form-input" placeholder="Mínimo 6 caracteres">
+          <button type="button" class="toggle-password" onclick="togglePassword('recoveryNewPass', this)">Ver</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirmar Nueva Contraseña</label>
+        <div class="input-wrapper">
+          <input type="password" id="recoveryConfirmPass" class="form-input" placeholder="Repite la nueva contraseña">
+          <button type="button" class="toggle-password" onclick="togglePassword('recoveryConfirmPass', this)">Ver</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" onclick="confirmarCambioPassword()">Actualizar Contraseña</button>
+    </div>
+
+    <button type="button" class="btn-secondary-dark" onclick="volverAlLogin()">← Volver a Iniciar Sesión</button>
   </div>
 
   <!-- PANTALLA PRINCIPAL DE LA APLICACIÓN -->
@@ -1157,14 +1319,33 @@
   <script>
     let usuarioActual = "Juan Luis";
     let filtroActualBusqueda = "todos";
-    let cuentaRegistrada = {
-      usuario: "",
-      correo: "",
-      password: "",
-      nombre: "",
-      pais: "",
-      enfoque: ""
-    };
+    let canalRecuperacionActual = "email";
+    let codigoOTPGenerado = "";
+    let cuentaEnRecuperacion = null;
+
+    // BASE DE DATOS INTERNA DE CUENTAS REGISTRADAS EN SIGMA FITNESS
+    const baseDatosUsuarios = [
+      {
+        nombre: "Juan Luis Rodríguez",
+        usuario: "juanluis",
+        correo: "juanluis@sigmafit.com",
+        whatsapp: "+584145574866",
+        password: "sigma123",
+        pais: "Venezuela",
+        enfoque: "Culturismo Natural",
+        rol: "FUNDADOR"
+      },
+      {
+        nombre: "Andrea Design",
+        usuario: "andrea",
+        correo: "andrea@sigmafit.com",
+        whatsapp: "+584120000000",
+        password: "sigma123",
+        pais: "Venezuela",
+        enfoque: "Acondicionamiento General",
+        rol: "COACH"
+      }
+    ];
 
     const directorioSigma = [
       { id: 1, nombre: "Juan Luis Rodríguez", tipo: "coach", detalle: "Fundador • Culturismo Natural & Hipertrofia", iniciales: "JL" },
@@ -1178,19 +1359,143 @@
       { id: 9, nombre: "Diego Salazar", tipo: "usuario", detalle: "Halterofilia • Argentina", iniciales: "DS" }
     ];
 
-    function mostrarErrorAuth(elementId, mensaje) {
+    function mostrarMensajeBox(elementId, mensaje) {
       const box = document.getElementById(elementId);
       box.innerText = mensaje;
       box.classList.add('visible');
     }
 
-    function limpiarErroresAuth() {
-      document.querySelectorAll('.auth-error').forEach(box => {
+    function limpiarMensajesAuth() {
+      document.querySelectorAll('.auth-error, .auth-success').forEach(box => {
         box.innerText = "";
         box.classList.remove('visible');
       });
     }
 
+    // --- LÓGICA DEL SITIO ALTERNO DE RECUPERACIÓN DE CONTRASEÑA ---
+    function abrirVistaRecuperacion() {
+      limpiarMensajesAuth();
+      document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('recovery-screen').style.display = 'block';
+      document.getElementById('recovery-step-1').style.display = 'block';
+      document.getElementById('recovery-step-2').style.display = 'none';
+      document.getElementById('recoveryContactInput').value = '';
+      document.getElementById('recoveryOtpInput').value = '';
+      document.getElementById('recoveryNewPass').value = '';
+      document.getElementById('recoveryConfirmPass').value = '';
+      codigoOTPGenerado = "";
+      cuentaEnRecuperacion = null;
+    }
+
+    function volverAlLogin() {
+      limpiarMensajesAuth();
+      document.getElementById('recovery-screen').style.display = 'none';
+      document.getElementById('auth-screen').style.display = 'block';
+    }
+
+    function seleccionarCanalRecuperacion(canal) {
+      limpiarMensajesAuth();
+      canalRecuperacionActual = canal;
+      const btnEmail = document.getElementById('btnChannelEmail');
+      const btnWa = document.getElementById('btnChannelWhatsapp');
+      const label = document.getElementById('recoveryContactLabel');
+      const input = document.getElementById('recoveryContactInput');
+
+      btnEmail.classList.remove('active');
+      btnWa.classList.remove('whatsapp-active');
+
+      if (canal === 'email') {
+        btnEmail.classList.add('active');
+        label.innerText = "Correo Electrónico Registrado";
+        input.placeholder = "Ej. juanluis@sigmafit.com";
+      } else {
+        btnWa.classList.add('whatsapp-active');
+        label.innerText = "Número de WhatsApp Registrado";
+        input.placeholder = "Ej. +584145574866";
+      }
+      input.value = '';
+    }
+
+    function normalizarTelefono(tel) {
+      return tel.replace(/[\s\-\(\)]/g, '');
+    }
+
+    function solicitarCodigoRecuperacion() {
+      limpiarMensajesAuth();
+      const valorIngresado = document.getElementById('recoveryContactInput').value.trim();
+
+      if (!valorIngresado) {
+        mostrarMensajeBox('recoveryError', canalRecuperacionActual === 'email'
+          ? 'Ingresa tu correo electrónico para verificarlo en la base de datos.'
+          : 'Ingresa tu número de WhatsApp registrado.');
+        return;
+      }
+
+      // Verificar si coincide con algún usuario registrado en la base de datos
+      let usuarioEncontrado = null;
+      if (canalRecuperacionActual === 'email') {
+        usuarioEncontrado = baseDatosUsuarios.find(u => u.correo.toLowerCase() === valorIngresado.toLowerCase());
+      } else {
+        const telBuscado = normalizarTelefono(valorIngresado);
+        usuarioEncontrado = baseDatosUsuarios.find(u => u.whatsapp && normalizarTelefono(u.whatsapp) === telBuscado);
+      }
+
+      if (!usuarioEncontrado) {
+        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada en la base de datos de Sigma Fitness.');
+        return;
+      }
+
+      // Generar código OTP aleatorio de 6 dígitos
+      cuentaEnRecuperacion = usuarioEncontrado;
+      codigoOTPGenerado = Math.floor(100000 + Math.random() * 900000).toString();
+
+      document.getElementById('otpChannelText').innerText = canalRecuperacionActual === 'email'
+        ? `Correo (${usuarioEncontrado.correo})`
+        : `WhatsApp (${usuarioEncontrado.whatsapp})`;
+      document.getElementById('otpCodePreview').innerText = codigoOTPGenerado;
+
+      document.getElementById('recovery-step-1').style.display = 'none';
+      document.getElementById('recovery-step-2').style.display = 'block';
+      mostrarMensajeBox('recoverySuccess', `Identidad verificada para ${usuarioEncontrado.nombre}. Hemos enviado el código de seguridad.`);
+    }
+
+    function confirmarCambioPassword() {
+      limpiarMensajesAuth();
+      const otpIngresado = document.getElementById('recoveryOtpInput').value.trim();
+      const nuevaPass = document.getElementById('recoveryNewPass').value.trim();
+      const confirmarPass = document.getElementById('recoveryConfirmPass').value.trim();
+
+      if (!cuentaEnRecuperacion || !codigoOTPGenerado) {
+        mostrarMensajeBox('recoveryError', 'Sesión de recuperación inválida. Vuelve a solicitar el código.');
+        return;
+      }
+
+      if (otpIngresado !== codigoOTPGenerado) {
+        mostrarMensajeBox('recoveryError', 'El código de verificación es incorrecto. Revisa el código enviado.');
+        return;
+      }
+
+      if (nuevaPass.length < 6) {
+        mostrarMensajeBox('recoveryError', 'La nueva contraseña debe tener al menos 6 caracteres.');
+        return;
+      }
+
+      if (nuevaPass !== confirmarPass) {
+        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden. Confírmala exactamente igual.');
+        return;
+      }
+
+      // Actualizar contraseña en la base de datos
+      cuentaEnRecuperacion.password = nuevaPass;
+      codigoOTPGenerado = "";
+
+      alert(`¡Contraseña actualizada con éxito para ${cuentaEnRecuperacion.nombre}! Ya puedes iniciar sesión con tu nueva clave.`);
+      volverAlLogin();
+      document.getElementById('loginUser').value = cuentaEnRecuperacion.correo;
+      document.getElementById('loginPass').value = '';
+    }
+
+    // --- BÚSQUEDA ---
     function togglePanelBusqueda() {
       const panel = document.getElementById('searchPanel');
       const btn = document.getElementById('btnSearchToggle');
@@ -1263,8 +1568,9 @@
       }
     }
 
+    // --- AUTENTICACIÓN Y REGISTRO ---
     function cambiarAuthTab(tab, boton) {
-      limpiarErroresAuth();
+      limpiarMensajesAuth();
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
       boton.classList.add('active');
@@ -1283,45 +1589,52 @@
     }
 
     function registrarUsuario() {
-      limpiarErroresAuth();
+      limpiarMensajesAuth();
       const nombre = document.getElementById('regName').value.trim();
       const correo = document.getElementById('regEmail').value.trim();
+      const whatsapp = document.getElementById('regWhatsapp').value.trim();
       const pass = document.getElementById('regPass').value.trim();
       const pais = document.getElementById('regCountry').value;
       const enfoque = document.getElementById('regFocus').value;
 
       if (!nombre) {
-        mostrarErrorAuth('registerError', 'Debes ingresar tu nombre de atleta.');
+        mostrarMensajeBox('registerError', 'Debes ingresar tu nombre de atleta.');
         return;
       }
       if (!correo || !correo.includes('@')) {
-        mostrarErrorAuth('registerError', 'Ingresa un correo electrónico válido.');
+        mostrarMensajeBox('registerError', 'Ingresa un correo electrónico válido.');
         return;
       }
       if (pass.length < 6) {
-        mostrarErrorAuth('registerError', 'La contraseña debe tener al menos 6 caracteres.');
+        mostrarMensajeBox('registerError', 'La contraseña debe tener al menos 6 caracteres.');
         return;
       }
       if (!pais) {
-        mostrarErrorAuth('registerError', 'Selecciona tu país para continuar.');
+        mostrarMensajeBox('registerError', 'Selecciona tu país para continuar.');
         return;
       }
 
-      cuentaRegistrada = {
-        usuario: nombre.toLowerCase(),
-        correo: correo.toLowerCase(),
-        password: pass,
+      const existeCorreo = baseDatosUsuarios.some(u => u.correo.toLowerCase() === correo.toLowerCase());
+      if (existeCorreo) {
+        mostrarMensajeBox('registerError', 'Este correo ya está registrado en Sigma Fitness.');
+        return;
+      }
+
+      const nuevoUsuario = {
         nombre: nombre,
+        usuario: nombre.toLowerCase().replace(/\s+/g, ''),
+        correo: correo.toLowerCase(),
+        whatsapp: whatsapp,
+        password: pass,
         pais: pais,
-        enfoque: enfoque
+        enfoque: enfoque,
+        rol: "ATLETA"
       };
 
-      usuarioActual = nombre;
-      const iniciales = nombre.substring(0, 2).toUpperCase();
-      document.getElementById('profileName').innerHTML = `${nombre} <span class="badge-pro">ATLETA</span>`;
-      document.getElementById('profileFocus').innerText = `${enfoque} • ${pais}`;
-      document.getElementById('profileAvatar').innerText = iniciales;
+      baseDatosUsuarios.push(nuevoUsuario);
+      aplicarPerfilUsuario(nuevoUsuario);
 
+      const iniciales = nombre.substring(0, 2).toUpperCase();
       directorioSigma.unshift({
         id: Date.now(),
         nombre: nombre,
@@ -1334,15 +1647,16 @@
       entrarApp();
     }
 
-    function recuperarPassword() {
-      const correo = prompt('Ingresa tu correo registrado para enviar instrucciones de recuperación:');
-      if (correo && correo.trim()) {
-        alert('Se han enviado instrucciones de recuperación a: ' + correo.trim());
-      }
+    function aplicarPerfilUsuario(userObj) {
+      usuarioActual = userObj.nombre;
+      const iniciales = userObj.nombre.substring(0, 2).toUpperCase();
+      document.getElementById('profileName').innerHTML = `${userObj.nombre} <span class="badge-pro">${userObj.rol || 'ATLETA'}</span>`;
+      document.getElementById('profileFocus').innerText = `${userObj.enfoque} • ${userObj.pais}`;
+      document.getElementById('profileAvatar').innerText = iniciales;
     }
 
     async function autenticarBiometriaReal() {
-      limpiarErroresAuth();
+      limpiarMensajesAuth();
       if (window.PublicKeyCredential) {
         try {
           const publicKey = {
@@ -1360,6 +1674,7 @@
 
           await navigator.credentials.create({ publicKey });
           alert("¡Huella verificada correctamente por el sistema!");
+          aplicarPerfilUsuario(baseDatosUsuarios[0]);
           entrarApp();
         } catch (error) {
           verificarBiometriaRespaldoBanco();
@@ -1373,6 +1688,7 @@
       const pinConfirmado = confirm("Sigma Fitness - Seguridad Biométrica:\n\n¿Autorizar acceso mediante el sistema seguro del dispositivo (PIN / Patrón / Huella)?");
       if (pinConfirmado) {
         alert("Autenticación biométrica exitosa.");
+        aplicarPerfilUsuario(baseDatosUsuarios[0]);
         entrarApp();
       } else {
         alert("Autenticación cancelada.");
@@ -1380,51 +1696,47 @@
     }
 
     function iniciarSesion() {
-      limpiarErroresAuth();
+      limpiarMensajesAuth();
       const userInput = document.getElementById('loginUser').value.trim();
       const passInput = document.getElementById('loginPass').value.trim();
 
       if (!userInput && !passInput) {
-        mostrarErrorAuth('loginError', 'Ingresa tu correo o usuario y tu contraseña para acceder.');
+        mostrarMensajeBox('loginError', 'Ingresa tu correo o usuario y tu contraseña para acceder.');
         return;
       }
       if (!userInput) {
-        mostrarErrorAuth('loginError', 'Debes escribir tu correo o usuario.');
+        mostrarMensajeBox('loginError', 'Debes escribir tu correo o usuario.');
         return;
       }
       if (!passInput) {
-        mostrarErrorAuth('loginError', 'Debes escribir tu contraseña.');
-        return;
-      }
-      if (passInput.length < 4) {
-        mostrarErrorAuth('loginError', 'La contraseña ingresada es demasiado corta.');
+        mostrarMensajeBox('loginError', 'Debes escribir tu contraseña.');
         return;
       }
 
-      if (cuentaRegistrada.correo) {
-        const coincideUser = userInput.toLowerCase() === cuentaRegistrada.correo || userInput.toLowerCase() === cuentaRegistrada.usuario;
-        if (!coincideUser || passInput !== cuentaRegistrada.password) {
-          mostrarErrorAuth('loginError', 'Credenciales incorrectas. Verifica tu correo/usuario y contraseña.');
-          return;
-        }
-      } else {
-        usuarioActual = userInput.includes('@') ? userInput.split('@')[0] : userInput;
-        const iniciales = usuarioActual.substring(0, 2).toUpperCase();
-        document.getElementById('profileName').innerHTML = `${usuarioActual} <span class="badge-pro">ATLETA</span>`;
-        document.getElementById('profileAvatar').innerText = iniciales;
+      // Buscar usuario registrado en la base de datos
+      const usuarioValido = baseDatosUsuarios.find(u =>
+        (u.correo.toLowerCase() === userInput.toLowerCase() || u.usuario.toLowerCase() === userInput.toLowerCase()) &&
+        u.password === passInput
+      );
+
+      if (!usuarioValido) {
+        mostrarMensajeBox('loginError', 'Correo/usuario o contraseña incorrectos. Si olvidaste tu clave, recupérala abajo.');
+        return;
       }
 
+      aplicarPerfilUsuario(usuarioValido);
       entrarApp();
     }
 
     function entrarApp() {
       document.getElementById('auth-screen').style.display = 'none';
+      document.getElementById('recovery-screen').style.display = 'none';
       document.getElementById('app-screen').classList.add('active');
     }
 
     function cerrarSesion() {
       document.getElementById('loginPass').value = '';
-      limpiarErroresAuth();
+      limpiarMensajesAuth();
       document.getElementById('app-screen').classList.remove('active');
       document.getElementById('searchPanel').classList.remove('open');
       document.getElementById('btnSearchToggle').classList.remove('active');
@@ -1438,6 +1750,7 @@
       boton.classList.add('active');
     }
 
+    // --- FEED Y REACCIONES ---
     function crearPublicacion() {
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
