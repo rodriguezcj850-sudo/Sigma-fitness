@@ -718,6 +718,22 @@
       background-color: rgba(220, 20, 60, 0.14);
     }
 
+    .camera-mode-bar {
+      display: none;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      background-color: var(--bg-input);
+      border: 1px solid var(--crimson);
+      border-radius: 9px;
+      padding: 0.55rem;
+      margin-bottom: 0.7rem;
+      align-items: center;
+    }
+
+    .camera-mode-bar.open {
+      display: flex;
+    }
+
     .format-select {
       background-color: var(--bg-input);
       color: var(--text-main);
@@ -1149,7 +1165,7 @@
 
       <div class="form-group">
         <label class="form-label">Correo o Usuario</label>
-        <input type="text" id="loginUser" class="form-input" placeholder="rodriguezcj850@gmail.com" autocomplete="username">
+        <input type="text" id="loginUser" class="form-input" placeholder="atleta@sigmafit.com" autocomplete="username">
       </div>
 
       <div class="form-group">
@@ -1341,21 +1357,28 @@
         <div class="card post-creator">
           <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
 
-          <!-- Inputs ocultos para Cámara y Galería -->
-          <input type="file" id="cameraInput" accept="image/*,video/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara')">
+          <!-- Inputs separados para forzar Cámara (Foto / Video) y Galería -->
+          <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara foto')">
+          <input type="file" id="cameraVideoInput" accept="video/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara video')">
           <input type="file" id="galleryInput" accept="image/*,video/*" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'galería')">
 
           <div class="media-toolbar">
-            <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraInput').click()">
+            <button type="button" class="media-pick-btn" onclick="toggleOpcionesCamara()">
               📷 Cámara
             </button>
-            <button type="button" class="media-pick-btn" onclick="document.getElementById('galleryInput').click()">
+            <button type="button" class="media-pick-btn" onclick="abrirGaleria()">
               🖼️ Galería
             </button>
             <select id="postFormat" class="format-select">
               <option value="post">Post Normal</option>
               <option value="reel">Reel Vertical</option>
             </select>
+          </div>
+
+          <div id="cameraModeBar" class="camera-mode-bar">
+            <button type="button" class="media-pick-btn" onclick="lanzarCamaraFoto()">📸 Tomar Foto</button>
+            <button type="button" class="media-pick-btn" onclick="lanzarCamaraVideo()">🎥 Grabar Video</button>
+            <button type="button" class="btn-close-search" style="margin-left:auto; position:static;" onclick="toggleOpcionesCamara(false)">✕</button>
           </div>
 
           <div id="mediaPreviewBox" class="media-preview-box">
@@ -1586,7 +1609,7 @@
       } else {
         btnEmail.classList.add('active');
         label.innerText = "Correo Electrónico Registrado";
-        input.placeholder = "Ej. rodriguezcj850@gmail.com";
+        input.placeholder = "Ej. atleta@sigmafit.com";
       }
       input.value = '';
     }
@@ -1731,7 +1754,31 @@
       document.getElementById('loginPass').value = '';
     }
 
-    // --- MULTIMEDIA: CÁMARA, GALERÍA, FOTOS, VIDEOS Y REELS ---
+    // --- MULTIMEDIA: CÁMARA (FOTO / VIDEO), GALERÍA, FOTOS, VIDEOS Y REELS ---
+    function toggleOpcionesCamara(forzarEstado = null) {
+      const bar = document.getElementById('cameraModeBar');
+      if (typeof forzarEstado === 'boolean') {
+        bar.classList.toggle('open', forzarEstado);
+      } else {
+        bar.classList.toggle('open');
+      }
+    }
+
+    function lanzarCamaraFoto() {
+      toggleOpcionesCamara(false);
+      document.getElementById('cameraPhotoInput').click();
+    }
+
+    function lanzarCamaraVideo() {
+      toggleOpcionesCamara(false);
+      document.getElementById('cameraVideoInput').click();
+    }
+
+    function abrirGaleria() {
+      toggleOpcionesCamara(false);
+      document.getElementById('galleryInput').click();
+    }
+
     function manejarArchivoSeleccionado(file, origen) {
       if (!file) return;
 
@@ -1800,7 +1847,8 @@
         URL.revokeObjectURL(archivoAdjuntoActual.url);
       }
       archivoAdjuntoActual = null;
-      document.getElementById('cameraInput').value = '';
+      document.getElementById('cameraPhotoInput').value = '';
+      document.getElementById('cameraVideoInput').value = '';
       document.getElementById('galleryInput').value = '';
       renderizarVistaPreviaMedia();
     }
@@ -1974,8 +2022,8 @@
             rp: { name: "Sigma Fitness" },
             user: {
               id: new Uint8Array([1]),
-              name: "rodriguezcj850@gmail.com",
-              displayName: "Juan Luis Rodríguez"
+              name: "atleta@sigmafit.com",
+              displayName: "Atleta Sigma"
             },
             pubKeyCredParams: [{ alg: -7, type: "public-key" }],
             timeout: 60000,
@@ -2143,11 +2191,13 @@
       feed.prepend(tarjeta);
       input.value = '';
       archivoAdjuntoActual = null;
-      document.getElementById('cameraInput').value = '';
+      document.getElementById('cameraPhotoInput').value = '';
+      document.getElementById('cameraVideoInput').value = '';
       document.getElementById('galleryInput').value = '';
       document.getElementById('postFormat').value = 'post';
       document.getElementById('mediaPreviewBox').classList.remove('active');
       document.getElementById('mediaPreviewContent').innerHTML = '';
+      toggleOpcionesCamara(false);
     }
 
     function cerrarPickersActivos(excepto = null) {
