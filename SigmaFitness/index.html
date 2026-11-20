@@ -36,7 +36,7 @@
       padding: 0.85rem;
     }
 
-    /* Contenedor de Autenticación y Recuperación */
+    /* Autenticación y Recuperación */
     .auth-container {
       width: 100%;
       max-width: 400px;
@@ -681,12 +681,135 @@
       resize: none;
       height: 82px;
       font-size: 0.92rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
       outline: none;
     }
 
     .post-creator textarea:focus {
       border-color: var(--crimson);
+    }
+
+    /* MULTIMEDIA: CÁMARA, GALERÍA, REELS Y VISTA PREVIA */
+    .media-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.7rem;
+      align-items: center;
+    }
+
+    .media-pick-btn {
+      background-color: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.45rem 0.72rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    .media-pick-btn:hover {
+      border-color: var(--crimson);
+      background-color: rgba(220, 20, 60, 0.14);
+    }
+
+    .format-select {
+      background-color: var(--bg-input);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 0.45rem 0.65rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      outline: none;
+      margin-left: auto;
+    }
+
+    .format-select:focus {
+      border-color: var(--crimson);
+    }
+
+    .media-preview-box {
+      display: none;
+      position: relative;
+      background-color: var(--bg-input);
+      border: 1px solid var(--crimson);
+      border-radius: 10px;
+      padding: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .media-preview-box.active {
+      display: block;
+    }
+
+    .btn-remove-media {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(9, 9, 11, 0.85);
+      border: 1px solid var(--crimson);
+      color: white;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    .post-media-container {
+      margin-bottom: 0.85rem;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #09090B;
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .post-media-img {
+      width: 100%;
+      max-height: 430px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-media-video {
+      width: 100%;
+      max-height: 450px;
+      display: block;
+      background-color: #000;
+    }
+
+    .post-media-reel {
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 9 / 16;
+      max-height: 480px;
+      margin: 0 auto;
+      object-fit: cover;
+      display: block;
+      background-color: #000;
+    }
+
+    .reel-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.5px;
+      z-index: 4;
     }
 
     .creator-actions {
@@ -773,7 +896,7 @@
       font-size: 0.93rem;
       line-height: 1.5;
       color: #E4E4E7;
-      margin-bottom: 0.95rem;
+      margin-bottom: 0.85rem;
       word-break: break-word;
     }
 
@@ -1021,7 +1144,6 @@
       <button type="button" class="auth-tab" onclick="cambiarAuthTab('register', this)">Registrarse</button>
     </div>
 
-    <!-- FORMULARIO: INICIAR SESIÓN -->
     <div id="form-login" class="auth-form active">
       <div id="loginError" class="auth-error"></div>
 
@@ -1048,7 +1170,6 @@
       </div>
     </div>
 
-    <!-- FORMULARIO: REGISTRARSE -->
     <div id="form-register" class="auth-form">
       <div id="registerError" class="auth-error"></div>
 
@@ -1118,7 +1239,6 @@
     <div id="recoveryError" class="auth-error"></div>
     <div id="recoverySuccess" class="auth-success"></div>
 
-    <!-- PASO 1: VALIDAR CORREO O WHATSAPP EN BASE DE DATOS -->
     <div id="recovery-step-1">
       <label class="form-label">Canal de envío del código</label>
       <div class="channel-selector">
@@ -1135,10 +1255,9 @@
         <input type="text" id="recoveryContactInput" class="form-input" placeholder="Ej. +584145574866">
       </div>
 
-      <button type="button" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código</button>
+      <button type="button" id="btnSendOtp" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código</button>
     </div>
 
-    <!-- PASO 2: PEGAR CÓDIGO RECIBIDO Y CAMBIAR CONTRASEÑA -->
     <div id="recovery-step-2" style="display: none;">
       <a id="reopenWhatsappLink" href="#" target="_blank" class="btn-reopen-wa">
         💬 Abrir WhatsApp para ver y copiar el código
@@ -1152,7 +1271,6 @@
         </div>
       </div>
 
-      <!-- CAMPOS DE NUEVA CONTRASEÑA (SOLO SE DESBLOQUEAN SI EL CÓDIGO ES CORRECTO) -->
       <div id="newPassFields" class="new-pass-fields">
         <div class="form-group">
           <label class="form-label">Nueva Contraseña</label>
@@ -1197,7 +1315,6 @@
       <button type="button" class="action-btn" onclick="cerrarSesion()" style="color: var(--crimson); border-color: var(--crimson);">Salir</button>
     </header>
 
-    <!-- PANEL DESPLEGABLE DE BÚSQUEDA -->
     <div id="searchPanel" class="search-panel">
       <div class="search-box-wrapper">
         <input type="text" id="globalSearchInput" class="search-input" placeholder="Buscar atletas, coaches, grupos..." oninput="filtrarDirectorio()">
@@ -1223,6 +1340,29 @@
       <section id="view-comunidad" class="view-section active">
         <div class="card post-creator">
           <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
+
+          <!-- Inputs ocultos para Cámara y Galería -->
+          <input type="file" id="cameraInput" accept="image/*,video/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara')">
+          <input type="file" id="galleryInput" accept="image/*,video/*" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'galería')">
+
+          <div class="media-toolbar">
+            <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraInput').click()">
+              📷 Cámara
+            </button>
+            <button type="button" class="media-pick-btn" onclick="document.getElementById('galleryInput').click()">
+              🖼️ Galería
+            </button>
+            <select id="postFormat" class="format-select">
+              <option value="post">Post Normal</option>
+              <option value="reel">Reel Vertical</option>
+            </select>
+          </div>
+
+          <div id="mediaPreviewBox" class="media-preview-box">
+            <button type="button" class="btn-remove-media" onclick="limpiarArchivoAdjunto()" title="Quitar archivo">✕</button>
+            <div id="mediaPreviewContent"></div>
+          </div>
+
           <div class="creator-actions">
             <select id="postCategory" class="tag-select">
               <option value="Entrenamiento">Entrenamiento</option>
@@ -1343,10 +1483,13 @@
     let filtroActualBusqueda = "todos";
     let canalRecuperacionActual = "whatsapp";
     let codigoOTPInterno = "";
+    let tokenBackendOTP = "";
     let codigoVerificadoOk = false;
     let cuentaEnRecuperacion = null;
 
-    // BASE DE DATOS INTERNA DE CUENTAS REGISTRADAS EN SIGMA FITNESS
+    // Estado multimedia adjunto a la publicación actual
+    let archivoAdjuntoActual = null; // { url, tipo: 'image' | 'video', origen }
+
     const baseDatosUsuarios = [
       {
         nombre: "Juan Luis Rodríguez",
@@ -1395,7 +1538,11 @@
       });
     }
 
-    // --- SITIO ALTERNO DE RECUPERACIÓN DE CONTRASEÑA ---
+    function normalizarTelefono(tel) {
+      return tel.replace(/[^\d]/g, '');
+    }
+
+    // --- RECUPERACIÓN DE CONTRASEÑA + SERVIDOR /api/send-otp ---
     function abrirVistaRecuperacion() {
       limpiarMensajesAuth();
       document.getElementById('auth-screen').style.display = 'none';
@@ -1409,6 +1556,7 @@
       document.getElementById('recoveryNewPass').value = '';
       document.getElementById('recoveryConfirmPass').value = '';
       codigoOTPInterno = "";
+      tokenBackendOTP = "";
       codigoVerificadoOk = false;
       cuentaEnRecuperacion = null;
       seleccionarCanalRecuperacion('whatsapp');
@@ -1443,13 +1591,10 @@
       input.value = '';
     }
 
-    function normalizarTelefono(tel) {
-      return tel.replace(/[^\d]/g, '');
-    }
-
-    function solicitarCodigoRecuperacion() {
+    async function solicitarCodigoRecuperacion() {
       limpiarMensajesAuth();
       const valorIngresado = document.getElementById('recoveryContactInput').value.trim();
+      const btnSend = document.getElementById('btnSendOtp');
 
       if (!valorIngresado) {
         mostrarMensajeBox('recoveryError', canalRecuperacionActual === 'whatsapp'
@@ -1467,12 +1612,46 @@
       }
 
       if (!usuarioEncontrado) {
-        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada en la base de datos.');
+        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada.');
         return;
       }
 
+      btnSend.disabled = true;
+      btnSend.innerText = "Enviando...";
+
+      const destinoReal = canalRecuperacionActual === 'email' ? usuarioEncontrado.correo : usuarioEncontrado.whatsapp;
+      let otpGenerado = Math.floor(100000 + Math.random() * 900000).toString();
+
+      try {
+        const resp = await fetch('/api/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            canal: canalRecuperacionActual,
+            destino: destinoReal,
+            nombre: usuarioEncontrado.nombre
+          })
+        });
+
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.tokenVerificacion) {
+            tokenBackendOTP = data.tokenVerificacion;
+            const decodificado = atob(data.tokenVerificacion).split(':');
+            if (decodificado[1]) {
+              otpGenerado = decodificado[1];
+            }
+          }
+        }
+      } catch (e) {
+        // Si está en vista previa local sin servidor de Vercel, continúa con generación interna
+      } finally {
+        btnSend.disabled = false;
+        btnSend.innerText = "Enviar Código";
+      }
+
       cuentaEnRecuperacion = usuarioEncontrado;
-      codigoOTPInterno = Math.floor(100000 + Math.random() * 900000).toString();
+      codigoOTPInterno = otpGenerado;
       codigoVerificadoOk = false;
 
       document.getElementById('recovery-step-1').style.display = 'none';
@@ -1488,11 +1667,11 @@
         linkWa.href = urlWa;
         linkWa.classList.add('visible');
 
-        mostrarMensajeBox('recoverySuccess', `Código enviado a WhatsApp (${usuarioEncontrado.whatsapp}). Cópialo y pégalo aquí para continuar.`);
+        mostrarMensajeBox('recoverySuccess', `Código enviado a WhatsApp (${usuarioEncontrado.whatsapp}). Cópialo y pégalo aquí para verificar.`);
         window.open(urlWa, '_blank');
       } else {
         document.getElementById('reopenWhatsappLink').classList.remove('visible');
-        mostrarMensajeBox('recoverySuccess', `Código enviado al correo (${usuarioEncontrado.correo}). Escríbelo o pégalo aquí para verificar.`);
+        mostrarMensajeBox('recoverySuccess', `Código enviado al correo (${usuarioEncontrado.correo}). Cópialo y pégalo aquí para verificar.`);
       }
     }
 
@@ -1508,7 +1687,7 @@
       if (!otpIngresado || otpIngresado !== codigoOTPInterno) {
         codigoVerificadoOk = false;
         document.getElementById('newPassFields').classList.remove('unlocked');
-        mostrarMensajeBox('recoveryError', 'Código incorrecto. Verifica el código que llegó a tu destino e inténtalo de nuevo.');
+        mostrarMensajeBox('recoveryError', 'Código incorrecto. Verifica el código que recibiste e inténtalo de nuevo.');
         return;
       }
 
@@ -1534,7 +1713,7 @@
       }
 
       if (nuevaPass !== confirmarPass) {
-        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden. Escribe exactamente la misma clave en ambos campos.');
+        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden.');
         return;
       }
 
@@ -1543,12 +1722,87 @@
       const nombreActualizado = cuentaEnRecuperacion.nombre;
 
       codigoOTPInterno = "";
+      tokenBackendOTP = "";
       codigoVerificadoOk = false;
 
-      alert(`¡Contraseña actualizada con éxito para ${nombreActualizado}! Ya puedes iniciar sesión con tu nueva clave.`);
+      alert(`¡Contraseña actualizada con éxito para ${nombreActualizado}! Ya puedes iniciar sesión.`);
       volverAlLogin();
       document.getElementById('loginUser').value = correoActualizado;
       document.getElementById('loginPass').value = '';
+    }
+
+    // --- MULTIMEDIA: CÁMARA, GALERÍA, FOTOS, VIDEOS Y REELS ---
+    function manejarArchivoSeleccionado(file, origen) {
+      if (!file) return;
+
+      const esVideo = file.type.startsWith('video/');
+      const esImagen = file.type.startsWith('image/');
+
+      if (!esVideo && !esImagen) {
+        alert('Solo se admiten imágenes o videos.');
+        return;
+      }
+
+      if (archivoAdjuntoActual && archivoAdjuntoActual.url && archivoAdjuntoActual.url.startsWith('blob:')) {
+        URL.revokeObjectURL(archivoAdjuntoActual.url);
+      }
+
+      const urlObjeto = URL.createObjectURL(file);
+      archivoAdjuntoActual = {
+        url: urlObjeto,
+        tipo: esVideo ? 'video' : 'image',
+        origen: origen
+      };
+
+      if (esVideo) {
+        document.getElementById('postFormat').value = 'reel';
+      }
+
+      renderizarVistaPreviaMedia();
+    }
+
+    function renderizarVistaPreviaMedia() {
+      const box = document.getElementById('mediaPreviewBox');
+      const content = document.getElementById('mediaPreviewContent');
+      const formato = document.getElementById('postFormat').value;
+
+      if (!archivoAdjuntoActual) {
+        box.classList.remove('active');
+        content.innerHTML = '';
+        return;
+      }
+
+      box.classList.add('active');
+      const claseMedia = formato === 'reel' ? 'post-media-reel' : (archivoAdjuntoActual.tipo === 'video' ? 'post-media-video' : 'post-media-img');
+      const badgeReel = formato === 'reel' ? '<span class="reel-badge">REEL</span>' : '';
+
+      if (archivoAdjuntoActual.tipo === 'video') {
+        content.innerHTML = `
+          <div class="post-media-container" style="margin:0;">
+            ${badgeReel}
+            <video src="${archivoAdjuntoActual.url}" class="${claseMedia}" controls playsinline></video>
+          </div>
+        `;
+      } else {
+        content.innerHTML = `
+          <div class="post-media-container" style="margin:0;">
+            ${badgeReel}
+            <img src="${archivoAdjuntoActual.url}" alt="Vista previa" class="${claseMedia}">
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById('postFormat').addEventListener('change', renderizarVistaPreviaMedia);
+
+    function limpiarArchivoAdjunto() {
+      if (archivoAdjuntoActual && archivoAdjuntoActual.url && archivoAdjuntoActual.url.startsWith('blob:')) {
+        URL.revokeObjectURL(archivoAdjuntoActual.url);
+      }
+      archivoAdjuntoActual = null;
+      document.getElementById('cameraInput').value = '';
+      document.getElementById('galleryInput').value = '';
+      renderizarVistaPreviaMedia();
     }
 
     // --- BÚSQUEDA ---
@@ -1624,7 +1878,7 @@
       }
     }
 
-    // --- AUTENTICACIÓN Y REGISTRO ---
+    // --- AUTENTICACIÓN ---
     function cambiarAuthTab(tab, boton) {
       limpiarMensajesAuth();
       document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -1805,17 +2059,41 @@
       boton.classList.add('active');
     }
 
-    // --- FEED Y REACCIONES ---
+    // --- FEED, MULTIMEDIA Y REACCIONES ---
     function crearPublicacion() {
       const input = document.getElementById('postInput');
       const category = document.getElementById('postCategory').value;
+      const formato = document.getElementById('postFormat').value;
       const texto = input.value.trim();
-      if (!texto) return;
+
+      if (!texto && !archivoAdjuntoActual) return;
 
       const feed = document.getElementById('feedContainer');
       const tarjeta = document.createElement('div');
       tarjeta.className = 'card';
       const iniciales = usuarioActual.substring(0, 2).toUpperCase();
+
+      let mediaHtml = '';
+      if (archivoAdjuntoActual) {
+        const claseMedia = formato === 'reel' ? 'post-media-reel' : (archivoAdjuntoActual.tipo === 'video' ? 'post-media-video' : 'post-media-img');
+        const badgeReel = formato === 'reel' ? '<span class="reel-badge">REEL</span>' : '';
+
+        if (archivoAdjuntoActual.tipo === 'video') {
+          mediaHtml = `
+            <div class="post-media-container">
+              ${badgeReel}
+              <video src="${archivoAdjuntoActual.url}" class="${claseMedia}" controls playsinline></video>
+            </div>
+          `;
+        } else {
+          mediaHtml = `
+            <div class="post-media-container">
+              ${badgeReel}
+              <img src="${archivoAdjuntoActual.url}" alt="Publicación de ${usuarioActual}" class="${claseMedia}">
+            </div>
+          `;
+        }
+      }
 
       tarjeta.innerHTML = `
         <div class="post-header">
@@ -1825,7 +2103,8 @@
           </div>
           <span class="post-tag">${category}</span>
         </div>
-        <div class="post-body">${texto}</div>
+        ${texto ? `<div class="post-body">${texto}</div>` : ''}
+        ${mediaHtml}
         <div class="sigma-actions-bar">
           <div class="reaction-picker">
             <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🔥')">🔥</button>
@@ -1863,6 +2142,12 @@
       `;
       feed.prepend(tarjeta);
       input.value = '';
+      archivoAdjuntoActual = null;
+      document.getElementById('cameraInput').value = '';
+      document.getElementById('galleryInput').value = '';
+      document.getElementById('postFormat').value = 'post';
+      document.getElementById('mediaPreviewBox').classList.remove('active');
+      document.getElementById('mediaPreviewContent').innerHTML = '';
     }
 
     function cerrarPickersActivos(excepto = null) {
@@ -1952,7 +2237,7 @@
 
     function compartirPost(boton) {
       const card = boton.closest('.card');
-      const textoPost = card.querySelector('.post-body').innerText;
+      const textoPost = card.querySelector('.post-body') ? card.querySelector('.post-body').innerText : 'Contenido multimedia en Sigma Fitness';
       const textoCompartir = `Sigma Fitness: "${textoPost}" - Únete a la disciplina innegociable.`;
       const labelSpan = boton.querySelector('.reaction-label');
       const textoPrevio = labelSpan ? labelSpan.innerText : "Compartir";
