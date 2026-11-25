@@ -4,115 +4,109 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#DC143C" />
-  <title>Sigma Fitness — Red Social & Entrenamiento</title>
+  <title>SIGMA FITNESS</title>
   <style>
     :root {
       --crimson: #DC143C;
-      --crimson-dark: #9B0D29;
-      --crimson-glow: rgba(220, 20, 60, 0.25);
-      --bg-main: #09090B;
-      --bg-card: #121215;
-      --bg-input: #1A1A1E;
-      --border-color: #27272A;
-      --text-main: #F4F4F5;
-      --text-muted: #A1A1AA;
-      --whatsapp-green: #25D366;
-      --danger: #EF4444;
+      --crimson-dark: #9e0b28;
+      --crimson-glow: rgba(220, 20, 60, 0.35);
+      --bg-main: #0c0c0f;
+      --bg-card: #16161b;
+      --bg-elevated: #1f1f27;
+      --text-main: #f5f5f7;
+      --text-muted: #a1a1aa;
+      --border-soft: rgba(255, 255, 255, 0.09);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, rgba(220, 20, 60, 0.14), transparent 45%), var(--bg-main);
       color: var(--text-main);
       min-height: 100vh;
-      overflow-x: hidden;
-      padding-bottom: 78px;
+      line-height: 1.45;
     }
-
-    /* --- AUTENTICACIÓN Y RECUPERACIÓN --- */
-    .auth-container {
+    /* === AUTENTICACIÓN === */
+    .auth-wrapper {
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1.2rem;
-      background: radial-gradient(circle at top, rgba(220, 20, 60, 0.16), transparent 60%), var(--bg-main);
     }
 
     .auth-card {
       width: 100%;
-      max-width: 420px;
+      max-width: 410px;
       background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border: 1px solid rgba(220, 20, 60, 0.28);
+      border-radius: var(--radius-lg);
       padding: 1.6rem 1.35rem;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
     }
 
-    .brand-logo-wrap {
-      text-align: center;
-      margin-bottom: 1.2rem;
-    }
-
-    .brand-monogram {
-      display: inline-flex;
+    .brand-logo-box {
+      width: 66px;
+      height: 66px;
+      margin: 0 auto 0.85rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      box-shadow: 0 10px 24px var(--crimson-glow);
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      font-weight: 900;
+      font-size: 1.55rem;
+      letter-spacing: 1px;
       color: #fff;
-      font-weight: 900;
-      font-size: 1.7rem;
-      letter-spacing: -1px;
-      box-shadow: 0 0 24px var(--crimson-glow);
-      margin-bottom: 0.6rem;
     }
 
-    .brand-title {
-      font-size: 1.45rem;
+    .auth-title {
+      text-align: center;
+      font-size: 1.35rem;
       font-weight: 900;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      letter-spacing: 0.6px;
     }
 
-    .brand-title span {
+    .auth-title span {
       color: var(--crimson);
     }
 
-    .brand-slogan {
-      font-size: 0.76rem;
+    .auth-slogan {
+      text-align: center;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 0.3rem;
       font-style: italic;
-      line-height: 1.35;
+      margin: 0.35rem 0 1.2rem;
     }
 
     .auth-tabs {
-      display: flex;
-      gap: 0.45rem;
-      background: var(--bg-input);
-      padding: 0.3rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--bg-main);
+      padding: 0.25rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.15rem;
+      gap: 0.2rem;
     }
 
     .auth-tab {
-      flex: 1;
       border: none;
       background: transparent;
       color: var(--text-muted);
-      padding: 0.55rem;
-      border-radius: 8px;
+      padding: 0.5rem 0.3rem;
+      border-radius: var(--radius-sm);
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       cursor: pointer;
     }
 
@@ -120,236 +114,205 @@
       background: var(--crimson);
       color: #fff;
     }
-
     .form-group {
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.9rem;
     }
 
-    .form-group label {
+    .form-label {
       display: block;
       font-size: 0.78rem;
-      font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 0.32rem;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
     }
 
-    .form-input, .format-select {
+    .form-input, .form-select, .form-textarea {
       width: 100%;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-soft);
       color: var(--text-main);
-      border-radius: 10px;
+      border-radius: var(--radius-md);
       padding: 0.72rem 0.85rem;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       outline: none;
-      transition: border-color 0.2s;
+      font-family: inherit;
     }
 
-    .form-input:focus, .format-select:focus {
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
       border-color: var(--crimson);
+      box-shadow: 0 0 0 3px rgba(220, 20, 60, 0.18);
     }
 
     .btn-primary {
       width: 100%;
+      border: none;
+      border-radius: var(--radius-md);
       background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
       color: #fff;
-      border: none;
-      border-radius: 10px;
-      padding: 0.78rem;
       font-weight: 800;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
+      padding: 0.8rem;
       cursor: pointer;
-      letter-spacing: 0.3px;
-      box-shadow: 0 6px 18px var(--crimson-glow);
+      box-shadow: 0 8px 20px var(--crimson-glow);
     }
 
-    .btn-secondary {
+    .btn-biometric {
       width: 100%;
-      background: var(--bg-input);
+      margin-top: 0.65rem;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: var(--radius-md);
+      background: var(--bg-elevated);
       color: var(--text-main);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 0.72rem;
       font-weight: 700;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
+      padding: 0.72rem;
       cursor: pointer;
-      margin-top: 0.55rem;
-    }
-
-    .auth-error, .auth-success {
-      display: none;
-      padding: 0.6rem 0.75rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      margin-bottom: 0.8rem;
-      line-height: 1.35;
-    }
-
-    .auth-error.visible {
-      display: block;
-      background: rgba(239, 68, 68, 0.14);
-      border: 1px solid rgba(239, 68, 68, 0.45);
-      color: #FCA5A5;
-    }
-
-    .auth-success.visible {
-      display: block;
-      background: rgba(37, 211, 102, 0.14);
-      border: 1px solid rgba(37, 211, 102, 0.45);
-      color: #86EFAC;
-    }
-
-    /* --- APP PRINCIPAL --- */
-    .app-shell {
-      display: none;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 120;
-      background: rgba(9, 9, 11, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.75rem 1rem;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-    }
-
-    .topbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      font-weight: 900;
-      font-size: 1.05rem;
-      letter-spacing: 0.4px;
-    }
-
-    .topbar-badge {
-      background: var(--crimson);
-      color: #fff;
-      padding: 0.22rem 0.48rem;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      font-weight: 900;
-    }
-
-    .topbar-actions {
-      display: flex;
+      justify-content: center;
       gap: 0.45rem;
     }
 
-    .icon-pill-btn {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      border-radius: 999px;
-      padding: 0.4rem 0.72rem;
+    .auth-msg {
+      padding: 0.65rem 0.8rem;
+      border-radius: var(--radius-sm);
       font-size: 0.78rem;
+      margin-bottom: 0.85rem;
+      display: none;
+    }
+
+    .auth-msg.visible {
+      display: block;
+    }
+
+    .auth-msg.error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .auth-msg.success {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #86efac;
+    }
+    /* === APP SHELL & FEED === */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: rgba(12, 12, 15, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .mini-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.85rem;
+      color: #fff;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .btn-header {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      padding: 0.42rem 0.72rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
+    }
+
+    .btn-header.primary {
+      background: var(--crimson);
+      border-color: var(--crimson);
+      color: #fff;
+    }
+
+    .main-container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0.9rem 0.9rem 5.5rem;
     }
 
     .view-section {
       display: none;
-      padding: 0.9rem;
     }
 
     .view-section.active {
       display: block;
     }
 
-    /* --- PUBLICADOR / COMPOSER --- */
     .card {
       background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 0.95rem;
-      margin-bottom: 0.9rem;
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      margin-bottom: 0.95rem;
     }
-
-    .composer-textarea {
-      width: 100%;
-      min-height: 76px;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      border-radius: 10px;
-      padding: 0.72rem;
-      font-size: 0.9rem;
-      resize: vertical;
-      outline: none;
-      margin-bottom: 0.65rem;
-    }
-
-    .composer-textarea:focus {
-      border-color: var(--crimson);
-    }
-
-    .composer-controls {
+    .composer-tools {
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
-      align-items: center;
-      justify-content: space-between;
+      margin: 0.7rem 0;
     }
 
-    .media-buttons-group {
-      display: flex;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-    }
-
-    .media-pick-btn {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
+    .tool-chip {
+      border: 1px solid var(--border-soft);
+      background: var(--bg-elevated);
       color: var(--text-main);
-      border-radius: 8px;
-      padding: 0.45rem 0.7rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
       font-size: 0.78rem;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-    }
-
-    .format-row-left {
-      margin-top: 0.5rem;
-      max-width: 190px;
     }
 
     .camera-mode-bar {
       display: none;
-      align-items: center;
       gap: 0.45rem;
-      margin-top: 0.55rem;
-      padding: 0.5rem;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
+      margin-bottom: 0.7rem;
     }
 
     .camera-mode-bar.open {
       display: flex;
     }
 
-    .btn-close-search {
-      background: transparent;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      border-radius: 6px;
-      padding: 0.25rem 0.55rem;
-      cursor: pointer;
-    }
-
     .media-preview-box {
       display: none;
       position: relative;
-      margin-top: 0.65rem;
-      border-radius: 10px;
+      margin-bottom: 0.75rem;
+      border-radius: var(--radius-md);
       overflow: hidden;
-      border: 1px solid var(--border-color);
       background: #000;
     }
 
@@ -357,40 +320,46 @@
       display: block;
     }
 
-    .media-preview-box img,
-    .media-preview-box video {
+    .media-preview-box img, .media-preview-box video {
       width: 100%;
-      max-height: 320px;
+      max-height: 260px;
       object-fit: cover;
       display: block;
     }
 
-    .btn-remove-media {
+    .remove-media-btn {
       position: absolute;
       top: 8px;
       right: 8px;
       background: rgba(0, 0, 0, 0.75);
       color: #fff;
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 999px;
-      padding: 0.28rem 0.62rem;
+      padding: 0.25rem 0.6rem;
       font-size: 0.75rem;
       cursor: pointer;
     }
 
-    /* --- POSTS DEL FEED --- */
-    .post-header {
+    .composer-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.6rem;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.6rem;
       margin-bottom: 0.65rem;
     }
 
     .post-author-info {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
+      min-width: 0;
     }
 
     .avatar-circle {
@@ -399,1184 +368,1015 @@
       border-radius: 50%;
       background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
       color: #fff;
+      font-weight: 800;
+      font-size: 0.88rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
-      font-size: 0.88rem;
       flex-shrink: 0;
     }
 
-    .username {
-      font-weight: 800;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      flex-wrap: wrap;
-    }
-
-    .badge-pro {
-      background: rgba(220, 20, 60, 0.18);
-      border: 1px solid var(--crimson);
-      color: #FF6B88;
-      font-size: 0.64rem;
-      font-weight: 800;
-      padding: 1px 6px;
-      border-radius: 999px;
-      text-transform: uppercase;
-    }
-
-    .post-meta {
-      font-size: 0.73rem;
-      color: var(--text-muted);
-    }
-
-    .post-header-right {
+    .author-name-row {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      position: relative;
+      flex-wrap: wrap;
     }
 
-    .post-tag {
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      font-size: 0.68rem;
-      padding: 0.2rem 0.5rem;
+    .author-name {
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .pro-badge {
+      background: rgba(220, 20, 60, 0.2);
+      border: 1px solid var(--crimson);
+      color: #ff859d;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.1rem 0.42rem;
       border-radius: 999px;
     }
 
-    .btn-post-dots {
-      background: transparent;
-      border: none;
+    .post-meta {
+      font-size: 0.74rem;
       color: var(--text-muted);
-      font-size: 1.2rem;
-      font-weight: 900;
-      padding: 0.2rem 0.45rem;
+    }
+    .post-menu-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .post-menu-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
     }
 
-    .post-options-dropdown {
-      display: none;
+    .post-menu-dropdown {
       position: absolute;
       right: 0;
-      top: 115%;
-      min-width: 205px;
-      background: #18181C;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 0.35rem;
-      z-index: 180;
+      top: 40px;
+      min-width: 195px;
+      background: #1c1c24;
+      border: 1px solid rgba(220, 20, 60, 0.45);
+      border-radius: var(--radius-md);
       box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75);
+      padding: 0.35rem;
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      gap: 0.2rem;
     }
 
-    .post-options-dropdown.open {
-      display: block;
+    .post-menu-dropdown.open {
+      display: flex;
     }
 
     .post-menu-item {
       width: 100%;
       text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-sm);
       background: transparent;
       border: none;
       color: var(--text-main);
-      padding: 0.55rem 0.65rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
       cursor: pointer;
-      display: block;
-    }
-
-    .post-menu-item:hover {
-      background: var(--bg-input);
     }
 
     .post-menu-item.danger {
-      color: #FCA5A5;
+      color: #ff6b81;
     }
-
-    .post-body-text {
+    .post-text {
       font-size: 0.9rem;
-      line-height: 1.48;
-      margin-bottom: 0.65rem;
+      color: var(--text-main);
+      margin-bottom: 0.7rem;
       white-space: pre-line;
     }
 
-    .post-media {
+    .post-media-wrap {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      background: #000;
+    }
+
+    .post-media-wrap img, .post-media-wrap video {
       width: 100%;
-      border-radius: 10px;
-      max-height: 440px;
+      max-height: 360px;
       object-fit: cover;
-      margin-bottom: 0.65rem;
-      border: 1px solid var(--border-color);
+      display: block;
     }
 
-    .post-media.reel-format {
-      aspect-ratio: 9 / 16;
-      max-height: 520px;
+    .post-media-wrap.reel-aspect video {
+      max-height: 460px;
     }
 
-    .post-actions-bar {
+    .post-actions {
       display: flex;
-      gap: 0.5rem;
-      border-top: 1px solid var(--border-color);
-      padding-top: 0.6rem;
+      align-items: center;
+      gap: 0.55rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid var(--border-soft);
     }
 
-    .post-action-btn {
-      flex: 1;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      border-radius: 8px;
-      padding: 0.45rem;
-      font-size: 0.78rem;
-      font-weight: 700;
+    .action-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-soft);
+      color: var(--text-main);
+      padding: 0.42rem 0.78rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       cursor: pointer;
     }
 
-    .post-action-btn.liked {
+    .action-btn.liked {
       border-color: var(--crimson);
-      color: #FF6B88;
-      background: rgba(220, 20, 60, 0.14);
+      background: rgba(220, 20, 60, 0.18);
+      color: #ff859d;
     }
-
-    /* --- DIRECTORIO & PERFIL --- */
-    .dir-item {
+    .trainer-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.6rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border-color);
+      gap: 0.65rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-md);
+      padding: 0.8rem;
+      margin-bottom: 0.7rem;
     }
 
-    .dir-item:last-child {
-      border-bottom: none;
+    .trainer-info {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
     }
 
-    .profile-banner {
+    .profile-hero {
       text-align: center;
-      padding: 1.2rem 0.8rem;
+      padding-bottom: 0.5rem;
     }
 
-    .profile-avatar-lg {
+    .avatar-lg {
       width: 74px;
       height: 74px;
       border-radius: 50%;
+      margin: 0 auto 0.65rem;
       background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
       color: #fff;
-      font-size: 1.5rem;
       font-weight: 900;
-      display: inline-flex;
+      font-size: 1.5rem;
+      display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 0.6rem;
-      box-shadow: 0 0 22px var(--crimson-glow);
     }
 
-    /* --- BARRA INFERIOR --- */
     .bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(18, 18, 21, 0.96);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-around;
-      padding: 0.5rem 0.25rem;
-      z-index: 150;
+      z-index: 120;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: rgba(14, 14, 18, 0.96);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-soft);
+      padding: 0.45rem 0.5rem calc(0.45rem + env(safe-area-inset-bottom));
     }
 
     .nav-item {
-      background: transparent;
       border: none;
+      background: transparent;
       color: var(--text-muted);
-      font-size: 0.72rem;
-      font-weight: 700;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.2rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.3rem;
       cursor: pointer;
-      padding: 0.25rem 0.65rem;
     }
 
     .nav-item.active {
       color: var(--crimson);
     }
-
-    /* --- MODALES GENERALES & CHAT E2EE --- */
-    .modal-backdrop, .e2ee-overlay {
-      display: none;
+    .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.84);
-      backdrop-filter: blur(4px);
-      z-index: 400;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(5px);
+      display: none;
       align-items: center;
       justify-content: center;
-      padding: 0.9rem;
+      padding: 1rem;
     }
 
-    .modal-backdrop.open, .e2ee-overlay.open {
+    .modal-backdrop.open {
       display: flex;
     }
 
-    .modal-card {
+    .modal-box {
       width: 100%;
-      max-width: 410px;
+      max-width: 460px;
       background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 1.15rem;
-    }
-
-    .e2ee-box {
-      width: 100%;
-      max-width: 430px;
-      height: 76vh;
-      max-height: 600px;
-      background: var(--bg-card);
-      border: 1px solid var(--crimson);
-      border-radius: 14px;
+      border: 1px solid rgba(220, 20, 60, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem;
+      max-height: 85vh;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .e2ee-top {
-      padding: 0.85rem 1rem;
-      background: #17171C;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .e2ee-pill {
-      display: inline-block;
-      margin-top: 3px;
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #86EFAC;
-      background: rgba(37, 211, 102, 0.14);
-      border: 1px solid rgba(37, 211, 102, 0.4);
-      padding: 2px 7px;
-      border-radius: 999px;
+      gap: 0.75rem;
     }
 
     .e2ee-log {
-      flex: 1;
-      padding: 0.85rem;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 0.55rem;
-      background: var(--bg-main);
+      gap: 0.6rem;
+      overflow-y: auto;
+      max-height: 48vh;
+      padding-right: 0.2rem;
     }
 
-    .e2ee-bubble {
+    .e2ee-msg {
       max-width: 82%;
-      padding: 0.6rem 0.78rem;
-      border-radius: 10px;
-      font-size: 0.86rem;
-      line-height: 1.4;
-      word-break: break-word;
+      padding: 0.65rem 0.85rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      word-wrap: break-word;
     }
 
-    .e2ee-bubble.me {
+    .e2ee-msg.peer {
+      align-self: flex-start;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-soft);
+      border-bottom-left-radius: 4px;
+    }
+
+    .e2ee-msg.me {
       align-self: flex-end;
       background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
       color: #fff;
+      border-bottom-right-radius: 4px;
     }
 
-    .e2ee-bubble.them {
-      align-self: flex-start;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-    }
-
-    .e2ee-foot {
-      padding: 0.7rem;
-      background: #17171C;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      gap: 0.45rem;
-    }
-
-    .e2ee-foot input {
-      flex: 1;
-      background: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      border-radius: 8px;
-      padding: 0.6rem 0.75rem;
-      outline: none;
-    }
-
-    .e2ee-foot button {
-      background: var(--crimson);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.6rem 0.95rem;
-      font-weight: 800;
-      cursor: pointer;
+    .e2ee-hash {
+      margin-top: 0.3rem;
+      font-size: 0.65rem;
+      opacity: 0.65;
+      font-family: monospace;
     }
   </style>
 </head>
 <body>
-  <section id="authSection" class="auth-container">
+  <section id="authSection" class="auth-wrapper">
     <div class="auth-card">
-      <div class="brand-logo-wrap">
-        <div class="brand-monogram">SF</div>
-        <div class="brand-title">SIGMA <span>FITNESS</span></div>
-        <div class="brand-slogan">"Dónde la voluntad se convierte en fuerza y la disciplina es innegociable"</div>
-      </div>
+      <div class="brand-logo-box">SF</div>
+      <h1 class="auth-title">SIGMA <span>FITNESS</span></h1>
+      <p class="auth-slogan">"Dónde la voluntad se convierte en fuerza y la disciplina es innegociable"</p>
+
+      <div id="authMsg" class="auth-msg"></div>
 
       <div class="auth-tabs">
-        <button type="button" class="auth-tab active" onclick="cambiarTabAuth('login')">Entrar</button>
-        <button type="button" class="auth-tab" onclick="cambiarTabAuth('register')">Registro</button>
-        <button type="button" class="auth-tab" onclick="cambiarTabAuth('recover')">Recuperar</button>
+        <button type="button" class="auth-tab active" data-mode="login" onclick="cambiarModoAuth('login')">Entrar</button>
+        <button type="button" class="auth-tab" data-mode="register" onclick="cambiarModoAuth('register')">Registro</button>
+        <button type="button" class="auth-tab" data-mode="recover" onclick="cambiarModoAuth('recover')">Recuperar</button>
       </div>
-
-      <div id="authError" class="auth-error"></div>
-      <div id="authSuccess" class="auth-success"></div>
 
       <form id="loginForm" onsubmit="manejarLogin(event)">
         <div class="form-group">
-          <label for="loginUser">Usuario, correo o teléfono</label>
-          <input type="text" id="loginUser" class="form-input" placeholder="Ej. juanluis o +584145574866" required />
+          <label class="form-label" for="loginId">Usuario, correo o teléfono</label>
+          <input id="loginId" type="text" class="form-input" placeholder="Ej. juanluis o +584145574866" required />
         </div>
         <div class="form-group">
-          <label for="loginPass">Contraseña</label>
-          <input type="password" id="loginPass" class="form-input" placeholder="Tu contraseña" required />
+          <label class="form-label" for="loginPass">Contraseña</label>
+          <input id="loginPass" type="password" class="form-input" placeholder="Tu contraseña" required />
         </div>
         <button type="submit" class="btn-primary">Iniciar Sesión</button>
-        <button type="button" class="btn-secondary" onclick="manejarBiometria()">🔐 Acceso Rápido con Biometría</button>
+        <button type="button" class="btn-biometric" onclick="manejarBiometria()">
+          <span>🔐</span>
+          <span>Acceso Rápido con Huella / Biometría</span>
+        </button>
       </form>
-
       <form id="registerForm" style="display:none;" onsubmit="manejarRegistro(event)">
         <div class="form-group">
-          <label for="regName">Nombre completo</label>
-          <input type="text" id="regName" class="form-input" placeholder="Ej. Juan Luis Rodríguez" required />
+          <label class="form-label" for="regName">Nombre completo</label>
+          <input id="regName" type="text" class="form-input" placeholder="Ej. Juan Rodríguez" required />
         </div>
         <div class="form-group">
-          <label for="regUser">Nombre de usuario (@usuario)</label>
-          <input type="text" id="regUser" class="form-input" placeholder="Ej. juanluis_sf" required />
+          <label class="form-label" for="regUser">Usuario (@)</label>
+          <input id="regUser" type="text" class="form-input" placeholder="Ej. juanluis_sf" required />
         </div>
         <div class="form-group">
-          <label for="regPhone">WhatsApp / Teléfono</label>
-          <input type="tel" id="regPhone" class="form-input" placeholder="+584145574866" required />
+          <label class="form-label" for="regPhone">WhatsApp / Teléfono</label>
+          <input id="regPhone" type="tel" class="form-input" placeholder="+584145574866" required />
         </div>
         <div class="form-group">
-          <label for="regPass">Contraseña</label>
-          <input type="password" id="regPass" class="form-input" placeholder="Mínimo 6 caracteres" required />
+          <label class="form-label" for="regPass">Contraseña</label>
+          <input id="regPass" type="password" class="form-input" placeholder="Mínimo 6 caracteres" required />
         </div>
-        <button type="submit" class="btn-primary">Crear Cuenta Sigma</button>
+        <button type="submit" class="btn-primary">Crear Cuenta</button>
       </form>
 
       <form id="recoverForm" style="display:none;" onsubmit="manejarRecuperacion(event)">
         <div class="form-group">
-          <label for="recContact">Número de WhatsApp o correo registrado</label>
-          <input type="text" id="recContact" class="form-input" placeholder="+584145574866" required />
+          <label class="form-label" for="recContact">WhatsApp o correo registrado</label>
+          <input id="recContact" type="text" class="form-input" placeholder="+584145574866" required />
         </div>
-        <div class="form-group">
-          <label for="recCode">Código de verificación (OTP)</label>
-          <input type="text" id="recCode" class="form-input" placeholder="Ej. 482910" />
-        </div>
-        <div class="form-group">
-          <label for="recNewPass">Nueva contraseña</label>
-          <input type="password" id="recNewPass" class="form-input" placeholder="Escribe tu nueva clave" />
-        </div>
-        <button type="button" class="btn-secondary" style="margin-top:0; margin-bottom:0.55rem;" onclick="enviarCodigoOTP()">📲 Generar Código por WhatsApp</button>
-        <button type="submit" class="btn-primary">Restablecer Contraseña</button>
+        <button type="submit" class="btn-primary">Enviar Código de Recuperación</button>
       </form>
     </div>
   </section>
-
-  <div id="appShell" class="app-shell">
-    <header class="topbar">
-      <div class="topbar-brand">
-        <span class="topbar-badge">SF</span>
-        <span>SIGMA FITNESS</span>
+  <div id="appShell" style="display:none;">
+    <header class="top-header">
+      <div class="header-left">
+        <div class="mini-logo">SF</div>
+        <div class="brand-title">SIGMA FITNESS</div>
       </div>
-      <div class="topbar-actions">
-        <button type="button" class="icon-pill-btn" onclick="abrirChatSigmaE2EE('andrea', 'Andrea Design')">💬 Chat E2EE</button>
-        <button type="button" class="icon-pill-btn" onclick="cerrarSesion()">Salir</button>
+      <div class="header-actions">
+        <button type="button" class="btn-header primary" onclick="abrirChatE2EE()">💬 Chat E2EE</button>
+        <button type="button" class="btn-header" onclick="cerrarSesion()">Salir</button>
       </div>
     </header>
-    <main id="viewFeed" class="view-section active">
-      <div class="card">
-        <textarea id="postTextarea" class="composer-textarea" placeholder="Comparte tu entrenamiento, marca personal o enfoque de hoy..."></textarea>
 
-        <div class="composer-controls">
-          <div class="media-buttons-group">
-            <button type="button" class="media-pick-btn" onclick="alternarBarraCamara()">📷 Cámara</button>
-            <button type="button" class="media-pick-btn" onclick="document.getElementById('galleryInput').click()">🖼️ Galería</button>
-            <button type="button" class="media-pick-btn" onclick="document.getElementById('reelInput').click()">🎬 Reel</button>
+    <main class="main-container">
+      <section id="viewFeed" class="view-section active">
+        <div class="card">
+          <textarea id="postText" rows="3" class="form-textarea" placeholder="Comparte tu entrenamiento, marca personal o enfoque de hoy..."></textarea>
+
+          <div class="composer-tools">
+            <button type="button" class="tool-chip" onclick="toggleOpcionesCamara()">📷 Cámara</button>
+            <button type="button" class="tool-chip" onclick="abrirSelectorMedia('image/*')">🖼️ Galería</button>
+            <button type="button" class="tool-chip" onclick="abrirSelectorMedia('video/*')">🎬 Reel</button>
+            <input id="mediaInput" type="file" style="display:none;" onchange="manejarArchivoMedia(event)" />
           </div>
-          <button type="button" class="btn-primary" style="width:auto; padding:0.52rem 1rem; font-size:0.84rem;" onclick="publicarContenido()">Publicar</button>
+
+          <div id="cameraModeBar" class="camera-mode-bar">
+            <button type="button" class="tool-chip" onclick="abrirSelectorMedia('image/*', 'environment')">📸 Tomar Foto</button>
+            <button type="button" class="tool-chip" onclick="abrirSelectorMedia('video/*', 'environment')">🎥 Grabar Video</button>
+          </div>
+
+          <div id="mediaPreviewBox" class="media-preview-box">
+            <button type="button" class="remove-media-btn" onclick="limpiarMedia()">✕ Quitar</button>
+            <img id="previewImg" style="display:none;" alt="Vista previa" />
+            <video id="previewVideo" style="display:none;" controls playsinline></video>
+          </div>
+
+          <div class="composer-footer">
+            <select id="postFormat" class="form-select" style="max-width: 195px;">
+              <option value="Post normal">Formato: Post normal</option>
+              <option value="Progreso / Marca">Formato: Progreso / Marca</option>
+              <option value="Reel de Entreno">Formato: Reel de Entreno</option>
+            </select>
+            <button type="button" class="btn-primary" style="width:auto; padding: 0.6rem 1.25rem;" onclick="publicarPost()">Publicar</button>
+          </div>
         </div>
 
-        <div class="format-row-left">
-          <select id="postFormatSelect" class="format-select">
-            <option value="normal">Formato: Post normal</option>
-            <option value="reel">Formato: Reel (9:16)</option>
-            <option value="progreso">Formato: Progreso / Marca</option>
-          </select>
+        <div id="feedList"></div>
+      </section>
+      <section id="viewDirectory" class="view-section">
+        <div class="card">
+          <h2 style="font-size:1rem; margin-bottom:0.35rem;">Atletas y Entrenadores</h2>
+          <p style="font-size:0.78rem; color:var(--text-muted);">Conecta o abre un canal directo cifrado con miembros de Sigma Fitness.</p>
         </div>
+        <div id="directoryList"></div>
+      </section>
 
-        <div id="cameraModeBar" class="camera-mode-bar">
-          <span style="font-size:0.78rem; color:var(--text-muted); flex:1;">Capturar desde cámara:</span>
-          <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraPhotoInput').click()">Foto</button>
-          <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraVideoInput').click()">Video</button>
-          <button type="button" class="btn-close-search" onclick="alternarBarraCamara()">✕</button>
+      <section id="viewProfile" class="view-section">
+        <div class="card profile-hero">
+          <div id="profileAvatar" class="avatar-lg">JR</div>
+          <h2 id="profileName" style="font-size:1.15rem;">Juan Rodríguez</h2>
+          <p id="profileHandle" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.7rem;">@juanluis • +584145574866</p>
+          <div style="display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap;">
+            <button type="button" class="btn-header primary" onclick="vincularHuellaActual()">🔐 Vincular Huella Aquí</button>
+            <button type="button" class="btn-header" onclick="abrirChatE2EE()">💬 Mensajes E2EE</button>
+          </div>
         </div>
-
-        <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="previsualizarArchivo(event, 'image')" />
-        <input type="file" id="cameraVideoInput" accept="video/*" capture="environment" style="display:none;" onchange="previsualizarArchivo(event, 'video')" />
-        <input type="file" id="galleryInput" accept="image/*,video/*" style="display:none;" onchange="previsualizarArchivo(event, 'auto')" />
-        <input type="file" id="reelInput" accept="video/*" style="display:none;" onchange="previsualizarArchivo(event, 'video')" />
-
-        <div id="mediaPreviewBox" class="media-preview-box">
-          <button type="button" class="btn-remove-media" onclick="quitarMediaPreview()">✕ Quitar</button>
-          <div id="mediaPreviewContent"></div>
-        </div>
-      </div>
-
-      <div id="feedPostsContainer"></div>
+        <div id="profilePostsList"></div>
+      </section>
     </main>
-    <!-- VISTA: EXPLORAR / DIRECTORIO -->
-    <section id="viewExplore" class="view-section">
-      <div class="card">
-        <div class="form-group" style="margin-bottom:0.6rem;">
-          <input type="search" id="exploreSearchInput" class="form-input" placeholder="Buscar entrenadores, atletas o especialidades..." oninput="renderizarDirectorio()" />
-        </div>
-        <div id="directoryListContainer"></div>
-      </div>
-    </section>
-
-    <!-- VISTA: PERFIL -->
-    <section id="viewProfile" class="view-section">
-      <div class="card profile-banner">
-        <div id="profileAvatarLg" class="profile-avatar-lg">JL</div>
-        <h2 id="profileNameHeading" style="font-size:1.18rem; font-weight:900;">Juan Luis Rodríguez</h2>
-        <p id="profileHandleText" style="color:var(--text-muted); font-size:0.82rem; margin-top:0.2rem;">@juanluis_sf • +584145574866</p>
-        <p id="profileBioText" style="font-size:0.85rem; margin-top:0.65rem; color:#D4D4D8;">Entrenador y atleta de físico culturismo natural. Enfoque en disciplina, fuerza y constancia.</p>
-        <button type="button" class="btn-secondary" style="max-width:240px; margin:0.9rem auto 0;" onclick="abrirChatSigmaE2EE('andrea', 'Andrea Design')">💬 Abrir Chat Cifrado (E2EE)</button>
-      </div>
-      <div id="profilePostsContainer"></div>
-    </section>
+    <nav class="bottom-nav">
+      <button type="button" id="navFeed" class="nav-item active" onclick="cambiarVista('feed')">
+        <span>🏠</span>
+        <span>Inicio</span>
+      </button>
+      <button type="button" id="navDirectory" class="nav-item" onclick="cambiarVista('directory')">
+        <span>🏋️</span>
+        <span>Atletas</span>
+      </button>
+      <button type="button" id="navProfile" class="nav-item" onclick="cambiarVista('profile')">
+        <span>👤</span>
+        <span>Perfil</span>
+      </button>
+    </nav>
   </div>
 
-  <!-- BARRA INFERIOR -->
-  <nav id="bottomNav" class="bottom-nav" style="display:none;">
-    <button type="button" class="nav-item active" data-view="viewFeed" onclick="cambiarVistaApp('viewFeed', this)">
-      <span>🏠</span>
-      <span>Inicio</span>
-    </button>
-    <button type="button" class="nav-item" data-view="viewExplore" onclick="cambiarVistaApp('viewExplore', this)">
-      <span>🏋️</span>
-      <span>Directorio</span>
-    </button>
-    <button type="button" class="nav-item" data-view="viewProfile" onclick="cambiarVistaApp('viewProfile', this)">
-      <span>👤</span>
-      <span>Perfil</span>
-    </button>
-  </nav>
-  <!-- MODAL EDITAR PUBLICACIÓN -->
-  <div id="editPostModal" class="modal-backdrop" onclick="if(event.target.id==='editPostModal') cerrarModalEditar()">
-    <div class="modal-card">
-      <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem;">Editar publicación</h3>
-      <textarea id="editPostTextarea" class="composer-textarea" style="min-height:95px;"></textarea>
-      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
-        <button type="button" class="btn-secondary" style="width:auto; margin-top:0;" onclick="cerrarModalEditar()">Cancelar</button>
-        <button type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.1rem;" onclick="guardarEdicionPost()">Guardar</button>
+  <div id="commentModal" class="modal-backdrop" onclick="cerrarModalFondo(event, 'commentModal')">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <strong style="font-size:0.95rem;">Comentarios</strong>
+        <button type="button" class="btn-header" onclick="cerrarModal('commentModal')">✕</button>
+      </div>
+      <div id="commentList" style="overflow-y:auto; max-height:42vh; display:flex; flex-direction:column; gap:0.5rem;"></div>
+      <div style="display:flex; gap:0.45rem;">
+        <input id="commentInput" type="text" class="form-input" placeholder="Escribe un comentario..." />
+        <button type="button" class="btn-primary" style="width:auto; padding:0 1rem;" onclick="enviarComentario()">Enviar</button>
       </div>
     </div>
   </div>
-
-  <!-- MODAL REPORTAR PUBLICACIÓN -->
-  <div id="reportPostModal" class="modal-backdrop" onclick="if(event.target.id==='reportPostModal') cerrarModalReportar()">
-    <div class="modal-card">
-      <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.55rem;">Reportar publicación</h3>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Selecciona el motivo del reporte para revisión en Sigma Fitness:</p>
-      <select id="reportReasonSelect" class="format-select" style="margin-bottom:0.9rem;">
-        <option value="Contenido inapropiado o spam">Contenido inapropiado o spam</option>
-        <option value="Información engañosa sobre entrenamiento">Información engañosa sobre entrenamiento</option>
-        <option value="Falta de respeto o acoso">Falta de respeto o acoso</option>
-        <option value="Otro motivo">Otro motivo</option>
-      </select>
-      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
-        <button type="button" class="btn-secondary" style="width:auto; margin-top:0;" onclick="cerrarModalReportar()">Cancelar</button>
-        <button type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.1rem;" onclick="enviarReportePost()">Enviar reporte</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL CHAT CIFRADO E2EE -->
-  <div id="sigmaE2EEModal" class="e2ee-overlay" onclick="if(event.target.id==='sigmaE2EEModal') cerrarChatSigmaE2EE()">
-    <div class="e2ee-box">
-      <div class="e2ee-top">
+  <div id="e2eeModal" class="modal-backdrop" onclick="cerrarModalFondo(event, 'e2eeModal')">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
         <div>
-          <div id="sigmaE2EEPeer" style="font-weight:800; font-size:0.92rem;">Chat Privado</div>
-          <span class="e2ee-pill">🔐 Cifrado E2EE (ECDH + AES-GCM)</span>
+          <strong style="font-size:0.95rem;">🔒 Canal Directo E2EE</strong>
+          <div id="e2eePeerLabel" style="font-size:0.72rem; color:var(--text-muted);">Cifrado SHA-256 local activo</div>
         </div>
-        <button type="button" onclick="cerrarChatSigmaE2EE()" style="background:none;border:none;color:#A1A1AA;font-size:1.1rem;cursor:pointer;">✕</button>
+        <button type="button" class="btn-header" onclick="cerrarModal('e2eeModal')">✕</button>
       </div>
-      <div id="sigmaE2EELog" class="e2ee-log"></div>
-      <div class="e2ee-foot">
-        <input type="text" id="sigmaE2EEInput" placeholder="Escribe un mensaje cifrado..." onkeydown="if(event.key==='Enter') enviarMensajeSigmaE2EE()">
-        <button type="button" onclick="enviarMensajeSigmaE2EE()">Enviar</button>
+      <div id="e2eeLog" class="e2ee-log"></div>
+      <div style="display:flex; gap:0.45rem;">
+        <input id="e2eeInput" type="text" class="form-input" placeholder="Mensaje cifrado..." />
+        <button type="button" class="btn-primary" style="width:auto; padding:0 1rem;" onclick="enviarMensajeE2EE()">Enviar</button>
       </div>
     </div>
   </div>
-    <script>
-    const STORAGE_USERS_KEY = "sigma_fitness_users_v1";
-    const STORAGE_SESSION_KEY = "sigma_fitness_session_v1";
-    const STORAGE_POSTS_KEY = "sigma_fitness_posts_v1";
 
-    const baseDatosUsuariosDefault = [
-      {
-        id: "juanluis",
-        nombre: "Juan Luis Rodríguez",
-        usuario: "@juanluis_sf",
-        telefono: "+584145574866",
-        password: "sigma2026",
-        esPro: true,
-        especialidad: "Físico Culturismo Natural & Acondicionamiento",
-        bio: "Entrenador y atleta de físico culturismo natural. Enfoque en disciplina, fuerza y constancia."
-      },
-      {
-        id: "andrea",
-        nombre: "Andrea Design",
-        usuario: "@andrea_fit",
-        telefono: "+584120000001",
-        password: "andrea2026",
-        esPro: true,
-        especialidad: "Diseño Deportivo & Nutrición Aplicada",
-        bio: "Construyendo hábitos sólidos y estética funcional día a día."
-      },
-      {
-        id: "carlos",
-        nombre: "Carlos Méndez",
-        usuario: "@cmendez_pro",
-        telefono: "+584120000002",
-        password: "carlos2026",
-        esPro: false,
-        especialidad: "Fuerza e Hipertrofia",
-        bio: "Entrenamiento pesado y progresión constante."
+  <script>
+    const DB_KEY = 'sigma_fitness_v2_db';
+    let tempMedia = null;
+    let activeCommentPostId = null;
+    let activePeer = { name: 'Coach Marcos', handle: '@marcos_sf' };
+
+    function cargarDB() {
+      const raw = localStorage.getItem(DB_KEY);
+      if (raw) {
+        try { return JSON.parse(raw); } catch (e) {}
       }
-    ];
-    const postsInicialesDefault = [
-      {
-        id: 101,
-        authorId: "juanluis",
-        authorName: "Juan Luis Rodríguez",
-        authorHandle: "@juanluis_sf",
-        esPro: true,
-        time: "Hace 18 min",
-        tag: "Progreso / Marca",
-        text: "Sesión pesada de espalda y hombro completada en casa. Sin atajos, pura constancia y técnica controlada. Dónde la voluntad se convierte en fuerza y la disciplina es innegociable.",
-        mediaUrl: "",
-        mediaType: "",
-        format: "progreso",
-        likes: 14,
-        likedByMe: false,
-        commentsCount: 3
-      },
-      {
-        id: 102,
-        authorId: "andrea",
-        authorName: "Andrea Design",
-        authorHandle: "@andrea_fit",
-        esPro: true,
-        time: "Hace 1 h",
-        tag: "Entrenamiento",
-        text: "Ajustando macros e hidratación para mantener el rendimiento al 100% toda la semana. ¿Qué grupo muscular entrenan hoy?",
-        mediaUrl: "",
-        mediaType: "",
-        format: "normal",
-        likes: 9,
-        likedByMe: false,
-        commentsCount: 2
-      }
-    ];
-
-    let usuariosSigma = JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || baseDatosUsuariosDefault;
-    let postsSigma = JSON.parse(localStorage.getItem(STORAGE_POSTS_KEY)) || postsInicialesDefault;
-    let usuarioActual = JSON.parse(localStorage.getItem(STORAGE_SESSION_KEY)) || null;
-    let codigoOTPGenerado = null;
-    let mediaSeleccionada = { url: "", type: "" };
-    let postEditandoId = null;
-    let postReportandoId = null;
-
-    function guardarEstadoLocal() {
-      localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(usuariosSigma));
-      localStorage.setItem(STORAGE_POSTS_KEY, JSON.stringify(postsSigma));
+      const initial = {
+        currentUser: null,
+        users: [
+          {
+            id: 'u_juan',
+            name: 'Juan Rodríguez',
+            handle: '@juanluis',
+            phone: '+584145574866',
+            pass: 'sigma2026',
+            pro: true,
+            credentialId: null
+          },
+          {
+            id: 'u_marcos',
+            name: 'Coach Marcos',
+            handle: '@marcos_sf',
+            phone: '+584120001122',
+            pass: '123456',
+            pro: true,
+            credentialId: null
+          }
+        ],
+        posts: [
+          {
+            id: 'p_1',
+            authorName: 'Juan Rodríguez',
+            authorHandle: '@juanluis',
+            pro: true,
+            format: 'Progreso / Marca',
+            text: 'Enfoque total en físico culturismo natural y recomposición corporal. Disciplina innegociable cada sesión.',
+            media: null,
+            likes: [],
+            comments: [{ author: 'Coach Marcos', text: 'Ese ritmo constante marca la diferencia.' }],
+            time: 'Hoy'
+          }
+        ],
+        e2eeMessages: [
+          {
+            sender: 'Coach Marcos',
+            handle: '@marcos_sf',
+            text: '¡Listo el bloque de fuerza y acondicionamiento de esta semana!',
+            hash: 'e2ee-8f4a21',
+            time: 'Ahora'
+}
+        ]
+      };
+      guardarDB(initial);
+      return initial;
     }
 
-    function obtenerIniciales(nombre) {
-      return (nombre || "SF")
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(p => p[0].toUpperCase())
-        .join("");
+    function guardarDB(db) {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
     }
-    function mostrarMensajeAuth(tipo, texto) {
-      const err = document.getElementById("authError");
-      const ok = document.getElementById("authSuccess");
-      err.classList.remove("visible");
-      ok.classList.remove("visible");
-      if (!texto) return;
-      if (tipo === "error") {
-        err.textContent = texto;
-        err.classList.add("visible");
-      } else {
-        ok.textContent = texto;
-        ok.classList.add("visible");
-      }
+    let db = cargarDB();
+
+    function mostrarAuthMsg(text, type) {
+      const box = document.getElementById('authMsg');
+      box.textContent = text;
+      box.className = 'auth-msg visible ' + type;
     }
 
-    function cambiarTabAuth(tab) {
-      mostrarMensajeAuth("", "");
-      document.querySelectorAll(".auth-tab").forEach((btn, idx) => {
-        const activo = (tab === "login" && idx === 0) || (tab === "register" && idx === 1) || (tab === "recover" && idx === 2);
-        btn.classList.toggle("active", activo);
+    function cambiarModoAuth(mode) {
+      document.querySelectorAll('.auth-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
       });
-      document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
-      document.getElementById("registerForm").style.display = tab === "register" ? "block" : "none";
-      document.getElementById("recoverForm").style.display = tab === "recover" ? "block" : "none";
+      document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
+      document.getElementById('recoverForm').style.display = mode === 'recover' ? 'block' : 'none';
+      document.getElementById('authMsg').className = 'auth-msg';
     }
 
     function manejarLogin(e) {
       e.preventDefault();
-      const identificador = document.getElementById("loginUser").value.trim().toLowerCase();
-      const pass = document.getElementById("loginPass").value;
-      const encontrado = usuariosSigma.find(u =>
-        u.id.toLowerCase() === identificador ||
-        u.usuario.toLowerCase().replace("@", "") === identificador.replace("@", "") ||
-        u.telefono === identificador
+      const idVal = document.getElementById('loginId').value.trim().toLowerCase();
+      const passVal = document.getElementById('loginPass').value;
+      const found = db.users.find(u =>
+        u.handle.toLowerCase() === idVal ||
+        u.handle.replace('@', '').toLowerCase() === idVal ||
+        u.phone.toLowerCase() === idVal
       );
-      if (!encontrado || encontrado.password !== pass) {
-        mostrarMensajeAuth("error", "Credenciales incorrectas. Verifica tu usuario/teléfono y contraseña.");
+      if (!found || found.pass !== passVal) {
+        mostrarAuthMsg('Credenciales inválidas. Verifica usuario, teléfono o contraseña.', 'error');
         return;
       }
-      iniciarSesionUsuario(encontrado);
+      db.currentUser = found.id;
+      guardarDB(db);
+      arrancarApp();
     }
 
     function manejarRegistro(e) {
       e.preventDefault();
-      const nombre = document.getElementById("regName").value.trim();
-      let usuario = document.getElementById("regUser").value.trim();
-      if (!usuario.startsWith("@")) usuario = "@" + usuario;
-      const telefono = document.getElementById("regPhone").value.trim();
-      const password = document.getElementById("regPass").value;
-
-      if (password.length < 6) {
-        mostrarMensajeAuth("error", "La contraseña debe tener al menos 6 caracteres.");
+      const name = document.getElementById('regName').value.trim();
+      let handle = document.getElementById('regUser').value.trim().toLowerCase();
+      if (!handle.startsWith('@')) handle = '@' + handle;
+      const phone = document.getElementById('regPhone').value.trim();
+      const pass = document.getElementById('regPass').value;
+      if (pass.length < 6) {
+        mostrarAuthMsg('La contraseña debe tener al menos 6 caracteres.', 'error');
         return;
       }
-      const existe = usuariosSigma.some(u => u.usuario.toLowerCase() === usuario.toLowerCase() || u.telefono === telefono);
-      if (existe) {
-        mostrarMensajeAuth("error", "Ese usuario o número ya está registrado en Sigma Fitness.");
+      if (db.users.some(u => u.handle.toLowerCase() === handle)) {
+        mostrarAuthMsg('Ese nombre de usuario ya está registrado.', 'error');
         return;
       }
-
-      const nuevo = {
-        id: "user_" + Date.now(),
-        nombre,
-        usuario,
-        telefono,
-        password,
-        esPro: false,
-        especialidad: "Atleta Sigma Fitness",
-        bio: "Comprometido con la disciplina y el progreso diario."
+      const newUser = {
+        id: 'u_' + Date.now(),
+        name,
+        handle,
+        phone,
+        pass,
+        pro: false,
+        credentialId: null
       };
-      usuariosSigma.push(nuevo);
-      guardarEstadoLocal();
-      iniciarSesionUsuario(nuevo);
-    }
-    function enviarCodigoOTP() {
-      const contacto = document.getElementById("recContact").value.trim();
-      if (!contacto) {
-        mostrarMensajeAuth("error", "Ingresa tu número de WhatsApp o usuario primero.");
-        return;
-      }
-      codigoOTPGenerado = String(Math.floor(100000 + Math.random() * 900000));
-      mostrarMensajeAuth("success", "Código OTP generado para " + contacto + ": " + codigoOTPGenerado);
+      db.users.push(newUser);
+      db.currentUser = newUser.id;
+      guardarDB(db);
+      arrancarApp();
     }
 
     function manejarRecuperacion(e) {
       e.preventDefault();
-      const contacto = document.getElementById("recContact").value.trim().toLowerCase();
-      const code = document.getElementById("recCode").value.trim();
-      const nuevaPass = document.getElementById("recNewPass").value;
+      const contact = document.getElementById('recContact').value.trim();
+      const code = String(Math.floor(100000 + Math.random() * 900000));
+      mostrarAuthMsg('Código generado para ' + contact + ': ' + code + ' (válido por 10 min).', 'success');
+    }
+    function bufferABase64(buf) {
+      const bytes = new Uint8Array(buf);
+      let bin = '';
+      for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
+      return btoa(bin);
+    }
 
-      if (!codigoOTPGenerado || code !== codigoOTPGenerado) {
-        mostrarMensajeAuth("error", "Código OTP inválido. Genera uno nuevo y verifícalo.");
+    function base64ABuffer(b64) {
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return bytes.buffer;
+    }
+
+    async function vincularHuellaActual() {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      if (!window.PublicKeyCredential) {
+        alert('Este dispositivo o navegador no soporta autenticación biométrica WebAuthn.');
         return;
       }
-      if (nuevaPass.length < 6) {
-        mostrarMensajeAuth("error", "La nueva contraseña debe tener al menos 6 caracteres.");
-        return;
+      try {
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        const userIdBytes = new TextEncoder().encode(user.id);
+        const cred = await navigator.credentials.create({
+          publicKey: {
+            challenge,
+            rp: { name: 'Sigma Fitness' },
+            user: { id: userIdBytes, name: user.handle, displayName: user.name },
+            pubKeyCredParams: [{ alg: -7, type: 'public-key' }, { alg: -257, type: 'public-key' }],
+            authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+            timeout: 60000
+          }
+        });
+        user.credentialId = bufferABase64(cred.rawId);
+        guardarDB(db);
+        alert('Huella / biometría vinculada a ' + user.name + '.');
+      } catch (err) {
+        alert('No se pudo completar el registro biométrico: ' + (err.message || err));
       }
-      const idx = usuariosSigma.findIndex(u =>
-        u.telefono.toLowerCase() === contacto || u.usuario.toLowerCase().replace("@", "") === contacto.replace("@", "")
-      );
-      if (idx === -1) {
-        mostrarMensajeAuth("error", "No encontramos una cuenta asociada a ese contacto.");
-        return;
-      }
-      usuariosSigma[idx].password = nuevaPass;
-      guardarEstadoLocal();
-      codigoOTPGenerado = null;
-      cambiarTabAuth("login");
-      mostrarMensajeAuth("success", "Contraseña actualizada con éxito. Ya puedes iniciar sesión.");
     }
 
     async function manejarBiometria() {
-      if (window.PublicKeyCredential && navigator.credentials) {
-        try {
-          const challenge = new Uint8Array(32);
-          window.crypto.getRandomValues(challenge);
-          await navigator.credentials.get({
-            publicKey: { challenge, timeout: 15000, userVerification: "preferred" }
-          }).catch(() => {});
-        } catch (err) {}
+      const linkedUsers = db.users.filter(u => u.credentialId);
+      if (!linkedUsers.length) {
+        mostrarAuthMsg('Primero inicia sesión y pulsa "Vincular Huella Aquí" en tu Perfil.', 'error');
+        return;
       }
-      iniciarSesionUsuario(usuariosSigma[0]);
+      if (!window.PublicKeyCredential) {
+        mostrarAuthMsg('WebAuthn no disponible en este navegador.', 'error');
+        return;
+      }
+      try {
+        const challenge = crypto.getRandomValues(new Uint8Array(32));
+        const allowCredentials = linkedUsers.map(u => ({
+          id: base64ABuffer(u.credentialId),
+          type: 'public-key'
+        }));
+        const assertion = await navigator.credentials.get({
+          publicKey: {
+            challenge,
+            allowCredentials,
+            userVerification: 'required',
+            timeout: 60000
+          }
+        });
+        const rawIdB64 = bufferABase64(assertion.rawId);
+        const matched = db.users.find(u => u.credentialId === rawIdB64) || linkedUsers[0];
+        db.currentUser = matched.id;
+        guardarDB(db);
+        arrancarApp();
+      } catch (err) {
+        mostrarAuthMsg('Verificación biométrica cancelada o fallida.', 'error');
+      }
+    }
+    function obtenerUsuarioActual() {
+      return db.users.find(u => u.id === db.currentUser) || null;
     }
 
-    function iniciarSesionUsuario(user) {
-      usuarioActual = user;
-      localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(user));
-      document.getElementById("authSection").style.display = "none";
-      document.getElementById("appShell").style.display = "block";
-      document.getElementById("bottomNav").style.display = "flex";
-      actualizarPerfilUI();
-      renderizarFeed();
-      renderizarDirectorio();
+    function arrancarApp() {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('appShell').style.display = 'block';
+      renderPerfil();
+      renderFeed();
+      renderDirectorio();
     }
 
     function cerrarSesion() {
-      usuarioActual = null;
-      localStorage.removeItem(STORAGE_SESSION_KEY);
-      document.getElementById("appShell").style.display = "none";
-      document.getElementById("bottomNav").style.display = "none";
-      document.getElementById("authSection").style.display = "flex";
-    }
-    function cambiarVistaApp(viewId, btnEl) {
-      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
-      const target = document.getElementById(viewId);
-      if (target) target.classList.add("active");
-      document.querySelectorAll(".nav-item").forEach(nav => nav.classList.remove("active"));
-      if (btnEl) btnEl.classList.add("active");
-      if (viewId === "viewProfile") renderizarPerfilPosts();
-      if (viewId === "viewExplore") renderizarDirectorio();
+      db.currentUser = null;
+      guardarDB(db);
+      document.getElementById('appShell').style.display = 'none';
+      document.getElementById('authSection').style.display = 'flex';
     }
 
-    function alternarBarraCamara() {
-      document.getElementById("cameraModeBar").classList.toggle("open");
+    function cambiarVista(vista) {
+      document.getElementById('viewFeed').classList.toggle('active', vista === 'feed');
+      document.getElementById('viewDirectory').classList.toggle('active', vista === 'directory');
+      document.getElementById('viewProfile').classList.toggle('active', vista === 'profile');
+      document.getElementById('navFeed').classList.toggle('active', vista === 'feed');
+      document.getElementById('navDirectory').classList.toggle('active', vista === 'directory');
+      document.getElementById('navProfile').classList.toggle('active', vista === 'profile');
+      if (vista === 'profile') renderPerfil();
+      if (vista === 'directory') renderDirectorio();
     }
 
-    function previsualizarArchivo(event, tipoForzado) {
-      const file = event.target.files && event.target.files[0];
+    function toggleOpcionesCamara() {
+      document.getElementById('cameraModeBar').classList.toggle('open');
+    }
+
+    function abrirSelectorMedia(acceptType, captureMode) {
+      const input = document.getElementById('mediaInput');
+      input.value = '';
+      input.accept = acceptType;
+      if (captureMode) input.setAttribute('capture', captureMode);
+      else input.removeAttribute('capture');
+      input.click();
+    }
+
+    function manejarArchivoMedia(e) {
+      const file = e.target.files && e.target.files[0];
       if (!file) return;
+      const isVideo = file.type.startsWith('video/');
       const reader = new FileReader();
-      reader.onload = function(e) {
-        const url = e.target.result;
-        const esVideo = tipoForzado === "video" || (tipoForzado === "auto" && file.type.startsWith("video/"));
-        mediaSeleccionada = { url, type: esVideo ? "video" : "image" };
-        const box = document.getElementById("mediaPreviewBox");
-        const content = document.getElementById("mediaPreviewContent");
-        content.innerHTML = esVideo
-          ? `<video src="${url}" controls playsinline></video>`
-          : `<img src="${url}" alt="Vista previa" />`;
-        box.classList.add("visible");
+      reader.onload = function(ev) {
+        tempMedia = { kind: isVideo ? 'video' : 'image', src: ev.target.result };
+        mostrarVistaPreviaMedia();
       };
       reader.readAsDataURL(file);
     }
 
-    function quitarMediaPreview() {
-      mediaSeleccionada = { url: "", type: "" };
-      document.getElementById("mediaPreviewBox").classList.remove("visible");
-      document.getElementById("mediaPreviewContent").innerHTML = "";
-      ["cameraPhotoInput", "cameraVideoInput", "galleryInput", "reelInput"].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = "";
-      });
-    }
-
-    function publicarContenido() {
-      if (!usuarioActual) return;
-      const texto = document.getElementById("postTextarea").value.trim();
-      const formato = document.getElementById("postFormatSelect").value;
-      if (!texto && !mediaSeleccionada.url) return;
-
-      const etiquetaMapa = {
-        normal: "Entrenamiento",
-        reel: "Reel 9:16",
-        progreso: "Progreso / Marca"
-      };
-
-      const nuevoPost = {
-        id: Date.now(),
-        authorId: usuarioActual.id,
-        authorName: usuarioActual.nombre,
-        authorHandle: usuarioActual.usuario,
-        esPro: Boolean(usuarioActual.esPro),
-        time: "Justo ahora",
-        tag: etiquetaMapa[formato] || "Entrenamiento",
-        text: texto || (mediaSeleccionada.type === "video" ? "Nuevo video en Sigma Fitness." : "Nueva foto en Sigma Fitness."),
-        mediaUrl: mediaSeleccionada.url,
-        mediaType: mediaSeleccionada.type,
-        format: formato,
-        likes: 0,
-        likedByMe: false,
-        commentsCount: 0
-      };
-
-      postsSigma.unshift(nuevoPost);
-      guardarEstadoLocal();
-      document.getElementById("postTextarea").value = "";
-      quitarMediaPreview();
-      renderizarFeed();
-      renderizarPerfilPosts();
-    }
-    function crearTarjetaPostHTML(post) {
-      const esMio = usuarioActual && post.authorId === usuarioActual.id;
-      const esReel = post.format === "reel";
-      let mediaHTML = "";
-
-      if (post.mediaUrl) {
-        mediaHTML = post.mediaType === "video"
-          ? `<div class="post-media-wrap ${esReel ? "reel-aspect" : ""}"><video src="${post.mediaUrl}" controls playsinline></video></div>`
-          : `<div class="post-media-wrap"><img src="${post.mediaUrl}" alt="Publicación" /></div>`;
+    function mostrarVistaPreviaMedia() {
+      const box = document.getElementById('mediaPreviewBox');
+      const img = document.getElementById('previewImg');
+      const vid = document.getElementById('previewVideo');
+      if (!tempMedia) {
+        box.classList.remove('visible');
+        img.style.display = 'none';
+        vid.style.display = 'none';
+        return;
       }
+      box.classList.add('visible');
+      if (tempMedia.kind === 'video') {
+        img.style.display = 'none';
+        vid.src = tempMedia.src;
+        vid.style.display = 'block';
+      } else {
+        vid.style.display = 'none';
+        img.src = tempMedia.src;
+        img.style.display = 'block';
+      }
+    }
 
-      const menuItems = esMio
-        ? `
-          <button type="button" class="post-menu-item" onclick="abrirModalEditar(${post.id})">✏️ Editar publicación</button>
-          <button type="button" class="post-menu-item danger" onclick="eliminarPost(${post.id})">🗑️ Eliminar publicación</button>
-        `
-        : `
-          <button type="button" class="post-menu-item" onclick="abrirChatSigmaE2EE('${post.authorId}', '${post.authorName.replace(/'/g, "\\'")}')">💬 Chat privado (E2EE)</button>
-          <button type="button" class="post-menu-item danger" onclick="abrirModalReportar(${post.id})">🚩 Reportar publicación</button>
-        `;
+    function limpiarMedia() {
+      tempMedia = null;
+      mostrarVistaPreviaMedia();
+    }
+    function publicarPost() {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      const txt = document.getElementById('postText').value.trim();
+      const format = document.getElementById('postFormat').value;
+      if (!txt && !tempMedia) return;
+      db.posts.unshift({
+        id: 'p_' + Date.now(),
+        authorName: user.name,
+        authorHandle: user.handle,
+        pro: !!user.pro,
+        format,
+        text: txt,
+        media: tempMedia ? { ...tempMedia } : null,
+        likes: [],
+        comments: [],
+        time: 'Ahora'
+      });
+      guardarDB(db);
+      document.getElementById('postText').value = '';
+      limpiarMedia();
+      renderFeed();
+      renderPerfil();
+    }
 
+    function toggleLike(postId) {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      const post = db.posts.find(p => p.id === postId);
+      if (!post) return;
+      const idx = post.likes.indexOf(user.id);
+      if (idx >= 0) post.likes.splice(idx, 1);
+      else post.likes.push(user.id);
+      guardarDB(db);
+      renderFeed();
+      renderPerfil();
+    }
+
+    function toggleMenuPost(postId, ev) {
+      ev.stopPropagation();
+      const menu = document.getElementById('menu_' + postId);
+      const isOpen = menu && menu.classList.contains('open');
+      cerrarTodosLosMenus();
+      if (menu && !isOpen) menu.classList.add('open');
+    }
+
+    function cerrarTodosLosMenus() {
+      document.querySelectorAll('.post-menu-dropdown.open').forEach(el => el.classList.remove('open'));
+    }
+
+    document.addEventListener('click', cerrarTodosLosMenus);
+
+    function editarPost(postId) {
+      cerrarTodosLosMenus();
+      const post = db.posts.find(p => p.id === postId);
+      if (!post) return;
+      const updated = prompt('Editar publicación:', post.text || '');
+      if (updated !== null) {
+        post.text = updated.trim();
+        guardarDB(db);
+        renderFeed();
+        renderPerfil();
+      }
+    }
+
+    function eliminarPost(postId) {
+      cerrarTodosLosMenus();
+      db.posts = db.posts.filter(p => p.id !== postId);
+      guardarDB(db);
+      renderFeed();
+      renderPerfil();
+    }
+    function obtenerIniciales(nombre) {
+      return (nombre || 'SF').split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase() || 'SF';
+    }
+
+    function escaparHTML(str) {
+      return String(str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
+    function crearTarjetaPost(post) {
+      const user = obtenerUsuarioActual();
+      const liked = user && post.likes.includes(user.id);
+      const isReel = post.format === 'Reel de Entreno' || (post.media && post.media.kind === 'video');
+      let mediaHTML = '';
+      if (post.media && post.media.src) {
+        if (post.media.kind === 'video') {
+          mediaHTML = `<div class="post-media-wrap ${isReel ? 'reel-aspect' : ''}"><video src="${post.media.src}" controls playsinline></video></div>`;
+        } else {
+          mediaHTML = `<div class="post-media-wrap"><img src="${post.media.src}" alt="Publicación" /></div>`;
+        }
+      }
       return `
         <article class="card">
           <div class="post-header">
             <div class="post-author-info">
-              <div class="avatar-circle">${obtenerIniciales(post.authorName)}</div>
+              <div class="avatar-circle">${escaparHTML(obtenerIniciales(post.authorName))}</div>
               <div>
                 <div class="author-name-row">
-                  <span class="author-name">${post.authorName}</span>
-                  ${post.esPro ? '<span class="pro-badge">PRO</span>' : ""}
+                  <span class="author-name">${escaparHTML(post.authorName)}</span>
+                  ${post.pro ? '<span class="pro-badge">PRO</span>' : ''}
                 </div>
-                <div class="post-meta">${post.authorHandle} • ${post.time} • ${post.tag}</div>
+                <div class="post-meta">${escaparHTML(post.authorHandle)} • ${escaparHTML(post.format)} • ${escaparHTML(post.time)}</div>
               </div>
             </div>
             <div class="post-menu-wrap">
-              <button type="button" class="post-menu-btn" onclick="alternarMenuPost(event, ${post.id})">⋮</button>
-              <div id="postMenu_${post.id}" class="post-menu-dropdown">${menuItems}</div>
+              <button type="button" class="post-menu-btn" onclick="toggleMenuPost('${post.id}', event)" aria-label="Opciones">⋮</button>
+              <div id="menu_${post.id}" class="post-menu-dropdown">
+                <button type="button" class="post-menu-item" onclick="editarPost('${post.id}')">✏️ Editar publicación</button>
+                <button type="button" class="post-menu-item" onclick="abrirChatE2EE('${escaparHTML(post.authorName)}', '${escaparHTML(post.authorHandle)}')">🔒 Mensaje directo</button>
+                <button type="button" class="post-menu-item danger" onclick="eliminarPost('${post.id}')">🗑️ Eliminar post</button>
+              </div>
             </div>
           </div>
-          <p class="post-text">${post.text}</p>
+          ${post.text ? `<div class="post-text">${escaparHTML(post.text)}</div>` : ''}
           ${mediaHTML}
           <div class="post-actions">
-            <button type="button" class="action-btn ${post.likedByMe ? "liked" : ""}" onclick="darLikePost(${post.id})">
-              <span>${post.likedByMe ? "❤️" : "🤍"}</span>
-              <span>${post.likes}</span>
-            </button>
-            <button type="button" class="action-btn" onclick="comentarPost(${post.id})">
-              <span>💬</span>
-              <span>${post.commentsCount}</span>
-            </button>
-            <button type="button" class="action-btn" onclick="abrirChatSigmaE2EE('${post.authorId}', '${post.authorName.replace(/'/g, "\\'")}')">
-              <span>🔐</span>
-              <span>Directo</span>
-            </button>
+            <button type="button" class="action-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${post.id}')">🔥 <span>${post.likes.length}</span></button>
+            <button type="button" class="action-btn" onclick="abrirComentarios('${post.id}')">💬 <span>${post.comments.length}</span></button>
           </div>
-        </article>
-      `;
+        </article>`;
     }
 
-    function renderizarFeed() {
-      const container = document.getElementById("feedPostsContainer");
-      if (!container) return;
-      container.innerHTML = postsSigma.map(crearTarjetaPostHTML).join("");
-    }
-    function alternarMenuPost(event, postId) {
-      event.stopPropagation();
-      document.querySelectorAll(".post-menu-dropdown.open").forEach(menu => {
-        if (menu.id !== "postMenu_" + postId) menu.classList.remove("open");
-      });
-      const menu = document.getElementById("postMenu_" + postId);
-      if (menu) menu.classList.toggle("open");
+    function renderFeed() {
+      const box = document.getElementById('feedList');
+      if (!box) return;
+      box.innerHTML = db.posts.length
+        ? db.posts.map(crearTarjetaPost).join('')
+        : '<div class="card"><p style="color:var(--text-muted); font-size:0.85rem;">Aún no hay publicaciones. ¡Sé el primero en compartir tu sesión!</p></div>';
     }
 
-    document.addEventListener("click", () => {
-      document.querySelectorAll(".post-menu-dropdown.open").forEach(menu => menu.classList.remove("open"));
-    });
+    function abrirComentarios(postId) {
+      activeCommentPostId = postId;
+      document.getElementById('commentInput').value = '';
+      renderComentarios();
+      document.getElementById('commentModal').classList.add('open');
+    }
 
-    function darLikePost(postId) {
-      const post = postsSigma.find(p => p.id === postId);
+    function renderComentarios() {
+      const box = document.getElementById('commentList');
+      const post = db.posts.find(p => p.id === activeCommentPostId);
       if (!post) return;
-      post.likedByMe = !post.likedByMe;
-      post.likes += post.likedByMe ? 1 : -1;
-      guardarEstadoLocal();
-      renderizarFeed();
-      renderizarPerfilPosts();
+      box.innerHTML = post.comments.length
+        ? post.comments.map(c => `
+            <div style="background:var(--bg-elevated); border:1px solid var(--border-soft); border-radius:10px; padding:0.55rem 0.7rem;">
+              <div style="font-size:0.76rem; font-weight:700; color:#ff859d;">${escaparHTML(c.author)}</div>
+              <div style="font-size:0.84rem;">${escaparHTML(c.text)}</div>
+            </div>`).join('')
+        : '<p style="font-size:0.8rem; color:var(--text-muted);">Sin comentarios todavía.</p>';
     }
 
-    function comentarPost(postId) {
-      const post = postsSigma.find(p => p.id === postId);
+    function enviarComentario() {
+      const user = obtenerUsuarioActual();
+      if (!user || !activeCommentPostId) return;
+      const inp = document.getElementById('commentInput');
+      const txt = inp.value.trim();
+      if (!txt) return;
+      const post = db.posts.find(p => p.id === activeCommentPostId);
       if (!post) return;
-      post.commentsCount += 1;
-      guardarEstadoLocal();
-      renderizarFeed();
-      renderizarPerfilPosts();
+      post.comments.push({ author: user.name, text: txt });
+      guardarDB(db);
+      inp.value = '';
+      renderComentarios();
+      renderFeed();
+      renderPerfil();
     }
 
-    function abrirModalEditar(postId) {
-      const post = postsSigma.find(p => p.id === postId);
-      if (!post) return;
-      postEditandoId = postId;
-      document.getElementById("editPostTextarea").value = post.text;
-      document.getElementById("editPostModal").classList.add("open");
-    }
-
-    function cerrarModalEditar() {
-      postEditandoId = null;
-      document.getElementById("editPostModal").classList.remove("open");
-    }
-
-    function guardarEdicionPost() {
-      if (!postEditandoId) return;
-      const nuevoTexto = document.getElementById("editPostTextarea").value.trim();
-      const post = postsSigma.find(p => p.id === postEditandoId);
-      if (post && nuevoTexto) {
-        post.text = nuevoTexto;
-        guardarEstadoLocal();
-        renderizarFeed();
-        renderizarPerfilPosts();
-      }
-      cerrarModalEditar();
-    }
-
-    function eliminarPost(postId) {
-      postsSigma = postsSigma.filter(p => p.id !== postId);
-      guardarEstadoLocal();
-      renderizarFeed();
-      renderizarPerfilPosts();
-    }
-
-    function abrirModalReportar(postId) {
-      postReportandoId = postId;
-      document.getElementById("reportPostModal").classList.add("open");
-    }
-
-    function cerrarModalReportar() {
-      postReportandoId = null;
-      document.getElementById("reportPostModal").classList.remove("open");
-    }
-
-    function enviarReportePost() {
-      const motivo = document.getElementById("reportReasonSelect").value;
-      const post = postsSigma.find(p => p.id === postReportandoId);
-      if (post) {
-        postsSigma = postsSigma.filter(p => p.id !== postReportandoId);
-        guardarEstadoLocal();
-        renderizarFeed();
-        renderizarPerfilPosts();
-        console.log("Reporte enviado:", post.id, motivo);
-      }
-      cerrarModalReportar();
-    }
-    function renderizarDirectorio() {
-      const container = document.getElementById("directoryListContainer");
-      if (!container) return;
-      const filtro = (document.getElementById("exploreSearchInput")?.value || "").trim().toLowerCase();
-      const filtrados = usuariosSigma.filter(u =>
-        u.nombre.toLowerCase().includes(filtro) ||
-        u.usuario.toLowerCase().includes(filtro) ||
-        (u.especialidad || "").toLowerCase().includes(filtro)
-      );
-
-      container.innerHTML = filtrados.map(u => `
+    function renderDirectorio() {
+      const box = document.getElementById('directoryList');
+      if (!box) return;
+      box.innerHTML = db.users.map(u => `
         <div class="trainer-card">
           <div class="trainer-info">
-            <div class="avatar-circle">${obtenerIniciales(u.nombre)}</div>
+            <div class="avatar-circle">${escaparHTML(obtenerIniciales(u.name))}</div>
             <div>
               <div class="author-name-row">
-                <span class="author-name">${u.nombre}</span>
-                ${u.esPro ? '<span class="pro-badge">PRO</span>' : ""}
+                <span class="author-name">${escaparHTML(u.name)}</span>
+                ${u.pro ? '<span class="pro-badge">PRO</span>' : ''}
               </div>
-              <div class="post-meta">${u.especialidad || "Atleta Sigma"}</div>
+              <div class="post-meta">${escaparHTML(u.handle)} • ${escaparHTML(u.phone)}</div>
             </div>
           </div>
-          <div style="display:flex; gap:0.35rem;">
-            <button type="button" class="btn-chat-e2ee" onclick="abrirChatSigmaE2EE('${u.id}', '${u.nombre.replace(/'/g, "\\'")}')">🔐 Chat</button>
-          </div>
-        </div>
-      `).join("");
+          <button type="button" class="btn-header primary" onclick="abrirChatE2EE('${escaparHTML(u.name)}', '${escaparHTML(u.handle)}')">Chat</button>
+        </div>`).join('');
     }
 
-    function actualizarPerfilUI() {
-      if (!usuarioActual) return;
-      document.getElementById("profileAvatarLg").textContent = obtenerIniciales(usuarioActual.nombre);
-      document.getElementById("profileNameHeading").textContent = usuarioActual.nombre;
-      document.getElementById("profileHandleText").textContent = `${usuarioActual.usuario} • ${usuarioActual.telefono}`;
-      document.getElementById("profileBioText").textContent = usuarioActual.bio || "";
-      renderizarPerfilPosts();
+    function renderPerfil() {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      document.getElementById('profileAvatar').textContent = obtenerIniciales(user.name);
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileHandle').textContent = `${user.handle} • ${user.phone}`;
+      const mine = db.posts.filter(p => p.authorHandle === user.handle);
+      const box = document.getElementById('profilePostsList');
+      box.innerHTML = mine.length
+        ? mine.map(crearTarjetaPost).join('')
+        : '<div class="card"><p style="font-size:0.84rem; color:var(--text-muted);">Aún no tienes publicaciones en tu perfil.</p></div>';
     }
-
-    function renderizarPerfilPosts() {
-      const container = document.getElementById("profilePostsContainer");
-      if (!container || !usuarioActual) return;
-      const misPosts = postsSigma.filter(p => p.authorId === usuarioActual.id);
-      container.innerHTML = misPosts.length
-        ? misPosts.map(crearTarjetaPostHTML).join("")
-        : '<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Aún no tienes publicaciones en tu perfil.</div>';
-    }
-    let e2eePeerInfo = { id: "andrea", nombre: "Andrea Design" };
-    let e2eeSharedKey = null;
-    const e2eeHistorial = {};
-
-    async function prepararClaveE2EE() {
-      if (!window.crypto || !window.crypto.subtle) return null;
-      const kpA = await window.crypto.subtle.generateKey(
-        { name: "ECDH", namedCurve: "P-256" },
-        true,
-        ["deriveKey"]
-      );
-      const kpB = await window.crypto.subtle.generateKey(
-        { name: "ECDH", namedCurve: "P-256" },
-        true,
-        ["deriveKey"]
-      );
-      return await window.crypto.subtle.deriveKey(
-        { name: "ECDH", public: kpB.publicKey },
-        kpA.privateKey,
-        { name: "AES-GCM", length: 256 },
-        false,
-        ["encrypt", "decrypt"]
-      );
-    }
-
-    async function cifrarTextoE2EE(textoPlano) {
-      if (!e2eeSharedKey) e2eeSharedKey = await prepararClaveE2EE();
-      if (!e2eeSharedKey) return { iv: "", cipher: textoPlano };
-      const iv = window.crypto.getRandomValues(new Uint8Array(12));
-      const encoded = new TextEncoder().encode(textoPlano);
-      const encryptedBuf = await window.crypto.subtle.encrypt(
-        { name: "AES-GCM", iv },
-        e2eeSharedKey,
-        encoded
-      );
-      const cipherHex = Array.from(new Uint8Array(encryptedBuf))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
-      const ivHex = Array.from(iv)
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
-      return { iv: ivHex, cipher: cipherHex };
-    }
-
-    async function descifrarTextoE2EE(paquete) {
-      if (!e2eeSharedKey || !paquete.iv) return paquete.plainText || "";
-      try {
-        const iv = new Uint8Array(paquete.iv.match(/.{1,2}/g).map(h => parseInt(h, 16)));
-        const bytes = new Uint8Array(paquete.cipher.match(/.{1,2}/g).map(h => parseInt(h, 16)));
-        const decryptedBuf = await window.crypto.subtle.decrypt(
-          { name: "AES-GCM", iv },
-          e2eeSharedKey,
-          bytes
-        );
-        return new TextDecoder().decode(decryptedBuf);
-      } catch (err) {
-        return paquete.plainText || "";
+    async function calcularHashE2EE(texto) {
+      if (window.crypto && crypto.subtle) {
+        const data = new TextEncoder().encode(texto + ':' + Date.now());
+        const digest = await crypto.subtle.digest('SHA-256', data);
+        const hex = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        return 'sha256:' + hex.slice(0, 12);
       }
-    }
-    async function abrirChatSigmaE2EE(peerId, peerNombre) {
-      e2eePeerInfo = { id: peerId, nombre: peerNombre };
-      document.getElementById("sigmaE2EEPeer").textContent = peerNombre;
-      if (!e2eeSharedKey) e2eeSharedKey = await prepararClaveE2EE();
-      if (!e2eeHistorial[peerId]) {
-        const saludo = `Canal directo cifrado listo con ${peerNombre}. Solo ambos dispositivos poseen la llave de sesión.`;
-        const cifrado = await cifrarTextoE2EE(saludo);
-        e2eeHistorial[peerId] = [
-          { sender: "peer", plainText: saludo, iv: cifrado.iv, cipher: cifrado.cipher }
-        ];
-      }
-      document.getElementById("sigmaE2EEModal").classList.add("open");
-      await renderizarChatSigmaE2EE();
+      return 'e2ee-' + Math.random().toString(36).slice(2, 10);
     }
 
-    function cerrarChatSigmaE2EE() {
-      document.getElementById("sigmaE2EEModal").classList.remove("open");
+    function abrirChatE2EE(peerName, peerHandle) {
+      if (peerName) activePeer = { name: peerName, handle: peerHandle || '@atleta' };
+      document.getElementById('e2eePeerLabel').textContent = `${activePeer.name} (${activePeer.handle}) • Cifrado E2EE activo`;
+      renderE2EE();
+      document.getElementById('e2eeModal').classList.add('open');
     }
 
-    async function renderizarChatSigmaE2EE() {
-      const log = document.getElementById("sigmaE2EELog");
-      if (!log) return;
-      const lista = e2eeHistorial[e2eePeerInfo.id] || [];
-      const htmlItems = [];
-      for (const msg of lista) {
-        const texto = await descifrarTextoE2EE(msg);
-        const esMio = msg.sender === "me";
-        htmlItems.push(`
-          <div class="e2ee-msg ${esMio ? "me" : "peer"}">
-            <div>${texto}</div>
-            <div class="e2ee-hash">AES-GCM: ${msg.cipher.slice(0, 22)}...</div>
-          </div>
-        `);
-      }
-      log.innerHTML = htmlItems.join("");
-      log.scrollTop = log.scrollHeight;
+    function renderE2EE() {
+      const user = obtenerUsuarioActual();
+      const myHandle = user ? user.handle : '@juanluis';
+      const box = document.getElementById('e2eeLog');
+      box.innerHTML = db.e2eeMessages.map(m => {
+        const isMe = m.handle === myHandle;
+        return `
+          <div class="e2ee-msg ${isMe ? 'me' : 'peer'}">
+            <div style="font-size:0.7rem; opacity:0.8; font-weight:700; margin-bottom:0.15rem;">${escaparHTML(m.sender)} • ${escaparHTML(m.time)}</div>
+            <div>${escaparHTML(m.text)}</div>
+            <div class="e2ee-hash">🔒 ${escaparHTML(m.hash)}</div>
+          </div>`;
+      }).join('');
+      box.scrollTop = box.scrollHeight;
     }
 
-    async function enviarMensajeSigmaE2EE() {
-      const input = document.getElementById("sigmaE2EEInput");
-      const texto = input.value.trim();
-      if (!texto) return;
-      input.value = "";
-
-      const paquete = await cifrarTextoE2EE(texto);
-      e2eeHistorial[e2eePeerInfo.id].push({
-        sender: "me",
-        plainText: texto,
-        iv: paquete.iv,
-        cipher: paquete.cipher
+    async function enviarMensajeE2EE() {
+      const user = obtenerUsuarioActual();
+      if (!user) return;
+      const inp = document.getElementById('e2eeInput');
+      const txt = inp.value.trim();
+      if (!txt) return;
+      const hash = await calcularHashE2EE(txt);
+      db.e2eeMessages.push({
+        sender: user.name,
+        handle: user.handle,
+        text: txt,
+        hash,
+        time: 'Ahora'
       });
-      await renderizarChatSigmaE2EE();
-
-      setTimeout(async () => {
-        const respTexto = `Recibido en canal seguro (${e2eePeerInfo.nombre}). ¡Seguimos firmes en Sigma Fitness!`;
-        const respCifrada = await cifrarTextoE2EE(respTexto);
-        e2eeHistorial[e2eePeerInfo.id].push({
-          sender: "peer",
-          plainText: respTexto,
-          iv: respCifrada.iv,
-          cipher: respCifrada.cipher
-        });
-        await renderizarChatSigmaE2EE();
-      }, 650);
+      guardarDB(db);
+      inp.value = '';
+      renderE2EE();
     }
 
-    if (usuarioActual) {
-      iniciarSesionUsuario(usuarioActual);
+    function cerrarModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    function cerrarModalFondo(ev, id) {
+      if (ev.target && ev.target.id === id) cerrarModal(id);
+    }
+
+    if (db.currentUser && obtenerUsuarioActual()) {
+      arrancarApp();
     }
   </script>
 </body>
