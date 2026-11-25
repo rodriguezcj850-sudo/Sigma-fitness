@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sigma Fitness | Red Social</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#DC143C" />
+  <title>Sigma Fitness — Red Social & Entrenamiento</title>
   <style>
     :root {
       --crimson: #DC143C;
@@ -16,948 +17,459 @@
       --text-main: #F4F4F5;
       --text-muted: #A1A1AA;
       --whatsapp-green: #25D366;
+      --danger: #EF4444;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
       background-color: var(--bg-main);
       color: var(--text-main);
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-      padding: 0.85rem;
+      overflow-x: hidden;
+      padding-bottom: 78px;
     }
 
-    /* Autenticación y Recuperación */
+    /* --- AUTENTICACIÓN Y RECUPERACIÓN --- */
     .auth-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      background: radial-gradient(circle at top, rgba(220, 20, 60, 0.16), transparent 60%), var(--bg-main);
+    }
+
+    .auth-card {
       width: 100%;
-      max-width: 400px;
-      background-color: var(--bg-card);
+      max-width: 420px;
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 1.85rem;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.65);
+      border-radius: 16px;
+      padding: 1.6rem 1.35rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65);
     }
 
-    .auth-brand {
+    .brand-logo-wrap {
       text-align: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
-    .brand-icon-lg {
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
-      color: white;
-      font-weight: 900;
-      font-size: 1.8rem;
-      width: 56px;
-      height: 56px;
+    .brand-monogram {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 12px;
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.7rem;
       letter-spacing: -1px;
-      box-shadow: 0 0 18px var(--crimson-glow);
-      margin-bottom: 0.75rem;
+      box-shadow: 0 0 24px var(--crimson-glow);
+      margin-bottom: 0.6rem;
     }
 
-    .auth-title {
-      font-weight: 800;
-      font-size: 1.4rem;
+    .brand-title {
+      font-size: 1.45rem;
+      font-weight: 900;
       letter-spacing: 0.5px;
       text-transform: uppercase;
     }
 
-    .auth-title span {
+    .brand-title span {
       color: var(--crimson);
     }
 
-    .auth-subtitle {
-      font-size: 0.85rem;
+    .brand-slogan {
+      font-size: 0.76rem;
       color: var(--text-muted);
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
+      font-style: italic;
+      line-height: 1.35;
     }
 
     .auth-tabs {
       display: flex;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 1.5rem;
+      gap: 0.45rem;
+      background: var(--bg-input);
+      padding: 0.3rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
     }
 
     .auth-tab {
       flex: 1;
-      background: none;
       border: none;
+      background: transparent;
       color: var(--text-muted);
-      padding: 0.75rem;
+      padding: 0.55rem;
+      border-radius: 8px;
       font-weight: 700;
       font-size: 0.85rem;
-      text-transform: uppercase;
       cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
     }
 
     .auth-tab.active {
-      color: var(--crimson);
-      border-bottom-color: var(--crimson);
-    }
-
-    .auth-form {
-      display: none;
-    }
-
-    .auth-form.active {
-      display: block;
+      background: var(--crimson);
+      color: #fff;
     }
 
     .form-group {
-      margin-bottom: 1.05rem;
-      position: relative;
+      margin-bottom: 0.85rem;
     }
 
-    .form-label {
+    .form-group label {
       display: block;
       font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      font-weight: 600;
       color: var(--text-muted);
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.32rem;
     }
 
-    .input-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .form-input {
+    .form-input, .format-select {
       width: 100%;
-      background-color: var(--bg-input);
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
       color: var(--text-main);
-      padding: 0.8rem 1rem;
-      font-size: 0.92rem;
+      border-radius: 10px;
+      padding: 0.72rem 0.85rem;
+      font-size: 0.9rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
-    .form-input:focus {
+    .form-input:focus, .format-select:focus {
       border-color: var(--crimson);
     }
 
-    .auth-error {
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.78rem;
+      font-weight: 800;
+      font-size: 0.92rem;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      box-shadow: 0 6px 18px var(--crimson-glow);
+    }
+
+    .btn-secondary {
+      width: 100%;
+      background: var(--bg-input);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.72rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      margin-top: 0.55rem;
+    }
+
+    .auth-error, .auth-success {
       display: none;
-      background-color: rgba(220, 20, 60, 0.14);
-      border: 1px solid var(--crimson);
-      color: #FF8FA3;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.65rem 0.75rem;
+      padding: 0.6rem 0.75rem;
       border-radius: 8px;
-      margin-bottom: 0.9rem;
-      line-height: 1.4;
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.35;
     }
 
     .auth-error.visible {
       display: block;
-    }
-
-    .auth-success {
-      display: none;
-      background-color: rgba(37, 211, 102, 0.12);
-      border: 1px solid var(--whatsapp-green);
-      color: #86EFAC;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.65rem 0.75rem;
-      border-radius: 8px;
-      margin-bottom: 0.9rem;
-      line-height: 1.45;
+      background: rgba(239, 68, 68, 0.14);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #FCA5A5;
     }
 
     .auth-success.visible {
       display: block;
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.45);
+      color: #86EFAC;
     }
 
-    .channel-selector {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .channel-btn {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 0.65rem 0.5rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      transition: all 0.2s;
-    }
-
-    .channel-btn.active {
-      border-color: var(--crimson);
-      background-color: var(--crimson-glow);
-      color: white;
-    }
-
-    .channel-btn.whatsapp-active {
-      border-color: var(--whatsapp-green);
-      background-color: rgba(37, 211, 102, 0.15);
-      color: var(--whatsapp-green);
-    }
-
-    .btn-reopen-wa {
+    /* --- APP PRINCIPAL --- */
+    .app-shell {
       display: none;
-      width: 100%;
-      background-color: rgba(37, 211, 102, 0.14);
-      border: 1px solid var(--whatsapp-green);
-      color: var(--whatsapp-green);
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-align: center;
-      text-decoration: none;
-      margin-bottom: 0.9rem;
-      transition: all 0.2s;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    .btn-reopen-wa.visible {
-      display: block;
-    }
-
-    .btn-reopen-wa:hover {
-      background-color: var(--whatsapp-green);
-      color: #000;
-    }
-
-    .new-pass-fields {
-      display: none;
-      margin-top: 0.5rem;
-      padding-top: 0.85rem;
-      border-top: 1px dashed var(--border-color);
-    }
-
-    .new-pass-fields.unlocked {
-      display: block;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 12px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .toggle-password:hover {
-      color: var(--crimson);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
-      color: white;
-      border: none;
-      width: 100%;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: filter 0.2s, transform 0.1s;
-      margin-top: 0.4rem;
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.08);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.99);
-    }
-
-    .btn-secondary-dark {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.84rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      margin-top: 0.65rem;
-      transition: all 0.2s;
-    }
-
-    .btn-secondary-dark:hover {
-      border-color: var(--crimson);
-      color: var(--text-main);
-    }
-
-    .btn-biometric-bank {
-      background: linear-gradient(135deg, var(--bg-input), #1E1E24);
-      border: 1px solid var(--crimson);
-      color: var(--text-main);
-      width: 100%;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.88rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-transform: uppercase;
-      margin-top: 0.75rem;
-      transition: all 0.2s;
-    }
-
-    .btn-biometric-bank:hover {
-      background-color: var(--crimson-glow);
-      box-shadow: 0 0 12px var(--crimson-glow);
-    }
-
-    .btn-whatsapp {
-      background-color: rgba(37, 211, 102, 0.15);
-      border: 1px solid var(--whatsapp-green);
-      color: var(--whatsapp-green);
-      width: 100%;
-      padding: 0.85rem;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      text-transform: uppercase;
-      margin-top: 1rem;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .btn-whatsapp:hover {
-      background-color: var(--whatsapp-green);
-      color: #000;
-      box-shadow: 0 0 12px rgba(37, 211, 102, 0.4);
-    }
-
-    .auth-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1.25rem;
-      font-size: 0.82rem;
-    }
-
-    .auth-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .auth-link:hover {
-      color: var(--crimson);
-    }
-
-    /* Vistas de la App */
-    .app-screen {
-      display: none;
-      width: 100%;
-      max-width: 650px;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .app-screen.active {
-      display: flex;
-    }
-
-    header {
-      background-color: rgba(18, 18, 21, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0.9rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .header-left {
+      z-index: 120;
+      background: rgba(9, 9, 11, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
       display: flex;
       align-items: center;
-      gap: 0.65rem;
-      min-width: 0;
+      justify-content: space-between;
     }
 
-    .btn-search-trigger {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.2s;
-    }
-
-    .btn-search-trigger:hover, .btn-search-trigger.active {
-      border-color: var(--crimson);
-      background-color: var(--crimson-glow);
-      color: var(--crimson);
-    }
-
-    .brand-header {
+    .topbar-brand {
       display: flex;
       align-items: center;
       gap: 0.55rem;
-      min-width: 0;
-    }
-
-    .brand-icon-sm {
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
-      color: white;
       font-weight: 900;
-      font-size: 1rem;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      flex-shrink: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.4px;
     }
 
-    .brand-title-sm {
-      font-weight: 800;
-      font-size: 1.02rem;
-      text-transform: uppercase;
-      white-space: nowrap;
+    .topbar-badge {
+      background: var(--crimson);
+      color: #fff;
+      padding: 0.22rem 0.48rem;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 900;
     }
 
-    .brand-title-sm span {
-      color: var(--crimson);
-    }
-
-    /* PANEL DE BÚSQUEDA EXPLORAR */
-    .search-panel {
-      display: none;
-      background-color: var(--bg-card);
-      border-bottom: 1px solid var(--crimson);
-      padding: 1rem;
-      box-shadow: 0 12px 24px rgba(0,0,0,0.75);
-      animation: slideDown 0.2s ease-out;
-    }
-
-    .search-panel.open {
-      display: block;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .search-box-wrapper {
-      position: relative;
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.85rem;
-    }
-
-    .search-input {
-      width: 100%;
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
-      padding: 0.72rem 2.4rem 0.72rem 0.9rem;
-      font-size: 0.9rem;
-      outline: none;
-    }
-
-    .search-input:focus {
-      border-color: var(--crimson);
-    }
-
-    .btn-close-search {
-      position: absolute;
-      right: 10px;
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .btn-close-search:hover {
-      color: var(--crimson);
-    }
-
-    .search-filters {
+    .topbar-actions {
       display: flex;
       gap: 0.45rem;
-      margin-bottom: 0.9rem;
-      overflow-x: auto;
-      padding-bottom: 2px;
     }
 
-    .filter-chip {
-      background-color: var(--bg-input);
+    .icon-pill-btn {
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 0.35rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      color: var(--text-main);
+      border-radius: 999px;
+      padding: 0.4rem 0.72rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      text-transform: uppercase;
       cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
-
-    .filter-chip.active, .filter-chip:hover {
-      background-color: var(--crimson);
-      border-color: var(--crimson);
-      color: white;
-    }
-
-    .search-results-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      max-height: 280px;
-      overflow-y: auto;
-    }
-
-    .search-item {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.7rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.65rem;
-    }
-
-    .search-item-info {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      min-width: 0;
-    }
-
-    .search-item-meta {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .badge-type {
-      font-size: 0.62rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-left: 4px;
-    }
-
-    .badge-coach {
-      background-color: rgba(220, 20, 60, 0.2);
-      color: var(--crimson);
-      border: 1px solid var(--crimson);
-    }
-
-    .badge-grupo {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: #60A5FA;
-      border: 1px solid #3B82F6;
-    }
-
-    .badge-atleta {
-      background-color: #27272A;
-      color: #E4E4E7;
-    }
-
-    .btn-follow-sm {
-      background-color: var(--crimson);
-      color: white;
-      border: none;
-      padding: 0.4rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .btn-follow-sm.joined {
-      background-color: #27272A;
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
-    }
-
-    .container {
-      padding: 1.15rem 0.75rem 1.5rem;
-      flex: 1;
     }
 
     .view-section {
       display: none;
+      padding: 0.9rem;
     }
 
     .view-section.active {
       display: block;
     }
 
-    .slogan-banner {
-      background: linear-gradient(90deg, rgba(220,20,60,0.16) 0%, rgba(18,18,21,1) 100%);
-      border-left: 4px solid var(--crimson);
-      padding: 0.9rem 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.15rem;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
+    /* --- PUBLICADOR / COMPOSER --- */
     .card {
-      background-color: var(--bg-card);
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      position: relative;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      border-radius: 14px;
+      padding: 0.95rem;
+      margin-bottom: 0.9rem;
     }
 
-    .post-creator textarea {
+    .composer-textarea {
       width: 100%;
-      background-color: var(--bg-input);
+      min-height: 76px;
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
       color: var(--text-main);
-      padding: 0.8rem;
-      resize: none;
-      height: 82px;
-      font-size: 0.92rem;
-      margin-bottom: 0.65rem;
+      border-radius: 10px;
+      padding: 0.72rem;
+      font-size: 0.9rem;
+      resize: vertical;
       outline: none;
+      margin-bottom: 0.65rem;
     }
 
-    .post-creator textarea:focus {
+    .composer-textarea:focus {
       border-color: var(--crimson);
     }
 
-    /* MULTIMEDIA: CÁMARA, GALERÍA, REELS Y VISTA PREVIA */
-    .media-toolbar {
+    .composer-controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.55rem;
+      gap: 0.45rem;
       align-items: center;
+      justify-content: space-between;
     }
 
-    .format-row-left {
+    .media-buttons-group {
       display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-bottom: 0.7rem;
+      gap: 0.45rem;
+      flex-wrap: wrap;
     }
 
     .media-pick-btn {
-      background-color: var(--bg-input);
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
       color: var(--text-main);
-      padding: 0.45rem 0.78rem;
       border-radius: 8px;
+      padding: 0.45rem 0.7rem;
       font-size: 0.78rem;
       font-weight: 700;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s;
     }
 
-    .media-pick-btn:hover {
-      border-color: var(--crimson);
-      background-color: rgba(220, 20, 60, 0.14);
+    .format-row-left {
+      margin-top: 0.5rem;
+      max-width: 190px;
     }
 
     .camera-mode-bar {
       display: none;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      background-color: var(--bg-input);
-      border: 1px solid var(--crimson);
-      border-radius: 9px;
-      padding: 0.55rem;
-      margin-bottom: 0.7rem;
       align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.55rem;
+      padding: 0.5rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
     }
 
     .camera-mode-bar.open {
       display: flex;
     }
 
-    .format-select {
-      background-color: var(--bg-input);
-      color: var(--text-main);
+    .btn-close-search {
+      background: transparent;
       border: 1px solid var(--border-color);
-      padding: 0.45rem 0.7rem;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      outline: none;
-    }
-
-    .format-select:focus {
-      border-color: var(--crimson);
+      color: var(--text-muted);
+      border-radius: 6px;
+      padding: 0.25rem 0.55rem;
+      cursor: pointer;
     }
 
     .media-preview-box {
       display: none;
       position: relative;
-      background-color: var(--bg-input);
-      border: 1px solid var(--crimson);
+      margin-top: 0.65rem;
       border-radius: 10px;
-      padding: 0.5rem;
-      margin-bottom: 0.75rem;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: #000;
     }
 
-    .media-preview-box.active {
+    .media-preview-box.visible {
+      display: block;
+    }
+
+    .media-preview-box img,
+    .media-preview-box video {
+      width: 100%;
+      max-height: 320px;
+      object-fit: cover;
       display: block;
     }
 
     .btn-remove-media {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: rgba(9, 9, 11, 0.85);
-      border: 1px solid var(--crimson);
-      color: white;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      font-weight: 800;
+      top: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 999px;
+      padding: 0.28rem 0.62rem;
+      font-size: 0.75rem;
       cursor: pointer;
-      z-index: 5;
     }
 
-    .post-media-container {
-      margin-bottom: 0.85rem;
-      border-radius: 10px;
-      overflow: hidden;
-      background-color: #09090B;
-      border: 1px solid var(--border-color);
-      position: relative;
-    }
-
-    .post-media-img {
-      width: 100%;
-      max-height: 430px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .post-media-video {
-      width: 100%;
-      max-height: 450px;
-      display: block;
-      background-color: #000;
-    }
-
-    .post-media-reel {
-      width: 100%;
-      max-width: 340px;
-      aspect-ratio: 9 / 16;
-      max-height: 480px;
-      margin: 0 auto;
-      object-fit: cover;
-      display: block;
-      background-color: #000;
-    }
-
-    .reel-badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
-      color: white;
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 5px;
-      letter-spacing: 0.5px;
-      z-index: 4;
-    }
-
-    .creator-actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.65rem;
-    }
-
-    .tag-select {
-      background-color: var(--bg-input);
-      color: var(--text-muted);
-      border: 1px solid var(--border-color);
-      padding: 0.55rem 0.7rem;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      outline: none;
-      flex: 1;
-      max-width: 210px;
-    }
-
+    /* --- POSTS DEL FEED --- */
     .post-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 0.45rem;
-      margin-bottom: 0.75rem;
-      position: relative;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .post-author-info {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+    }
+
+    .username {
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .badge-pro {
+      background: rgba(220, 20, 60, 0.18);
+      border: 1px solid var(--crimson);
+      color: #FF6B88;
+      font-size: 0.64rem;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .post-meta {
+      font-size: 0.73rem;
+      color: var(--text-muted);
     }
 
     .post-header-right {
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      flex-shrink: 0;
       position: relative;
     }
 
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      min-width: 0;
-    }
-
-    .avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background-color: var(--bg-input);
-      border: 2px solid var(--crimson);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 0.82rem;
-      color: var(--crimson);
-      flex-shrink: 0;
-    }
-
-    .username {
-      font-weight: 700;
-      font-size: 0.92rem;
-      display: inline-flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .badge-pro {
-      background-color: var(--crimson);
-      color: white;
-      font-size: 0.6rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-    }
-
     .post-tag {
-      font-size: 0.72rem;
-      color: #FF758F;
-      background-color: rgba(220, 20, 60, 0.14);
-      border: 1px solid rgba(220, 20, 60, 0.35);
-      padding: 0.25rem 0.55rem;
-      border-radius: 6px;
-      font-weight: 700;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* MENÚ DE 3 PUNTOS EN POSTS */
-    .btn-post-dots {
-      background-color: var(--bg-input);
+      background: var(--bg-input);
       border: 1px solid var(--border-color);
       color: var(--text-muted);
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      font-size: 1.05rem;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
+      font-size: 0.68rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
     }
 
-    .btn-post-dots:hover {
-      border-color: var(--crimson);
-      color: white;
+    .btn-post-dots {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      font-weight: 900;
+      padding: 0.2rem 0.45rem;
+      cursor: pointer;
     }
 
     .post-options-dropdown {
       display: none;
       position: absolute;
-      top: calc(100% + 6px);
       right: 0;
-      min-width: 215px;
-      background-color: #16161C;
-      border: 1px solid var(--crimson);
-      border-radius: 10px;
+      top: 115%;
+      min-width: 205px;
+      background: #18181C;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
       padding: 0.35rem;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.88);
-      z-index: 80;
-      animation: slideDown 0.15s ease-out;
+      z-index: 180;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.75);
     }
 
     .post-options-dropdown.open {
@@ -966,1677 +478,1105 @@
 
     .post-menu-item {
       width: 100%;
-      background: none;
+      text-align: left;
+      background: transparent;
       border: none;
       color: var(--text-main);
-      padding: 0.58rem 0.7rem;
-      border-radius: 7px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-align: left;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: background-color 0.15s;
-    }
-
-    .post-menu-item:hover {
-      background-color: rgba(255, 255, 255, 0.06);
-    }
-
-    .post-menu-item.danger {
-      color: #FF758F;
-      border-top: 1px solid var(--border-color);
-      margin-top: 0.2rem;
-      padding-top: 0.65rem;
-    }
-
-    .post-menu-item.danger:hover {
-      background-color: rgba(220, 20, 60, 0.16);
-    }
-
-    /* MODAL DE REPORTE */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(4px);
-      z-index: 300;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-
-    .modal-overlay.open {
-      display: flex;
-    }
-
-    .report-modal {
-      width: 100%;
-      max-width: 400px;
-      background-color: var(--bg-card);
-      border: 1px solid var(--crimson);
-      border-radius: 14px;
-      padding: 1.35rem;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9);
-    }
-
-    .report-modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.6rem;
-    }
-
-    .report-reason-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      margin: 0.9rem 0 1rem;
-    }
-
-    .report-reason-btn {
-      width: 100%;
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 0.68rem 0.85rem;
+      padding: 0.55rem 0.65rem;
       border-radius: 8px;
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      text-align: left;
       cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.15s;
-    }
-
-    .report-reason-btn:hover, .report-reason-btn.selected {
-      border-color: var(--crimson);
-      background-color: rgba(220, 20, 60, 0.16);
-      color: white;
-    }
-
-    .post-body {
-      font-size: 0.93rem;
-      line-height: 1.5;
-      color: #E4E4E7;
-      margin-bottom: 0.85rem;
-      word-break: break-word;
-    }
-
-    /* BARRA MODERNA INTERNA DE ACCIONES */
-    .sigma-actions-bar {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr) minmax(0, 0.95fr);
-      gap: 0.4rem;
-      width: 100%;
-      border-top: 1px solid var(--border-color);
-      padding-top: 0.7rem;
-      position: relative;
-    }
-
-    .sigma-box-btn {
-      width: 100%;
-      min-width: 0;
-      background: linear-gradient(180deg, #1A1A20 0%, #141418 100%);
-      border: 1px solid #2A2A32;
-      color: #D4D4D8;
-      padding: 0.5rem 0.4rem;
-      border-radius: 9px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.28rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: all 0.18s ease;
-      user-select: none;
-    }
-
-    .sigma-box-btn:hover {
-      border-color: var(--crimson);
-      color: #FFFFFF;
-      background: linear-gradient(180deg, #22161B 0%, #171215 100%);
-    }
-
-    .sigma-box-btn.reacted {
-      background: linear-gradient(135deg, rgba(220, 20, 60, 0.25), rgba(155, 13, 41, 0.16));
-      border-color: var(--crimson);
-      color: #FFFFFF;
-      box-shadow: 0 0 12px rgba(220, 20, 60, 0.22);
-    }
-
-    .reaction-symbol {
-      font-size: 1rem;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .reaction-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .reaction-counter {
-      font-size: 0.72rem;
-      font-weight: 800;
-      background-color: rgba(255, 255, 255, 0.06);
-      padding: 1px 5px;
-      border-radius: 999px;
-      color: #A1A1AA;
-      flex-shrink: 0;
-    }
-
-    .sigma-box-btn.reacted .reaction-counter {
-      background-color: rgba(220, 20, 60, 0.35);
-      color: #FFE4E9;
-    }
-
-    /* PICKER FLOTANTE DE REACCIONES SIGMA */
-    .reaction-picker {
-      display: none;
-      position: absolute;
-      bottom: calc(100% + 8px);
-      left: 0;
-      background-color: #16161C;
-      border: 1px solid var(--crimson);
-      border-radius: 12px;
-      padding: 0.38rem 0.5rem;
-      gap: 0.3rem;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.85), 0 0 14px var(--crimson-glow);
-      z-index: 50;
-      animation: popUp 0.16s ease-out;
-    }
-
-    .reaction-picker.open {
-      display: flex;
-    }
-
-    @keyframes popUp {
-      from { opacity: 0; transform: translateY(6px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .reaction-option {
-      background-color: var(--bg-input);
-      border: 1px solid transparent;
-      border-radius: 8px;
-      width: 34px;
-      height: 34px;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
-    }
-
-    .reaction-option:hover {
-      transform: scale(1.18);
-      border-color: var(--crimson);
-      background-color: rgba(220, 20, 60, 0.18);
-    }
-
-    .action-btn {
-      background-color: var(--bg-input);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.38rem 0.68rem;
-      border-radius: 7px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-
-    .action-btn:hover {
-      border-color: var(--crimson);
-      color: var(--text-main);
-    }
-
-    .comments-section {
-      display: none;
-      margin-top: 0.85rem;
-      padding-top: 0.85rem;
-      border-top: 1px dashed var(--border-color);
-    }
-
-    .comments-section.open {
       display: block;
     }
 
-    .comment-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 0.75rem;
+    .post-menu-item:hover {
+      background: var(--bg-input);
     }
 
-    .comment-item {
-      background-color: var(--bg-input);
-      padding: 0.55rem 0.75rem;
-      border-radius: 7px;
-      font-size: 0.84rem;
+    .post-menu-item.danger {
+      color: #FCA5A5;
     }
 
-    .comment-item strong {
-      color: var(--crimson);
-      margin-right: 0.4rem;
+    .post-body-text {
+      font-size: 0.9rem;
+      line-height: 1.48;
+      margin-bottom: 0.65rem;
+      white-space: pre-line;
     }
 
-    .comment-input-box {
-      display: flex;
-      gap: 0.45rem;
-    }
-
-    .comment-input {
-      flex: 1;
-      min-width: 0;
-      background-color: var(--bg-input);
+    .post-media {
+      width: 100%;
+      border-radius: 10px;
+      max-height: 440px;
+      object-fit: cover;
+      margin-bottom: 0.65rem;
       border: 1px solid var(--border-color);
-      border-radius: 7px;
-      color: var(--text-main);
-      padding: 0.48rem 0.7rem;
-      font-size: 0.84rem;
-      outline: none;
     }
 
-    .comment-input:focus {
-      border-color: var(--crimson);
+    .post-media.reel-format {
+      aspect-ratio: 9 / 16;
+      max-height: 520px;
     }
 
-    .btn-send-comment {
-      background-color: var(--crimson);
-      color: white;
-      border: none;
-      padding: 0.48rem 0.85rem;
-      border-radius: 7px;
-      font-weight: 700;
+    .post-actions-bar {
+      display: flex;
+      gap: 0.5rem;
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.6rem;
+    }
+
+    .post-action-btn {
+      flex: 1;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 8px;
+      padding: 0.45rem;
       font-size: 0.78rem;
+      font-weight: 700;
       cursor: pointer;
-      flex-shrink: 0;
     }
 
-    nav {
-      background-color: var(--bg-card);
+    .post-action-btn.liked {
+      border-color: var(--crimson);
+      color: #FF6B88;
+      background: rgba(220, 20, 60, 0.14);
+    }
+
+    /* --- DIRECTORIO & PERFIL --- */
+    .dir-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .dir-item:last-child {
+      border-bottom: none;
+    }
+
+    .profile-banner {
+      text-align: center;
+      padding: 1.2rem 0.8rem;
+    }
+
+    .profile-avatar-lg {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 0 22px var(--crimson-glow);
+    }
+
+    /* --- BARRA INFERIOR --- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(18, 18, 21, 0.96);
+      backdrop-filter: blur(10px);
       border-top: 1px solid var(--border-color);
       display: flex;
       justify-content: space-around;
-      padding: 0.8rem 0.35rem;
-      position: sticky;
-      bottom: 0;
-      z-index: 90;
-      border-radius: 0 0 10px 10px;
+      padding: 0.5rem 0.25rem;
+      z-index: 150;
     }
 
     .nav-item {
-      background: none;
+      background: transparent;
       border: none;
       color: var(--text-muted);
-      font-size: 0.75rem;
-      font-weight: 800;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+      padding: 0.25rem 0.65rem;
     }
 
     .nav-item.active {
       color: var(--crimson);
     }
+
+    /* --- MODALES GENERALES & CHAT E2EE --- */
+    .modal-backdrop, .e2ee-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.84);
+      backdrop-filter: blur(4px);
+      z-index: 400;
+      align-items: center;
+      justify-content: center;
+      padding: 0.9rem;
+    }
+
+    .modal-backdrop.open, .e2ee-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 410px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.15rem;
+    }
+
+    .e2ee-box {
+      width: 100%;
+      max-width: 430px;
+      height: 76vh;
+      max-height: 600px;
+      background: var(--bg-card);
+      border: 1px solid var(--crimson);
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .e2ee-top {
+      padding: 0.85rem 1rem;
+      background: #17171C;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .e2ee-pill {
+      display: inline-block;
+      margin-top: 3px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #86EFAC;
+      background: rgba(37, 211, 102, 0.14);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+
+    .e2ee-log {
+      flex: 1;
+      padding: 0.85rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      background: var(--bg-main);
+    }
+
+    .e2ee-bubble {
+      max-width: 82%;
+      padding: 0.6rem 0.78rem;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .e2ee-bubble.me {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--crimson), var(--crimson-dark));
+      color: #fff;
+    }
+
+    .e2ee-bubble.them {
+      align-self: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .e2ee-foot {
+      padding: 0.7rem;
+      background: #17171C;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 0.45rem;
+    }
+
+    .e2ee-foot input {
+      flex: 1;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      outline: none;
+    }
+
+    .e2ee-foot button {
+      background: var(--crimson);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-
-  <!-- PANTALLA DE ACCESO Y REGISTRO -->
-  <div id="auth-screen" class="auth-container">
-    <div class="auth-brand">
-      <div class="brand-icon-lg">SF</div>
-      <div class="auth-title">SIGMA <span>FITNESS</span></div>
-      <div class="auth-subtitle">Disciplina Innegociable</div>
-    </div>
-
-    <div class="auth-tabs">
-      <button type="button" class="auth-tab active" onclick="cambiarAuthTab('login', this)">Iniciar Sesión</button>
-      <button type="button" class="auth-tab" onclick="cambiarAuthTab('register', this)">Registrarse</button>
-    </div>
-
-    <div id="form-login" class="auth-form active">
-      <div id="loginError" class="auth-error"></div>
-
-      <div class="form-group">
-        <label class="form-label">Correo o Usuario</label>
-        <input type="text" id="loginUser" class="form-input" placeholder="atleta@sigmafit.com" autocomplete="username">
+  <section id="authSection" class="auth-container">
+    <div class="auth-card">
+      <div class="brand-logo-wrap">
+        <div class="brand-monogram">SF</div>
+        <div class="brand-title">SIGMA <span>FITNESS</span></div>
+        <div class="brand-slogan">"Dónde la voluntad se convierte en fuerza y la disciplina es innegociable"</div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Contraseña</label>
-        <div class="input-wrapper">
-          <input type="password" id="loginPass" class="form-input" placeholder="••••••••" autocomplete="current-password">
-          <button type="button" class="toggle-password" onclick="togglePassword('loginPass', this)">Ver</button>
-        </div>
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" onclick="cambiarTabAuth('login')">Entrar</button>
+        <button type="button" class="auth-tab" onclick="cambiarTabAuth('register')">Registro</button>
+        <button type="button" class="auth-tab" onclick="cambiarTabAuth('recover')">Recuperar</button>
       </div>
 
-      <button type="button" class="btn-primary" onclick="iniciarSesion()">Ingresar</button>
-      <button type="button" class="btn-biometric-bank" onclick="autenticarBiometriaReal()">
-        <span style="font-size: 1.15rem;">🔒</span> Usar Huella / Biometría
-      </button>
+      <div id="authError" class="auth-error"></div>
+      <div id="authSuccess" class="auth-success"></div>
 
-      <div class="auth-footer">
-        <a class="auth-link" onclick="abrirVistaRecuperacion()">¿Olvidaste tu contraseña?</a>
-      </div>
-    </div>
-
-    <div id="form-register" class="auth-form">
-      <div id="registerError" class="auth-error"></div>
-
-      <div class="form-group">
-        <label class="form-label">Nombre de Atleta</label>
-        <input type="text" id="regName" class="form-input" placeholder="Ej. Juan Luis">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Correo Electrónico</label>
-        <input type="email" id="regEmail" class="form-input" placeholder="tu@correo.com">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">WhatsApp (Para recuperación de cuenta)</label>
-        <input type="tel" id="regWhatsapp" class="form-input" placeholder="Ej. +584145574866">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Crear Contraseña</label>
-        <div class="input-wrapper">
-          <input type="password" id="regPass" class="form-input" placeholder="Mínimo 6 caracteres">
-          <button type="button" class="toggle-password" onclick="togglePassword('regPass', this)">Ver</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">País</label>
-        <select id="regCountry" class="form-input">
-          <option value="" disabled selected>Selecciona tu país</option>
-          <option value="Venezuela">Venezuela</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Argentina">Argentina</option>
-          <option value="México">México</option>
-          <option value="Chile">Chile</option>
-          <option value="Perú">Perú</option>
-          <option value="Ecuador">Ecuador</option>
-          <option value="España">España</option>
-          <option value="Estados Unidos">Estados Unidos</option>
-          <option value="Otro">Otro</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Enfoque Principal</label>
-        <select id="regFocus" class="form-input">
-          <option value="Fitness">Fitness</option>
-          <option value="Culturismo Natural">Culturismo Natural</option>
-          <option value="Fuerza / Powerlifting">Fuerza / Powerlifting</option>
-          <option value="Halterofilia">Halterofilia</option>
-          <option value="Acondicionamiento General">Acondicionamiento General</option>
-        </select>
-      </div>
-
-      <button type="button" class="btn-primary" onclick="registrarUsuario()">Crear Cuenta Sigma</button>
-    </div>
-  </div>
-
-  <!-- SITIO ALTERNO: RECUPERACIÓN DE CONTRASEÑA -->
-  <div id="recovery-screen" class="auth-container" style="display: none;">
-    <div class="auth-brand">
-      <div class="brand-icon-lg">🔐</div>
-      <div class="auth-title">RECUPERAR <span>ACCESO</span></div>
-      <div class="auth-subtitle">Verificación de Seguridad Sigma Fitness</div>
-    </div>
-
-    <div id="recoveryError" class="auth-error"></div>
-    <div id="recoverySuccess" class="auth-success"></div>
-
-    <div id="recovery-step-1">
-      <label class="form-label">Canal de envío del código</label>
-      <div class="channel-selector">
-        <button type="button" id="btnChannelWhatsapp" class="channel-btn whatsapp-active" onclick="seleccionarCanalRecuperacion('whatsapp')">
-          💬 WhatsApp
-        </button>
-        <button type="button" id="btnChannelEmail" class="channel-btn" onclick="seleccionarCanalRecuperacion('email')">
-          ✉️ Correo
-        </button>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label" id="recoveryContactLabel">Número de WhatsApp Registrado</label>
-        <input type="text" id="recoveryContactInput" class="form-input" placeholder="Ej. +584145574866">
-      </div>
-
-      <button type="button" id="btnSendOtp" class="btn-primary" onclick="solicitarCodigoRecuperacion()">Enviar Código</button>
-    </div>
-
-    <div id="recovery-step-2" style="display: none;">
-      <a id="reopenWhatsappLink" href="#" target="_blank" class="btn-reopen-wa">
-        💬 Abrir WhatsApp para ver y copiar el código
-      </a>
-
-      <div class="form-group">
-        <label class="form-label">Pega o escribe el código recibido</label>
-        <div style="display: flex; gap: 0.45rem;">
-          <input type="text" id="recoveryOtpInput" class="form-input" maxlength="6" placeholder="Código de 6 dígitos" style="letter-spacing: 3px; font-weight: 800;">
-          <button type="button" class="btn-primary" style="width: auto; padding: 0 1rem; margin: 0;" onclick="validarCodigoOTP()">Verificar</button>
-        </div>
-      </div>
-
-      <div id="newPassFields" class="new-pass-fields">
+      <form id="loginForm" onsubmit="manejarLogin(event)">
         <div class="form-group">
-          <label class="form-label">Nueva Contraseña</label>
-          <div class="input-wrapper">
-            <input type="password" id="recoveryNewPass" class="form-input" placeholder="Mínimo 6 caracteres">
-            <button type="button" class="toggle-password" onclick="togglePassword('recoveryNewPass', this)">Ver</button>
-          </div>
+          <label for="loginUser">Usuario, correo o teléfono</label>
+          <input type="text" id="loginUser" class="form-input" placeholder="Ej. juanluis o +584145574866" required />
         </div>
-
         <div class="form-group">
-          <label class="form-label">Confirmar Nueva Contraseña</label>
-          <div class="input-wrapper">
-            <input type="password" id="recoveryConfirmPass" class="form-input" placeholder="Repite la nueva contraseña">
-            <button type="button" class="toggle-password" onclick="togglePassword('recoveryConfirmPass', this)">Ver</button>
-          </div>
+          <label for="loginPass">Contraseña</label>
+          <input type="password" id="loginPass" class="form-input" placeholder="Tu contraseña" required />
         </div>
+        <button type="submit" class="btn-primary">Iniciar Sesión</button>
+        <button type="button" class="btn-secondary" onclick="manejarBiometria()">🔐 Acceso Rápido con Biometría</button>
+      </form>
 
-        <button type="button" class="btn-primary" onclick="confirmarCambioPassword()">Guardar Nueva Contraseña</button>
-      </div>
-    </div>
-
-    <button type="button" class="btn-secondary-dark" onclick="volverAlLogin()">← Volver a Iniciar Sesión</button>
-  </div>
-
-  <!-- MODAL DE REPORTE DE PUBLICACIÓN -->
-  <div id="reportModalOverlay" class="modal-overlay" onclick="if(event.target===this) cerrarModalReporte()">
-    <div class="report-modal">
-      <div class="report-modal-header">
-        <h3 style="font-size: 1rem; text-transform: uppercase; color: var(--crimson);">🚩 Reportar Publicación</h3>
-        <button type="button" class="btn-close-search" style="position:static;" onclick="cerrarModalReporte()">✕</button>
-      </div>
-      <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.4;">
-        Selecciona el motivo por el cual consideras que esta publicación incumple las normas de Sigma Fitness:
-      </p>
-
-      <div class="report-reason-list" id="reportReasonList">
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Acoso o bullying')">
-          <span>Acoso o bullying</span><span>›</span>
-        </button>
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Desnudos o contenido sexual')">
-          <span>Desnudos o contenido sexual</span><span>›</span>
-        </button>
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Violencia o autolesiones')">
-          <span>Violencia o autolesiones</span><span>›</span>
-        </button>
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Discurso de odio o discriminación')">
-          <span>Discurso de odio o discriminación</span><span>›</span>
-        </button>
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Información falsa o peligrosa')">
-          <span>Información falsa o peligrosa</span><span>›</span>
-        </button>
-        <button type="button" class="report-reason-btn" onclick="seleccionarMotivoReporte(this, 'Spam o estafa')">
-          <span>Spam o estafa</span><span>›</span>
-        </button>
-      </div>
-
-      <button type="button" class="btn-primary" onclick="enviarReportePost()">Enviar Reporte</button>
-      <button type="button" class="btn-secondary-dark" onclick="cerrarModalReporte()">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- PANTALLA PRINCIPAL DE LA APLICACIÓN -->
-  <div id="app-screen" class="app-screen">
-    <header>
-      <div class="header-left">
-        <button id="btnSearchToggle" class="btn-search-trigger" onclick="togglePanelBusqueda()" title="Buscar usuarios, coaches o grupos">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-        </button>
-
-        <div class="brand-header">
-          <div class="brand-icon-sm">SF</div>
-          <div class="brand-title-sm">SIGMA <span>FITNESS</span></div>
+      <form id="registerForm" style="display:none;" onsubmit="manejarRegistro(event)">
+        <div class="form-group">
+          <label for="regName">Nombre completo</label>
+          <input type="text" id="regName" class="form-input" placeholder="Ej. Juan Luis Rodríguez" required />
         </div>
-      </div>
+        <div class="form-group">
+          <label for="regUser">Nombre de usuario (@usuario)</label>
+          <input type="text" id="regUser" class="form-input" placeholder="Ej. juanluis_sf" required />
+        </div>
+        <div class="form-group">
+          <label for="regPhone">WhatsApp / Teléfono</label>
+          <input type="tel" id="regPhone" class="form-input" placeholder="+584145574866" required />
+        </div>
+        <div class="form-group">
+          <label for="regPass">Contraseña</label>
+          <input type="password" id="regPass" class="form-input" placeholder="Mínimo 6 caracteres" required />
+        </div>
+        <button type="submit" class="btn-primary">Crear Cuenta Sigma</button>
+      </form>
 
-      <button type="button" class="action-btn" onclick="cerrarSesion()" style="color: var(--crimson); border-color: var(--crimson);">Salir</button>
+      <form id="recoverForm" style="display:none;" onsubmit="manejarRecuperacion(event)">
+        <div class="form-group">
+          <label for="recContact">Número de WhatsApp o correo registrado</label>
+          <input type="text" id="recContact" class="form-input" placeholder="+584145574866" required />
+        </div>
+        <div class="form-group">
+          <label for="recCode">Código de verificación (OTP)</label>
+          <input type="text" id="recCode" class="form-input" placeholder="Ej. 482910" />
+        </div>
+        <div class="form-group">
+          <label for="recNewPass">Nueva contraseña</label>
+          <input type="password" id="recNewPass" class="form-input" placeholder="Escribe tu nueva clave" />
+        </div>
+        <button type="button" class="btn-secondary" style="margin-top:0; margin-bottom:0.55rem;" onclick="enviarCodigoOTP()">📲 Generar Código por WhatsApp</button>
+        <button type="submit" class="btn-primary">Restablecer Contraseña</button>
+      </form>
+    </div>
+  </section>
+
+  <div id="appShell" class="app-shell">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <span class="topbar-badge">SF</span>
+        <span>SIGMA FITNESS</span>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="icon-pill-btn" onclick="abrirChatSigmaE2EE('andrea', 'Andrea Design')">💬 Chat E2EE</button>
+        <button type="button" class="icon-pill-btn" onclick="cerrarSesion()">Salir</button>
+      </div>
     </header>
+    <main id="viewFeed" class="view-section active">
+      <div class="card">
+        <textarea id="postTextarea" class="composer-textarea" placeholder="Comparte tu entrenamiento, marca personal o enfoque de hoy..."></textarea>
 
-    <div id="searchPanel" class="search-panel">
-      <div class="search-box-wrapper">
-        <input type="text" id="globalSearchInput" class="search-input" placeholder="Buscar atletas, coaches, grupos..." oninput="filtrarDirectorio()">
-        <button type="button" class="btn-close-search" onclick="togglePanelBusqueda()">✕</button>
+        <div class="composer-controls">
+          <div class="media-buttons-group">
+            <button type="button" class="media-pick-btn" onclick="alternarBarraCamara()">📷 Cámara</button>
+            <button type="button" class="media-pick-btn" onclick="document.getElementById('galleryInput').click()">🖼️ Galería</button>
+            <button type="button" class="media-pick-btn" onclick="document.getElementById('reelInput').click()">🎬 Reel</button>
+          </div>
+          <button type="button" class="btn-primary" style="width:auto; padding:0.52rem 1rem; font-size:0.84rem;" onclick="publicarContenido()">Publicar</button>
+        </div>
+
+        <div class="format-row-left">
+          <select id="postFormatSelect" class="format-select">
+            <option value="normal">Formato: Post normal</option>
+            <option value="reel">Formato: Reel (9:16)</option>
+            <option value="progreso">Formato: Progreso / Marca</option>
+          </select>
+        </div>
+
+        <div id="cameraModeBar" class="camera-mode-bar">
+          <span style="font-size:0.78rem; color:var(--text-muted); flex:1;">Capturar desde cámara:</span>
+          <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraPhotoInput').click()">Foto</button>
+          <button type="button" class="media-pick-btn" onclick="document.getElementById('cameraVideoInput').click()">Video</button>
+          <button type="button" class="btn-close-search" onclick="alternarBarraCamara()">✕</button>
+        </div>
+
+        <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="previsualizarArchivo(event, 'image')" />
+        <input type="file" id="cameraVideoInput" accept="video/*" capture="environment" style="display:none;" onchange="previsualizarArchivo(event, 'video')" />
+        <input type="file" id="galleryInput" accept="image/*,video/*" style="display:none;" onchange="previsualizarArchivo(event, 'auto')" />
+        <input type="file" id="reelInput" accept="video/*" style="display:none;" onchange="previsualizarArchivo(event, 'video')" />
+
+        <div id="mediaPreviewBox" class="media-preview-box">
+          <button type="button" class="btn-remove-media" onclick="quitarMediaPreview()">✕ Quitar</button>
+          <div id="mediaPreviewContent"></div>
+        </div>
       </div>
 
-      <div class="search-filters">
-        <button type="button" class="filter-chip active" onclick="cambiarFiltroBusqueda('todos', this)">Todos</button>
-        <button type="button" class="filter-chip" onclick="cambiarFiltroBusqueda('coach', this)">Coaches</button>
-        <button type="button" class="filter-chip" onclick="cambiarFiltroBusqueda('usuario', this)">Usuarios</button>
-        <button type="button" class="filter-chip" onclick="cambiarFiltroBusqueda('grupo', this)">Grupos</button>
+      <div id="feedPostsContainer"></div>
+    </main>
+    <!-- VISTA: EXPLORAR / DIRECTORIO -->
+    <section id="viewExplore" class="view-section">
+      <div class="card">
+        <div class="form-group" style="margin-bottom:0.6rem;">
+          <input type="search" id="exploreSearchInput" class="form-input" placeholder="Buscar entrenadores, atletas o especialidades..." oninput="renderizarDirectorio()" />
+        </div>
+        <div id="directoryListContainer"></div>
       </div>
+    </section>
 
-      <div id="searchResultsList" class="search-results-list"></div>
-    </div>
-
-    <div class="container">
-      <div class="slogan-banner">
-        "Donde la voluntad se convierte en fuerza y la disciplina es innegociable"
+    <!-- VISTA: PERFIL -->
+    <section id="viewProfile" class="view-section">
+      <div class="card profile-banner">
+        <div id="profileAvatarLg" class="profile-avatar-lg">JL</div>
+        <h2 id="profileNameHeading" style="font-size:1.18rem; font-weight:900;">Juan Luis Rodríguez</h2>
+        <p id="profileHandleText" style="color:var(--text-muted); font-size:0.82rem; margin-top:0.2rem;">@juanluis_sf • +584145574866</p>
+        <p id="profileBioText" style="font-size:0.85rem; margin-top:0.65rem; color:#D4D4D8;">Entrenador y atleta de físico culturismo natural. Enfoque en disciplina, fuerza y constancia.</p>
+        <button type="button" class="btn-secondary" style="max-width:240px; margin:0.9rem auto 0;" onclick="abrirChatSigmaE2EE('andrea', 'Andrea Design')">💬 Abrir Chat Cifrado (E2EE)</button>
       </div>
-
-      <!-- VISTA: COMUNIDAD -->
-      <section id="view-comunidad" class="view-section active">
-        <div class="card post-creator">
-          <textarea id="postInput" placeholder="Comparte tu entrenamiento de hoy, marca personal o reflexión..."></textarea>
-
-          <!-- Inputs separados para forzar Cámara (Foto / Video) y Galería -->
-          <input type="file" id="cameraPhotoInput" accept="image/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara foto')">
-          <input type="file" id="cameraVideoInput" accept="video/*" capture="environment" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'cámara video')">
-          <input type="file" id="galleryInput" accept="image/*,video/*" style="display: none;" onchange="manejarArchivoSeleccionado(this.files[0], 'galería')">
-
-          <div class="media-toolbar">
-            <button type="button" class="media-pick-btn" onclick="toggleOpcionesCamara()">
-              📷 Cámara
-            </button>
-            <button type="button" class="media-pick-btn" onclick="abrirGaleria()">
-              🖼️ Galería
-            </button>
-          </div>
-
-          <!-- Fila alineada a la izquierda debajo de Cámara -->
-          <div class="format-row-left">
-            <select id="postFormat" class="format-select">
-              <option value="post">Post Normal</option>
-              <option value="reel">Reel Vertical</option>
-            </select>
-          </div>
-
-          <div id="cameraModeBar" class="camera-mode-bar">
-            <button type="button" class="media-pick-btn" onclick="lanzarCamaraFoto()">📸 Tomar Foto</button>
-            <button type="button" class="media-pick-btn" onclick="lanzarCamaraVideo()">🎥 Grabar Video</button>
-            <button type="button" class="btn-close-search" style="margin-left:auto; position:static;" onclick="toggleOpcionesCamara(false)">✕</button>
-          </div>
-
-          <div id="mediaPreviewBox" class="media-preview-box">
-            <button type="button" class="btn-remove-media" onclick="limpiarArchivoAdjunto()" title="Quitar archivo">✕</button>
-            <div id="mediaPreviewContent"></div>
-          </div>
-
-          <div class="creator-actions">
-            <select id="postCategory" class="tag-select">
-              <option value="Entrenamiento">Entrenamiento</option>
-              <option value="Récord Personal">Récord Personal</option>
-              <option value="Nutrición">Nutrición</option>
-              <option value="Mentalidad Sigma">Mentalidad Sigma</option>
-            </select>
-            <button type="button" class="btn-primary" style="width: auto; padding: 0.6rem 1.25rem; margin: 0;" onclick="crearPublicacion()">Publicar</button>
-          </div>
-        </div>
-
-        <div class="feed" id="feedContainer">
-          <div class="card" data-media-url="" data-media-type="" data-media-name="">
-            <div class="post-header">
-              <div class="user-info">
-                <div class="avatar">JL</div>
-                <div>
-                  <span class="username">Juan Luis <span class="badge-pro">FUNDADOR</span></span>
-                </div>
-              </div>
-
-              <div class="post-header-right">
-                <span class="post-tag">Mentalidad Sigma</span>
-                <button type="button" class="btn-post-dots" onclick="toggleMenuPost(this, event)" title="Opciones de publicación">⋮</button>
-                <div class="post-options-dropdown">
-                  <button type="button" class="post-menu-item" onclick="descargarMediaPost(this)">📥 Guardar foto / video</button>
-                  <button type="button" class="post-menu-item" onclick="guardarPostMarcador(this)">🔖 Guardar publicación</button>
-                  <button type="button" class="post-menu-item" onclick="compartirPostDesdeMenu(this)">📋 Copiar texto</button>
-                  <button type="button" class="post-menu-item danger" onclick="abrirModalReporte(this)">🚩 Reportar publicación</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="post-body">
-              Bienvenidos a la red social oficial de Sigma Fitness. Arrancamos con todo este proyecto hecho a pulso. ¡La disciplina es innegociable!
-            </div>
-
-            <div class="sigma-actions-bar">
-              <div class="reaction-picker">
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🔥')">🔥</button>
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '💪')">💪</button>
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '⚡')">⚡</button>
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🏆')">🏆</button>
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🎯')">🎯</button>
-                <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🫡')">🫡</button>
-              </div>
-
-              <button type="button" class="sigma-box-btn react-trigger" data-selected="" data-count="4" onclick="togglePickerReaccion(this, event)">
-                <span class="reaction-symbol">⚡</span>
-                <span class="reaction-label">Reaccionar</span>
-                <span class="reaction-counter">4</span>
-              </button>
-
-              <button type="button" class="sigma-box-btn" onclick="toggleComentarios(this)">
-                <span>💬</span>
-                <span class="reaction-label">Comentar</span>
-                <span class="reaction-counter comment-count">1</span>
-              </button>
-
-              <button type="button" class="sigma-box-btn" onclick="compartirPost(this)">
-                <span>↗</span>
-                <span class="reaction-label">Compartir</span>
-              </button>
-            </div>
-
-            <div class="comments-section">
-              <div class="comment-list">
-                <div class="comment-item"><strong>Atleta Sigma:</strong> ¡Excelente plataforma, a darle con todo!</div>
-              </div>
-              <div class="comment-input-box">
-                <input type="text" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') agregarComentario(this.nextElementSibling)">
-                <button type="button" class="btn-send-comment" onclick="agregarComentario(this)">Enviar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- VISTA: RETOS -->
-      <section id="view-retos" class="view-section">
-        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Retos <span>Activos</span></h2>
-        <div class="card" style="display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;">
-          <div>
-            <h3 style="font-size: 1rem; margin-bottom: 0.3rem;">30 Días de Hierro Innegociable</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Constancia absoluta en tu rutina diaria.</p>
-          </div>
-          <button type="button" class="btn-primary" style="width: auto; padding: 0.5rem 1rem; margin: 0;" onclick="unirseReto(this)">Unirse</button>
-        </div>
-      </section>
-
-      <!-- VISTA: SIGMA PRO -->
-      <section id="view-pro" class="view-section">
-        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Membresía <span>Sigma Pro</span></h2>
-        <div class="card">
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Lleva tu estatus al nivel superior dentro de la red.</p>
-          <button type="button" class="btn-primary" onclick="alert('Pasarela Sigma Pro lista para integrar.')">Activar Sigma Pro</button>
-        </div>
-      </section>
-
-      <!-- VISTA: PERFIL -->
-      <section id="view-perfil" class="view-section">
-        <h2 style="font-size: 1.1rem; text-transform: uppercase; margin-bottom: 1rem;">Perfil de <span>Atleta</span></h2>
-        <div class="card">
-          <div class="user-info">
-            <div class="avatar" id="profileAvatar" style="width: 45px; height: 45px;">JL</div>
-            <div>
-              <div class="username" id="profileName" style="font-size: 1.05rem;">Juan Luis Rodríguez <span class="badge-pro">FUNDADOR</span></div>
-              <div id="profileFocus" style="font-size: 0.8rem; color: var(--text-muted);">Fitness • Venezuela</div>
-            </div>
-          </div>
-
-          <a href="https://wa.me/584145574866?text=Hola%20Juan,%20vi%20tu%20perfil%20en%20Sigma%20Fitness%20y%20quiero%20contactarte%20como%20entrenador." target="_blank" class="btn-whatsapp">
-            💬 Contactar por WhatsApp
-          </a>
-        </div>
-      </section>
-    </div>
-
-    <nav>
-      <button type="button" class="nav-item active" onclick="cambiarVista('comunidad', this)">Comunidad</button>
-      <button type="button" class="nav-item" onclick="cambiarVista('retos', this)">Retos</button>
-      <button type="button" class="nav-item" onclick="cambiarVista('pro', this)">Sigma Pro</button>
-      <button type="button" class="nav-item" onclick="cambiarVista('perfil', this)">Perfil</button>
-    </nav>
+      <div id="profilePostsContainer"></div>
+    </section>
   </div>
 
-  <script>
-    let usuarioActual = "Juan Luis";
-    let filtroActualBusqueda = "todos";
-    let canalRecuperacionActual = "whatsapp";
-    let codigoOTPInterno = "";
-    let tokenBackendOTP = "";
-    let codigoVerificadoOk = false;
-    let cuentaEnRecuperacion = null;
+  <!-- BARRA INFERIOR -->
+  <nav id="bottomNav" class="bottom-nav" style="display:none;">
+    <button type="button" class="nav-item active" data-view="viewFeed" onclick="cambiarVistaApp('viewFeed', this)">
+      <span>🏠</span>
+      <span>Inicio</span>
+    </button>
+    <button type="button" class="nav-item" data-view="viewExplore" onclick="cambiarVistaApp('viewExplore', this)">
+      <span>🏋️</span>
+      <span>Directorio</span>
+    </button>
+    <button type="button" class="nav-item" data-view="viewProfile" onclick="cambiarVistaApp('viewProfile', this)">
+      <span>👤</span>
+      <span>Perfil</span>
+    </button>
+  </nav>
+  <!-- MODAL EDITAR PUBLICACIÓN -->
+  <div id="editPostModal" class="modal-backdrop" onclick="if(event.target.id==='editPostModal') cerrarModalEditar()">
+    <div class="modal-card">
+      <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.75rem;">Editar publicación</h3>
+      <textarea id="editPostTextarea" class="composer-textarea" style="min-height:95px;"></textarea>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button type="button" class="btn-secondary" style="width:auto; margin-top:0;" onclick="cerrarModalEditar()">Cancelar</button>
+        <button type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.1rem;" onclick="guardarEdicionPost()">Guardar</button>
+      </div>
+    </div>
+  </div>
 
-    // Estado multimedia adjunto a la publicación actual
-    let archivoAdjuntoActual = null; // { url, tipo: 'image' | 'video', origen, nombreArchivo }
-    let motivoReporteSeleccionado = "";
-    let postEnReporte = null;
+  <!-- MODAL REPORTAR PUBLICACIÓN -->
+  <div id="reportPostModal" class="modal-backdrop" onclick="if(event.target.id==='reportPostModal') cerrarModalReportar()">
+    <div class="modal-card">
+      <h3 style="font-size:1rem; font-weight:800; margin-bottom:0.55rem;">Reportar publicación</h3>
+      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.75rem;">Selecciona el motivo del reporte para revisión en Sigma Fitness:</p>
+      <select id="reportReasonSelect" class="format-select" style="margin-bottom:0.9rem;">
+        <option value="Contenido inapropiado o spam">Contenido inapropiado o spam</option>
+        <option value="Información engañosa sobre entrenamiento">Información engañosa sobre entrenamiento</option>
+        <option value="Falta de respeto o acoso">Falta de respeto o acoso</option>
+        <option value="Otro motivo">Otro motivo</option>
+      </select>
+      <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+        <button type="button" class="btn-secondary" style="width:auto; margin-top:0;" onclick="cerrarModalReportar()">Cancelar</button>
+        <button type="button" class="btn-primary" style="width:auto; padding:0.65rem 1.1rem;" onclick="enviarReportePost()">Enviar reporte</button>
+      </div>
+    </div>
+  </div>
 
-    const baseDatosUsuarios = [
+  <!-- MODAL CHAT CIFRADO E2EE -->
+  <div id="sigmaE2EEModal" class="e2ee-overlay" onclick="if(event.target.id==='sigmaE2EEModal') cerrarChatSigmaE2EE()">
+    <div class="e2ee-box">
+      <div class="e2ee-top">
+        <div>
+          <div id="sigmaE2EEPeer" style="font-weight:800; font-size:0.92rem;">Chat Privado</div>
+          <span class="e2ee-pill">🔐 Cifrado E2EE (ECDH + AES-GCM)</span>
+        </div>
+        <button type="button" onclick="cerrarChatSigmaE2EE()" style="background:none;border:none;color:#A1A1AA;font-size:1.1rem;cursor:pointer;">✕</button>
+      </div>
+      <div id="sigmaE2EELog" class="e2ee-log"></div>
+      <div class="e2ee-foot">
+        <input type="text" id="sigmaE2EEInput" placeholder="Escribe un mensaje cifrado..." onkeydown="if(event.key==='Enter') enviarMensajeSigmaE2EE()">
+        <button type="button" onclick="enviarMensajeSigmaE2EE()">Enviar</button>
+      </div>
+    </div>
+  </div>
+    <script>
+    const STORAGE_USERS_KEY = "sigma_fitness_users_v1";
+    const STORAGE_SESSION_KEY = "sigma_fitness_session_v1";
+    const STORAGE_POSTS_KEY = "sigma_fitness_posts_v1";
+
+    const baseDatosUsuariosDefault = [
       {
+        id: "juanluis",
         nombre: "Juan Luis Rodríguez",
-        usuario: "juanluis",
-        correo: "rodriguezcj850@gmail.com",
-        whatsapp: "+584145574866",
-        password: "Rodriguez0210",
-        pais: "Venezuela",
-        enfoque: "Fitness",
-        rol: "FUNDADOR"
+        usuario: "@juanluis_sf",
+        telefono: "+584145574866",
+        password: "sigma2026",
+        esPro: true,
+        especialidad: "Físico Culturismo Natural & Acondicionamiento",
+        bio: "Entrenador y atleta de físico culturismo natural. Enfoque en disciplina, fuerza y constancia."
       },
       {
+        id: "andrea",
         nombre: "Andrea Design",
-        usuario: "andrea",
-        correo: "andrea@sigmafit.com",
-        whatsapp: "+584120000000",
-        password: "sigma123",
-        pais: "Venezuela",
-        enfoque: "Acondicionamiento General",
-        rol: "COACH"
+        usuario: "@andrea_fit",
+        telefono: "+584120000001",
+        password: "andrea2026",
+        esPro: true,
+        especialidad: "Diseño Deportivo & Nutrición Aplicada",
+        bio: "Construyendo hábitos sólidos y estética funcional día a día."
+      },
+      {
+        id: "carlos",
+        nombre: "Carlos Méndez",
+        usuario: "@cmendez_pro",
+        telefono: "+584120000002",
+        password: "carlos2026",
+        esPro: false,
+        especialidad: "Fuerza e Hipertrofia",
+        bio: "Entrenamiento pesado y progresión constante."
+      }
+    ];
+    const postsInicialesDefault = [
+      {
+        id: 101,
+        authorId: "juanluis",
+        authorName: "Juan Luis Rodríguez",
+        authorHandle: "@juanluis_sf",
+        esPro: true,
+        time: "Hace 18 min",
+        tag: "Progreso / Marca",
+        text: "Sesión pesada de espalda y hombro completada en casa. Sin atajos, pura constancia y técnica controlada. Dónde la voluntad se convierte en fuerza y la disciplina es innegociable.",
+        mediaUrl: "",
+        mediaType: "",
+        format: "progreso",
+        likes: 14,
+        likedByMe: false,
+        commentsCount: 3
+      },
+      {
+        id: 102,
+        authorId: "andrea",
+        authorName: "Andrea Design",
+        authorHandle: "@andrea_fit",
+        esPro: true,
+        time: "Hace 1 h",
+        tag: "Entrenamiento",
+        text: "Ajustando macros e hidratación para mantener el rendimiento al 100% toda la semana. ¿Qué grupo muscular entrenan hoy?",
+        mediaUrl: "",
+        mediaType: "",
+        format: "normal",
+        likes: 9,
+        likedByMe: false,
+        commentsCount: 2
       }
     ];
 
-    const directorioSigma = [
-      { id: 1, nombre: "Juan Luis Rodríguez", tipo: "coach", detalle: "Fundador • Fitness & Preparación Física", iniciales: "JL" },
-      { id: 2, nombre: "Coach Carlos Méndez", tipo: "coach", detalle: "Especialista en Fuerza y Powerlifting • Venezuela", iniciales: "CM" },
-      { id: 3, nombre: "Andrea Design & Fit", tipo: "coach", detalle: "Preparación Física y Acondicionamiento", iniciales: "AD" },
-      { id: 4, nombre: "Culturismo Natural Latino", tipo: "grupo", detalle: "Grupo Oficial • 420 miembros activos", iniciales: "CN" },
-      { id: 5, nombre: "Hierro en Casa (Home Gym)", tipo: "grupo", detalle: "Entrenamiento con equipo propio • 285 miembros", iniciales: "HC" },
-      { id: 6, nombre: "Fuerza & Halterofilia", tipo: "grupo", detalle: "Técnica y marcas personales • 190 miembros", iniciales: "FH" },
-      { id: 7, nombre: "Mateo Vargas", tipo: "usuario", detalle: "Atleta Sigma • Colombia", iniciales: "MV" },
-      { id: 8, nombre: "Valeria Torres", tipo: "usuario", detalle: "Fitness • México", iniciales: "VT" },
-      { id: 9, nombre: "Diego Salazar", tipo: "usuario", detalle: "Halterofilia • Argentina", iniciales: "DS" }
-    ];
+    let usuariosSigma = JSON.parse(localStorage.getItem(STORAGE_USERS_KEY)) || baseDatosUsuariosDefault;
+    let postsSigma = JSON.parse(localStorage.getItem(STORAGE_POSTS_KEY)) || postsInicialesDefault;
+    let usuarioActual = JSON.parse(localStorage.getItem(STORAGE_SESSION_KEY)) || null;
+    let codigoOTPGenerado = null;
+    let mediaSeleccionada = { url: "", type: "" };
+    let postEditandoId = null;
+    let postReportandoId = null;
 
-    function mostrarMensajeBox(elementId, mensaje) {
-      const box = document.getElementById(elementId);
-      box.innerText = mensaje;
-      box.classList.add('visible');
+    function guardarEstadoLocal() {
+      localStorage.setItem(STORAGE_USERS_KEY, JSON.stringify(usuariosSigma));
+      localStorage.setItem(STORAGE_POSTS_KEY, JSON.stringify(postsSigma));
     }
 
-    function limpiarMensajesAuth() {
-      document.querySelectorAll('.auth-error, .auth-success').forEach(box => {
-        box.innerText = "";
-        box.classList.remove('visible');
+    function obtenerIniciales(nombre) {
+      return (nombre || "SF")
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(p => p[0].toUpperCase())
+        .join("");
+    }
+    function mostrarMensajeAuth(tipo, texto) {
+      const err = document.getElementById("authError");
+      const ok = document.getElementById("authSuccess");
+      err.classList.remove("visible");
+      ok.classList.remove("visible");
+      if (!texto) return;
+      if (tipo === "error") {
+        err.textContent = texto;
+        err.classList.add("visible");
+      } else {
+        ok.textContent = texto;
+        ok.classList.add("visible");
+      }
+    }
+
+    function cambiarTabAuth(tab) {
+      mostrarMensajeAuth("", "");
+      document.querySelectorAll(".auth-tab").forEach((btn, idx) => {
+        const activo = (tab === "login" && idx === 0) || (tab === "register" && idx === 1) || (tab === "recover" && idx === 2);
+        btn.classList.toggle("active", activo);
       });
+      document.getElementById("loginForm").style.display = tab === "login" ? "block" : "none";
+      document.getElementById("registerForm").style.display = tab === "register" ? "block" : "none";
+      document.getElementById("recoverForm").style.display = tab === "recover" ? "block" : "none";
     }
 
-    function normalizarTelefono(tel) {
-      return tel.replace(/[^\d]/g, '');
-    }
-
-    // --- MENÚ 3 PUNTOS EN POSTS + REPORTES + DESCARGA MULTIMEDIA ---
-    function cerrarMenusPostActivos(excepto = null) {
-      document.querySelectorAll('.post-options-dropdown.open').forEach(menu => {
-        if (menu !== excepto) {
-          menu.classList.remove('open');
-        }
-      });
-    }
-
-    function toggleMenuPost(boton, event) {
-      event.stopPropagation();
-      cerrarPickersActivos();
-      const wrapper = boton.closest('.post-header-right');
-      const dropdown = wrapper.querySelector('.post-options-dropdown');
-      const yaEstabaAbierto = dropdown.classList.contains('open');
-
-      cerrarMenusPostActivos(dropdown);
-      if (!yaEstabaAbierto) {
-        dropdown.classList.add('open');
-      } else {
-        dropdown.classList.remove('open');
-      }
-    }
-
-    function descargarMediaPost(boton) {
-      const card = boton.closest('.card');
-      const mediaUrl = card.dataset.mediaUrl;
-      const mediaType = card.dataset.mediaType;
-      const mediaName = card.dataset.mediaName || (mediaType === 'video' ? 'sigma-video.mp4' : 'sigma-foto.jpg');
-
-      cerrarMenusPostActivos();
-
-      if (!mediaUrl) {
-        alert('Esta publicación solo contiene texto y no tiene foto o video para descargar.');
-        return;
-      }
-
-      const enlace = document.createElement('a');
-      enlace.href = mediaUrl;
-      enlace.download = mediaName;
-      document.body.appendChild(enlace);
-      enlace.click();
-      document.body.removeChild(enlace);
-    }
-
-    function guardarPostMarcador(boton) {
-      cerrarMenusPostActivos();
-      if (boton.dataset.saved === "true") {
-        boton.dataset.saved = "false";
-        boton.innerText = "🔖 Guardar publicación";
-        alert("Publicación quitada de tus guardados.");
-      } else {
-        boton.dataset.saved = "true";
-        boton.innerText = "✅ Guardado en perfil";
-        alert("Publicación guardada en tu colección personal de Sigma Fitness.");
-      }
-    }
-
-    function compartirPostDesdeMenu(boton) {
-      const card = boton.closest('.card');
-      cerrarMenusPostActivos();
-      const textoPost = card.querySelector('.post-body') ? card.querySelector('.post-body').innerText : 'Contenido multimedia en Sigma Fitness';
-      const textoCompartir = `Sigma Fitness: "${textoPost}" - Únete a la disciplina innegociable.`;
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(textoCompartir);
-        alert("Texto copiado al portapapeles.");
-      } else {
-        alert(textoCompartir);
-      }
-    }
-
-    function abrirModalReporte(boton) {
-      postEnReporte = boton.closest('.card');
-      cerrarMenusPostActivos();
-      motivoReporteSeleccionado = "";
-      document.querySelectorAll('.report-reason-btn').forEach(b => b.classList.remove('selected'));
-      document.getElementById('reportModalOverlay').classList.add('open');
-    }
-
-    function cerrarModalReporte() {
-      document.getElementById('reportModalOverlay').classList.remove('open');
-      postEnReporte = null;
-      motivoReporteSeleccionado = "";
-    }
-
-    function seleccionarMotivoReporte(boton, motivo) {
-      document.querySelectorAll('.report-reason-btn').forEach(b => b.classList.remove('selected'));
-      boton.classList.add('selected');
-      motivoReporteSeleccionado = motivo;
-    }
-
-    function enviarReportePost() {
-      if (!motivoReporteSeleccionado) {
-        alert("Por favor selecciona un motivo antes de enviar el reporte.");
-        return;
-      }
-
-      alert(`Reporte enviado por "${motivoReporteSeleccionado}". Nuestro equipo de moderación revisará esta publicación.`);
-      cerrarModalReporte();
-    }
-
-    // --- RECUPERACIÓN DE CONTRASEÑA + SERVIDOR /api/send-otp ---
-    function abrirVistaRecuperacion() {
-      limpiarMensajesAuth();
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('recovery-screen').style.display = 'block';
-      document.getElementById('recovery-step-1').style.display = 'block';
-      document.getElementById('recovery-step-2').style.display = 'none';
-      document.getElementById('newPassFields').classList.remove('unlocked');
-      document.getElementById('reopenWhatsappLink').classList.remove('visible');
-      document.getElementById('recoveryContactInput').value = '';
-      document.getElementById('recoveryOtpInput').value = '';
-      document.getElementById('recoveryNewPass').value = '';
-      document.getElementById('recoveryConfirmPass').value = '';
-      codigoOTPInterno = "";
-      tokenBackendOTP = "";
-      codigoVerificadoOk = false;
-      cuentaEnRecuperacion = null;
-      seleccionarCanalRecuperacion('whatsapp');
-    }
-
-    function volverAlLogin() {
-      limpiarMensajesAuth();
-      document.getElementById('recovery-screen').style.display = 'none';
-      document.getElementById('auth-screen').style.display = 'block';
-    }
-
-    function seleccionarCanalRecuperacion(canal) {
-      limpiarMensajesAuth();
-      canalRecuperacionActual = canal;
-      const btnEmail = document.getElementById('btnChannelEmail');
-      const btnWa = document.getElementById('btnChannelWhatsapp');
-      const label = document.getElementById('recoveryContactLabel');
-      const input = document.getElementById('recoveryContactInput');
-
-      btnEmail.classList.remove('active');
-      btnWa.classList.remove('whatsapp-active');
-
-      if (canal === 'whatsapp') {
-        btnWa.classList.add('whatsapp-active');
-        label.innerText = "Número de WhatsApp Registrado";
-        input.placeholder = "Ej. +584145574866";
-      } else {
-        btnEmail.classList.add('active');
-        label.innerText = "Correo Electrónico Registrado";
-        input.placeholder = "Ej. atleta@sigmafit.com";
-      }
-      input.value = '';
-    }
-
-    async function solicitarCodigoRecuperacion() {
-      limpiarMensajesAuth();
-      const valorIngresado = document.getElementById('recoveryContactInput').value.trim();
-      const btnSend = document.getElementById('btnSendOtp');
-
-      if (!valorIngresado) {
-        mostrarMensajeBox('recoveryError', canalRecuperacionActual === 'whatsapp'
-          ? 'Ingresa tu número de WhatsApp registrado.'
-          : 'Ingresa tu correo electrónico registrado.');
-        return;
-      }
-
-      let usuarioEncontrado = null;
-      if (canalRecuperacionActual === 'email') {
-        usuarioEncontrado = baseDatosUsuarios.find(u => u.correo.toLowerCase() === valorIngresado.toLowerCase());
-      } else {
-        const telBuscado = normalizarTelefono(valorIngresado);
-        usuarioEncontrado = baseDatosUsuarios.find(u => u.whatsapp && normalizarTelefono(u.whatsapp) === telBuscado);
-      }
-
-      if (!usuarioEncontrado) {
-        mostrarMensajeBox('recoveryError', 'Los datos ingresados no coinciden con ninguna cuenta registrada.');
-        return;
-      }
-
-      btnSend.disabled = true;
-      btnSend.innerText = "Enviando...";
-
-      const destinoReal = canalRecuperacionActual === 'email' ? usuarioEncontrado.correo : usuarioEncontrado.whatsapp;
-      let otpGenerado = Math.floor(100000 + Math.random() * 900000).toString();
-
-      try {
-        const resp = await fetch('/api/send-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            canal: canalRecuperacionActual,
-            destino: destinoReal,
-            nombre: usuarioEncontrado.nombre
-          })
-        });
-
-        if (resp.ok) {
-          const data = await resp.json();
-          if (data.tokenVerificacion) {
-            tokenBackendOTP = data.tokenVerificacion;
-            const decodificado = atob(data.tokenVerificacion).split(':');
-            if (decodificado[1]) {
-              otpGenerado = decodificado[1];
-            }
-          }
-        }
-      } catch (e) {
-        // Respaldo local si se prueba sin servidor de Vercel
-      } finally {
-        btnSend.disabled = false;
-        btnSend.innerText = "Enviar Código";
-      }
-
-      cuentaEnRecuperacion = usuarioEncontrado;
-      codigoOTPInterno = otpGenerado;
-      codigoVerificadoOk = false;
-
-      document.getElementById('recovery-step-1').style.display = 'none';
-      document.getElementById('recovery-step-2').style.display = 'block';
-      document.getElementById('newPassFields').classList.remove('unlocked');
-
-      if (canalRecuperacionActual === 'whatsapp') {
-        const numLimpio = normalizarTelefono(usuarioEncontrado.whatsapp);
-        const mensajeWa = encodeURIComponent(`Sigma Fitness - Código de recuperación de contraseña: ${codigoOTPInterno}`);
-        const urlWa = `https://wa.me/${numLimpio}?text=${mensajeWa}`;
-
-        const linkWa = document.getElementById('reopenWhatsappLink');
-        linkWa.href = urlWa;
-        linkWa.classList.add('visible');
-
-        mostrarMensajeBox('recoverySuccess', `Código enviado a WhatsApp (${usuarioEncontrado.whatsapp}). Cópialo y pégalo aquí para verificar.`);
-        window.open(urlWa, '_blank');
-      } else {
-        document.getElementById('reopenWhatsappLink').classList.remove('visible');
-        mostrarMensajeBox('recoverySuccess', `Código enviado al correo (${usuarioEncontrado.correo}). Cópialo y pégalo aquí para verificar.`);
-      }
-    }
-
-    function validarCodigoOTP() {
-      limpiarMensajesAuth();
-      const otpIngresado = document.getElementById('recoveryOtpInput').value.trim();
-
-      if (!codigoOTPInterno || !cuentaEnRecuperacion) {
-        mostrarMensajeBox('recoveryError', 'Primero debes solicitar el código de verificación.');
-        return;
-      }
-
-      if (!otpIngresado || otpIngresado !== codigoOTPInterno) {
-        codigoVerificadoOk = false;
-        document.getElementById('newPassFields').classList.remove('unlocked');
-        mostrarMensajeBox('recoveryError', 'Código incorrecto. Verifica el código que recibiste e inténtalo de nuevo.');
-        return;
-      }
-
-      codigoVerificadoOk = true;
-      document.getElementById('newPassFields').classList.add('unlocked');
-      mostrarMensajeBox('recoverySuccess', 'Código verificado correctamente. Ahora ingresa y confirma tu nueva contraseña.');
-    }
-
-    function confirmarCambioPassword() {
-      limpiarMensajesAuth();
-      const otpIngresado = document.getElementById('recoveryOtpInput').value.trim();
-      const nuevaPass = document.getElementById('recoveryNewPass').value.trim();
-      const confirmarPass = document.getElementById('recoveryConfirmPass').value.trim();
-
-      if (!codigoVerificadoOk || otpIngresado !== codigoOTPInterno) {
-        mostrarMensajeBox('recoveryError', 'El código no ha sido validado correctamente.');
-        return;
-      }
-
-      if (nuevaPass.length < 6) {
-        mostrarMensajeBox('recoveryError', 'La nueva contraseña debe tener al menos 6 caracteres.');
-        return;
-      }
-
-      if (nuevaPass !== confirmarPass) {
-        mostrarMensajeBox('recoveryError', 'Las contraseñas no coinciden.');
-        return;
-      }
-
-      cuentaEnRecuperacion.password = nuevaPass;
-      const correoActualizado = cuentaEnRecuperacion.correo;
-      const nombreActualizado = cuentaEnRecuperacion.nombre;
-
-      codigoOTPInterno = "";
-      tokenBackendOTP = "";
-      codigoVerificadoOk = false;
-
-      alert(`¡Contraseña actualizada con éxito para ${nombreActualizado}! Ya puedes iniciar sesión.`);
-      volverAlLogin();
-      document.getElementById('loginUser').value = correoActualizado;
-      document.getElementById('loginPass').value = '';
-    }
-
-    // --- MULTIMEDIA: CÁMARA (FOTO / VIDEO), GALERÍA, FOTOS, VIDEOS Y REELS ---
-    function toggleOpcionesCamara(forzarEstado = null) {
-      const bar = document.getElementById('cameraModeBar');
-      if (typeof forzarEstado === 'boolean') {
-        bar.classList.toggle('open', forzarEstado);
-      } else {
-        bar.classList.toggle('open');
-      }
-    }
-
-    function lanzarCamaraFoto() {
-      toggleOpcionesCamara(false);
-      document.getElementById('cameraPhotoInput').click();
-    }
-
-    function lanzarCamaraVideo() {
-      toggleOpcionesCamara(false);
-      document.getElementById('cameraVideoInput').click();
-    }
-
-    function abrirGaleria() {
-      toggleOpcionesCamara(false);
-      document.getElementById('galleryInput').click();
-    }
-
-    function manejarArchivoSeleccionado(file, origen) {
-      if (!file) return;
-
-      const esVideo = file.type.startsWith('video/');
-      const esImagen = file.type.startsWith('image/');
-
-      if (!esVideo && !esImagen) {
-        alert('Solo se admiten imágenes o videos.');
-        return;
-      }
-
-      if (archivoAdjuntoActual && archivoAdjuntoActual.url && archivoAdjuntoActual.url.startsWith('blob:')) {
-        URL.revokeObjectURL(archivoAdjuntoActual.url);
-      }
-
-      const urlObjeto = URL.createObjectURL(file);
-      archivoAdjuntoActual = {
-        url: urlObjeto,
-        tipo: esVideo ? 'video' : 'image',
-        origen: origen,
-        nombreArchivo: file.name || (esVideo ? 'sigma-reel.mp4' : 'sigma-foto.jpg')
-      };
-
-      if (esVideo) {
-        document.getElementById('postFormat').value = 'reel';
-      }
-
-      renderizarVistaPreviaMedia();
-    }
-
-    function renderizarVistaPreviaMedia() {
-      const box = document.getElementById('mediaPreviewBox');
-      const content = document.getElementById('mediaPreviewContent');
-      const formato = document.getElementById('postFormat').value;
-
-      if (!archivoAdjuntoActual) {
-        box.classList.remove('active');
-        content.innerHTML = '';
-        return;
-      }
-
-      box.classList.add('active');
-      const claseMedia = formato === 'reel' ? 'post-media-reel' : (archivoAdjuntoActual.tipo === 'video' ? 'post-media-video' : 'post-media-img');
-      const badgeReel = formato === 'reel' ? '<span class="reel-badge">REEL</span>' : '';
-
-      if (archivoAdjuntoActual.tipo === 'video') {
-        content.innerHTML = `
-          <div class="post-media-container" style="margin:0;">
-            ${badgeReel}
-            <video src="${archivoAdjuntoActual.url}" class="${claseMedia}" controls playsinline></video>
-          </div>
-        `;
-      } else {
-        content.innerHTML = `
-          <div class="post-media-container" style="margin:0;">
-            ${badgeReel}
-            <img src="${archivoAdjuntoActual.url}" alt="Vista previa" class="${claseMedia}">
-          </div>
-        `;
-      }
-    }
-
-    document.getElementById('postFormat').addEventListener('change', renderizarVistaPreviaMedia);
-
-    function limpiarArchivoAdjunto() {
-      if (archivoAdjuntoActual && archivoAdjuntoActual.url && archivoAdjuntoActual.url.startsWith('blob:')) {
-        URL.revokeObjectURL(archivoAdjuntoActual.url);
-      }
-      archivoAdjuntoActual = null;
-      document.getElementById('cameraPhotoInput').value = '';
-      document.getElementById('cameraVideoInput').value = '';
-      document.getElementById('galleryInput').value = '';
-      renderizarVistaPreviaMedia();
-    }
-
-    // --- BÚSQUEDA ---
-    function togglePanelBusqueda() {
-      const panel = document.getElementById('searchPanel');
-      const btn = document.getElementById('btnSearchToggle');
-      panel.classList.toggle('open');
-      btn.classList.toggle('active');
-
-      if (panel.classList.contains('open')) {
-        document.getElementById('globalSearchInput').focus();
-        filtrarDirectorio();
-      }
-    }
-
-    function cambiarFiltroBusqueda(tipo, boton) {
-      filtroActualBusqueda = tipo;
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      boton.classList.add('active');
-      filtrarDirectorio();
-    }
-
-    function filtrarDirectorio() {
-      const query = document.getElementById('globalSearchInput').value.toLowerCase().trim();
-      const contenedor = document.getElementById('searchResultsList');
-
-      const resultados = directorioSigma.filter(item => {
-        const coincideTipo = (filtroActualBusqueda === 'todos') || (item.tipo === filtroActualBusqueda);
-        const coincideTexto = item.nombre.toLowerCase().includes(query) || item.detalle.toLowerCase().includes(query);
-        return coincideTipo && coincideTexto;
-      });
-
-      if (resultados.length === 0) {
-        contenedor.innerHTML = `<div style="text-align:center; color: var(--text-muted); font-size: 0.85rem; padding: 1rem;">No se encontraron resultados para "${query}".</div>`;
-        return;
-      }
-
-      contenedor.innerHTML = resultados.map(item => {
-        let badgeHtml = '';
-        let textoBoton = 'Seguir';
-
-        if (item.tipo === 'coach') {
-          badgeHtml = '<span class="badge-type badge-coach">COACH</span>';
-        } else if (item.tipo === 'grupo') {
-          badgeHtml = '<span class="badge-type badge-grupo">GRUPO</span>';
-          textoBoton = 'Unirse';
-        } else {
-          badgeHtml = '<span class="badge-type badge-atleta">ATLETA</span>';
-        }
-
-        return `
-          <div class="search-item">
-            <div class="search-item-info">
-              <div class="avatar">${item.iniciales}</div>
-              <div>
-                <div style="font-weight: 700; font-size: 0.88rem;">${item.nombre} ${badgeHtml}</div>
-                <div class="search-item-meta">${item.detalle}</div>
-              </div>
-            </div>
-            <button type="button" class="btn-follow-sm" onclick="accionDirectorio(this, '${item.tipo}')">${textoBoton}</button>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function accionDirectorio(boton, tipo) {
-      if (boton.classList.contains('joined')) {
-        boton.classList.remove('joined');
-        boton.innerText = tipo === 'grupo' ? 'Unirse' : 'Seguir';
-      } else {
-        boton.classList.add('joined');
-        boton.innerText = tipo === 'grupo' ? 'Miembro ✓' : 'Siguiendo ✓';
-      }
-    }
-
-    // --- AUTENTICACIÓN ---
-    function cambiarAuthTab(tab, boton) {
-      limpiarMensajesAuth();
-      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
-      boton.classList.add('active');
-      document.getElementById('form-' + tab).classList.add('active');
-    }
-
-    function togglePassword(inputId, btnToggle) {
-      const inputPass = document.getElementById(inputId);
-      if (inputPass.type === 'password') {
-        inputPass.type = 'text';
-        btnToggle.innerText = 'Ocultar';
-      } else {
-        inputPass.type = 'password';
-        btnToggle.innerText = 'Ver';
-      }
-    }
-
-    function registrarUsuario() {
-      limpiarMensajesAuth();
-      const nombre = document.getElementById('regName').value.trim();
-      const correo = document.getElementById('regEmail').value.trim();
-      const whatsapp = document.getElementById('regWhatsapp').value.trim();
-      const pass = document.getElementById('regPass').value.trim();
-      const pais = document.getElementById('regCountry').value;
-      const enfoque = document.getElementById('regFocus').value;
-
-      if (!nombre) {
-        mostrarMensajeBox('registerError', 'Debes ingresar tu nombre de atleta.');
-        return;
-      }
-      if (!correo || !correo.includes('@')) {
-        mostrarMensajeBox('registerError', 'Ingresa un correo electrónico válido.');
-        return;
-      }
-      if (pass.length < 6) {
-        mostrarMensajeBox('registerError', 'La contraseña debe tener al menos 6 caracteres.');
-        return;
-      }
-      if (!pais) {
-        mostrarMensajeBox('registerError', 'Selecciona tu país para continuar.');
-        return;
-      }
-
-      const existeCorreo = baseDatosUsuarios.some(u => u.correo.toLowerCase() === correo.toLowerCase());
-      if (existeCorreo) {
-        mostrarMensajeBox('registerError', 'Este correo ya está registrado en Sigma Fitness.');
-        return;
-      }
-
-      const nuevoUsuario = {
-        nombre: nombre,
-        usuario: nombre.toLowerCase().replace(/\s+/g, ''),
-        correo: correo.toLowerCase(),
-        whatsapp: whatsapp,
-        password: pass,
-        pais: pais,
-        enfoque: enfoque,
-        rol: "ATLETA"
-      };
-
-      baseDatosUsuarios.push(nuevoUsuario);
-      aplicarPerfilUsuario(nuevoUsuario);
-
-      const iniciales = nombre.substring(0, 2).toUpperCase();
-      directorioSigma.unshift({
-        id: Date.now(),
-        nombre: nombre,
-        tipo: "usuario",
-        detalle: `${enfoque} • ${pais}`,
-        iniciales: iniciales
-      });
-
-      alert('¡Cuenta creada con éxito! Bienvenido a Sigma Fitness, ' + nombre + '.');
-      entrarApp();
-    }
-
-    function aplicarPerfilUsuario(userObj) {
-      usuarioActual = userObj.nombre;
-      const iniciales = userObj.nombre.substring(0, 2).toUpperCase();
-      document.getElementById('profileName').innerHTML = `${userObj.nombre} <span class="badge-pro">${userObj.rol || 'ATLETA'}</span>`;
-      document.getElementById('profileFocus').innerText = `${userObj.enfoque} • ${userObj.pais}`;
-      document.getElementById('profileAvatar').innerText = iniciales;
-    }
-
-    async function autenticarBiometriaReal() {
-      limpiarMensajesAuth();
-      if (window.PublicKeyCredential) {
-        try {
-          const publicKey = {
-            challenge: new Uint8Array([21, 31, 105, 18, 45, 77]),
-            rp: { name: "Sigma Fitness" },
-            user: {
-              id: new Uint8Array([1]),
-              name: "atleta@sigmafit.com",
-              displayName: "Atleta Sigma"
-            },
-            pubKeyCredParams: [{ alg: -7, type: "public-key" }],
-            timeout: 60000,
-            authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" }
-          };
-
-          await navigator.credentials.create({ publicKey });
-          alert("¡Huella verificada correctamente por el sistema!");
-          aplicarPerfilUsuario(baseDatosUsuarios[0]);
-          entrarApp();
-        } catch (error) {
-          verificarBiometriaRespaldoBanco();
-        }
-      } else {
-        verificarBiometriaRespaldoBanco();
-      }
-    }
-
-    function verificarBiometriaRespaldoBanco() {
-      const pinConfirmado = confirm("Sigma Fitness - Seguridad Biométrica:\n\n¿Autorizar acceso mediante el sistema seguro del dispositivo (PIN / Patrón / Huella)?");
-      if (pinConfirmado) {
-        alert("Autenticación biométrica exitosa.");
-        aplicarPerfilUsuario(baseDatosUsuarios[0]);
-        entrarApp();
-      } else {
-        alert("Autenticación cancelada.");
-      }
-    }
-
-    function iniciarSesion() {
-      limpiarMensajesAuth();
-      const userInput = document.getElementById('loginUser').value.trim();
-      const passInput = document.getElementById('loginPass').value.trim();
-
-      if (!userInput && !passInput) {
-        mostrarMensajeBox('loginError', 'Ingresa tu correo o usuario y tu contraseña para acceder.');
-        return;
-      }
-      if (!userInput) {
-        mostrarMensajeBox('loginError', 'Debes escribir tu correo o usuario.');
-        return;
-      }
-      if (!passInput) {
-        mostrarMensajeBox('loginError', 'Debes escribir tu contraseña.');
-        return;
-      }
-
-      const usuarioValido = baseDatosUsuarios.find(u =>
-        (u.correo.toLowerCase() === userInput.toLowerCase() || u.usuario.toLowerCase() === userInput.toLowerCase()) &&
-        u.password === passInput
+    function manejarLogin(e) {
+      e.preventDefault();
+      const identificador = document.getElementById("loginUser").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPass").value;
+      const encontrado = usuariosSigma.find(u =>
+        u.id.toLowerCase() === identificador ||
+        u.usuario.toLowerCase().replace("@", "") === identificador.replace("@", "") ||
+        u.telefono === identificador
       );
+      if (!encontrado || encontrado.password !== pass) {
+        mostrarMensajeAuth("error", "Credenciales incorrectas. Verifica tu usuario/teléfono y contraseña.");
+        return;
+      }
+      iniciarSesionUsuario(encontrado);
+    }
 
-      if (!usuarioValido) {
-        mostrarMensajeBox('loginError', 'Correo/usuario o contraseña incorrectos. Si olvidaste tu clave, recupérala abajo.');
+    function manejarRegistro(e) {
+      e.preventDefault();
+      const nombre = document.getElementById("regName").value.trim();
+      let usuario = document.getElementById("regUser").value.trim();
+      if (!usuario.startsWith("@")) usuario = "@" + usuario;
+      const telefono = document.getElementById("regPhone").value.trim();
+      const password = document.getElementById("regPass").value;
+
+      if (password.length < 6) {
+        mostrarMensajeAuth("error", "La contraseña debe tener al menos 6 caracteres.");
+        return;
+      }
+      const existe = usuariosSigma.some(u => u.usuario.toLowerCase() === usuario.toLowerCase() || u.telefono === telefono);
+      if (existe) {
+        mostrarMensajeAuth("error", "Ese usuario o número ya está registrado en Sigma Fitness.");
         return;
       }
 
-      aplicarPerfilUsuario(usuarioValido);
-      entrarApp();
+      const nuevo = {
+        id: "user_" + Date.now(),
+        nombre,
+        usuario,
+        telefono,
+        password,
+        esPro: false,
+        especialidad: "Atleta Sigma Fitness",
+        bio: "Comprometido con la disciplina y el progreso diario."
+      };
+      usuariosSigma.push(nuevo);
+      guardarEstadoLocal();
+      iniciarSesionUsuario(nuevo);
+    }
+    function enviarCodigoOTP() {
+      const contacto = document.getElementById("recContact").value.trim();
+      if (!contacto) {
+        mostrarMensajeAuth("error", "Ingresa tu número de WhatsApp o usuario primero.");
+        return;
+      }
+      codigoOTPGenerado = String(Math.floor(100000 + Math.random() * 900000));
+      mostrarMensajeAuth("success", "Código OTP generado para " + contacto + ": " + codigoOTPGenerado);
     }
 
-    function entrarApp() {
-      document.getElementById('auth-screen').style.display = 'none';
-      document.getElementById('recovery-screen').style.display = 'none';
-      document.getElementById('app-screen').classList.add('active');
+    function manejarRecuperacion(e) {
+      e.preventDefault();
+      const contacto = document.getElementById("recContact").value.trim().toLowerCase();
+      const code = document.getElementById("recCode").value.trim();
+      const nuevaPass = document.getElementById("recNewPass").value;
+
+      if (!codigoOTPGenerado || code !== codigoOTPGenerado) {
+        mostrarMensajeAuth("error", "Código OTP inválido. Genera uno nuevo y verifícalo.");
+        return;
+      }
+      if (nuevaPass.length < 6) {
+        mostrarMensajeAuth("error", "La nueva contraseña debe tener al menos 6 caracteres.");
+        return;
+      }
+      const idx = usuariosSigma.findIndex(u =>
+        u.telefono.toLowerCase() === contacto || u.usuario.toLowerCase().replace("@", "") === contacto.replace("@", "")
+      );
+      if (idx === -1) {
+        mostrarMensajeAuth("error", "No encontramos una cuenta asociada a ese contacto.");
+        return;
+      }
+      usuariosSigma[idx].password = nuevaPass;
+      guardarEstadoLocal();
+      codigoOTPGenerado = null;
+      cambiarTabAuth("login");
+      mostrarMensajeAuth("success", "Contraseña actualizada con éxito. Ya puedes iniciar sesión.");
+    }
+
+    async function manejarBiometria() {
+      if (window.PublicKeyCredential && navigator.credentials) {
+        try {
+          const challenge = new Uint8Array(32);
+          window.crypto.getRandomValues(challenge);
+          await navigator.credentials.get({
+            publicKey: { challenge, timeout: 15000, userVerification: "preferred" }
+          }).catch(() => {});
+        } catch (err) {}
+      }
+      iniciarSesionUsuario(usuariosSigma[0]);
+    }
+
+    function iniciarSesionUsuario(user) {
+      usuarioActual = user;
+      localStorage.setItem(STORAGE_SESSION_KEY, JSON.stringify(user));
+      document.getElementById("authSection").style.display = "none";
+      document.getElementById("appShell").style.display = "block";
+      document.getElementById("bottomNav").style.display = "flex";
+      actualizarPerfilUI();
+      renderizarFeed();
+      renderizarDirectorio();
     }
 
     function cerrarSesion() {
-      document.getElementById('loginPass').value = '';
-      limpiarMensajesAuth();
-      document.getElementById('app-screen').classList.remove('active');
-      document.getElementById('searchPanel').classList.remove('open');
-      document.getElementById('btnSearchToggle').classList.remove('active');
-      document.getElementById('auth-screen').style.display = 'block';
+      usuarioActual = null;
+      localStorage.removeItem(STORAGE_SESSION_KEY);
+      document.getElementById("appShell").style.display = "none";
+      document.getElementById("bottomNav").style.display = "none";
+      document.getElementById("authSection").style.display = "flex";
+    }
+    function cambiarVistaApp(viewId, btnEl) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.remove("active"));
+      const target = document.getElementById(viewId);
+      if (target) target.classList.add("active");
+      document.querySelectorAll(".nav-item").forEach(nav => nav.classList.remove("active"));
+      if (btnEl) btnEl.classList.add("active");
+      if (viewId === "viewProfile") renderizarPerfilPosts();
+      if (viewId === "viewExplore") renderizarDirectorio();
     }
 
-    function cambiarVista(nombreVista, boton) {
-      document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-      document.getElementById('view-' + nombreVista).classList.add('active');
-      boton.classList.add('active');
+    function alternarBarraCamara() {
+      document.getElementById("cameraModeBar").classList.toggle("open");
     }
 
-    // --- FEED, MULTIMEDIA Y REACCIONES ---
-    function crearPublicacion() {
-      const input = document.getElementById('postInput');
-      const category = document.getElementById('postCategory').value;
-      const formato = document.getElementById('postFormat').value;
-      const texto = input.value.trim();
-
-      if (!texto && !archivoAdjuntoActual) return;
-
-      const feed = document.getElementById('feedContainer');
-      const tarjeta = document.createElement('div');
-      tarjeta.className = 'card';
-      const iniciales = usuarioActual.substring(0, 2).toUpperCase();
-
-      tarjeta.dataset.mediaUrl = archivoAdjuntoActual ? archivoAdjuntoActual.url : '';
-      tarjeta.dataset.mediaType = archivoAdjuntoActual ? archivoAdjuntoActual.tipo : '';
-      tarjeta.dataset.mediaName = archivoAdjuntoActual ? archivoAdjuntoActual.nombreArchivo : '';
-
-      let mediaHtml = '';
-      let textoGuardarMedia = '📥 Guardar foto / video';
-
-      if (archivoAdjuntoActual) {
-        const claseMedia = formato === 'reel' ? 'post-media-reel' : (archivoAdjuntoActual.tipo === 'video' ? 'post-media-video' : 'post-media-img');
-        const badgeReel = formato === 'reel' ? '<span class="reel-badge">REEL</span>' : '';
-
-        if (archivoAdjuntoActual.tipo === 'video') {
-          textoGuardarMedia = formato === 'reel' ? '📥 Guardar Reel' : '📥 Guardar Video';
-          mediaHtml = `
-            <div class="post-media-container">
-              ${badgeReel}
-              <video src="${archivoAdjuntoActual.url}" class="${claseMedia}" controls playsinline></video>
-            </div>
-          `;
-        } else {
-          textoGuardarMedia = '📥 Guardar Foto';
-          mediaHtml = `
-            <div class="post-media-container">
-              ${badgeReel}
-              <img src="${archivoAdjuntoActual.url}" alt="Publicación de ${usuarioActual}" class="${claseMedia}">
-            </div>
-          `;
-        }
-      }
-
-      tarjeta.innerHTML = `
-        <div class="post-header">
-          <div class="user-info">
-            <div class="avatar">${iniciales}</div>
-            <div><span class="username">${usuarioActual} <span class="badge-pro">SIGMA</span></span></div>
-          </div>
-
-          <div class="post-header-right">
-            <span class="post-tag">${category}</span>
-            <button type="button" class="btn-post-dots" onclick="toggleMenuPost(this, event)" title="Opciones de publicación">⋮</button>
-            <div class="post-options-dropdown">
-              <button type="button" class="post-menu-item" onclick="descargarMediaPost(this)">${textoGuardarMedia}</button>
-              <button type="button" class="post-menu-item" onclick="guardarPostMarcador(this)">🔖 Guardar publicación</button>
-              <button type="button" class="post-menu-item" onclick="compartirPostDesdeMenu(this)">📋 Copiar texto</button>
-              <button type="button" class="post-menu-item danger" onclick="abrirModalReporte(this)">🚩 Reportar publicación</button>
-            </div>
-          </div>
-        </div>
-        ${texto ? `<div class="post-body">${texto}</div>` : ''}
-        ${mediaHtml}
-        <div class="sigma-actions-bar">
-          <div class="reaction-picker">
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🔥')">🔥</button>
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '💪')">💪</button>
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '⚡')">⚡</button>
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🏆')">🏆</button>
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🎯')">🎯</button>
-            <button type="button" class="reaction-option" onclick="seleccionarReaccion(this, '🫡')">🫡</button>
-          </div>
-
-          <button type="button" class="sigma-box-btn react-trigger" data-selected="" data-count="0" onclick="togglePickerReaccion(this, event)">
-            <span class="reaction-symbol">⚡</span>
-            <span class="reaction-label">Reaccionar</span>
-            <span class="reaction-counter">0</span>
-          </button>
-
-          <button type="button" class="sigma-box-btn" onclick="toggleComentarios(this)">
-            <span>💬</span>
-            <span class="reaction-label">Comentar</span>
-            <span class="reaction-counter comment-count">0</span>
-          </button>
-
-          <button type="button" class="sigma-box-btn" onclick="compartirPost(this)">
-            <span>↗</span>
-            <span class="reaction-label">Compartir</span>
-          </button>
-        </div>
-        <div class="comments-section">
-          <div class="comment-list"></div>
-          <div class="comment-input-box">
-            <input type="text" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') agregarComentario(this.nextElementSibling)">
-            <button type="button" class="btn-send-comment" onclick="agregarComentario(this)">Enviar</button>
-          </div>
-        </div>
-      `;
-      feed.prepend(tarjeta);
-      input.value = '';
-      archivoAdjuntoActual = null;
-      document.getElementById('cameraPhotoInput').value = '';
-      document.getElementById('cameraVideoInput').value = '';
-      document.getElementById('galleryInput').value = '';
-      document.getElementById('postFormat').value = 'post';
-      document.getElementById('mediaPreviewBox').classList.remove('active');
-      document.getElementById('mediaPreviewContent').innerHTML = '';
-      toggleOpcionesCamara(false);
+    function previsualizarArchivo(event, tipoForzado) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const url = e.target.result;
+        const esVideo = tipoForzado === "video" || (tipoForzado === "auto" && file.type.startsWith("video/"));
+        mediaSeleccionada = { url, type: esVideo ? "video" : "image" };
+        const box = document.getElementById("mediaPreviewBox");
+        const content = document.getElementById("mediaPreviewContent");
+        content.innerHTML = esVideo
+          ? `<video src="${url}" controls playsinline></video>`
+          : `<img src="${url}" alt="Vista previa" />`;
+        box.classList.add("visible");
+      };
+      reader.readAsDataURL(file);
     }
 
-    function cerrarPickersActivos(excepto = null) {
-      document.querySelectorAll('.reaction-picker.open').forEach(picker => {
-        if (picker !== excepto) {
-          picker.classList.remove('open');
-        }
+    function quitarMediaPreview() {
+      mediaSeleccionada = { url: "", type: "" };
+      document.getElementById("mediaPreviewBox").classList.remove("visible");
+      document.getElementById("mediaPreviewContent").innerHTML = "";
+      ["cameraPhotoInput", "cameraVideoInput", "galleryInput", "reelInput"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
       });
     }
 
-    function togglePickerReaccion(boton, event) {
+    function publicarContenido() {
+      if (!usuarioActual) return;
+      const texto = document.getElementById("postTextarea").value.trim();
+      const formato = document.getElementById("postFormatSelect").value;
+      if (!texto && !mediaSeleccionada.url) return;
+
+      const etiquetaMapa = {
+        normal: "Entrenamiento",
+        reel: "Reel 9:16",
+        progreso: "Progreso / Marca"
+      };
+
+      const nuevoPost = {
+        id: Date.now(),
+        authorId: usuarioActual.id,
+        authorName: usuarioActual.nombre,
+        authorHandle: usuarioActual.usuario,
+        esPro: Boolean(usuarioActual.esPro),
+        time: "Justo ahora",
+        tag: etiquetaMapa[formato] || "Entrenamiento",
+        text: texto || (mediaSeleccionada.type === "video" ? "Nuevo video en Sigma Fitness." : "Nueva foto en Sigma Fitness."),
+        mediaUrl: mediaSeleccionada.url,
+        mediaType: mediaSeleccionada.type,
+        format: formato,
+        likes: 0,
+        likedByMe: false,
+        commentsCount: 0
+      };
+
+      postsSigma.unshift(nuevoPost);
+      guardarEstadoLocal();
+      document.getElementById("postTextarea").value = "";
+      quitarMediaPreview();
+      renderizarFeed();
+      renderizarPerfilPosts();
+    }
+    function crearTarjetaPostHTML(post) {
+      const esMio = usuarioActual && post.authorId === usuarioActual.id;
+      const esReel = post.format === "reel";
+      let mediaHTML = "";
+
+      if (post.mediaUrl) {
+        mediaHTML = post.mediaType === "video"
+          ? `<div class="post-media-wrap ${esReel ? "reel-aspect" : ""}"><video src="${post.mediaUrl}" controls playsinline></video></div>`
+          : `<div class="post-media-wrap"><img src="${post.mediaUrl}" alt="Publicación" /></div>`;
+      }
+
+      const menuItems = esMio
+        ? `
+          <button type="button" class="post-menu-item" onclick="abrirModalEditar(${post.id})">✏️ Editar publicación</button>
+          <button type="button" class="post-menu-item danger" onclick="eliminarPost(${post.id})">🗑️ Eliminar publicación</button>
+        `
+        : `
+          <button type="button" class="post-menu-item" onclick="abrirChatSigmaE2EE('${post.authorId}', '${post.authorName.replace(/'/g, "\\'")}')">💬 Chat privado (E2EE)</button>
+          <button type="button" class="post-menu-item danger" onclick="abrirModalReportar(${post.id})">🚩 Reportar publicación</button>
+        `;
+
+      return `
+        <article class="card">
+          <div class="post-header">
+            <div class="post-author-info">
+              <div class="avatar-circle">${obtenerIniciales(post.authorName)}</div>
+              <div>
+                <div class="author-name-row">
+                  <span class="author-name">${post.authorName}</span>
+                  ${post.esPro ? '<span class="pro-badge">PRO</span>' : ""}
+                </div>
+                <div class="post-meta">${post.authorHandle} • ${post.time} • ${post.tag}</div>
+              </div>
+            </div>
+            <div class="post-menu-wrap">
+              <button type="button" class="post-menu-btn" onclick="alternarMenuPost(event, ${post.id})">⋮</button>
+              <div id="postMenu_${post.id}" class="post-menu-dropdown">${menuItems}</div>
+            </div>
+          </div>
+          <p class="post-text">${post.text}</p>
+          ${mediaHTML}
+          <div class="post-actions">
+            <button type="button" class="action-btn ${post.likedByMe ? "liked" : ""}" onclick="darLikePost(${post.id})">
+              <span>${post.likedByMe ? "❤️" : "🤍"}</span>
+              <span>${post.likes}</span>
+            </button>
+            <button type="button" class="action-btn" onclick="comentarPost(${post.id})">
+              <span>💬</span>
+              <span>${post.commentsCount}</span>
+            </button>
+            <button type="button" class="action-btn" onclick="abrirChatSigmaE2EE('${post.authorId}', '${post.authorName.replace(/'/g, "\\'")}')">
+              <span>🔐</span>
+              <span>Directo</span>
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderizarFeed() {
+      const container = document.getElementById("feedPostsContainer");
+      if (!container) return;
+      container.innerHTML = postsSigma.map(crearTarjetaPostHTML).join("");
+    }
+    function alternarMenuPost(event, postId) {
       event.stopPropagation();
-      cerrarMenusPostActivos();
-      const bar = boton.closest('.sigma-actions-bar');
-      const picker = bar.querySelector('.reaction-picker');
-      const yaEstabaAbierto = picker.classList.contains('open');
-
-      cerrarPickersActivos(picker);
-
-      if (!yaEstabaAbierto) {
-        picker.classList.add('open');
-      } else {
-        picker.classList.remove('open');
-      }
+      document.querySelectorAll(".post-menu-dropdown.open").forEach(menu => {
+        if (menu.id !== "postMenu_" + postId) menu.classList.remove("open");
+      });
+      const menu = document.getElementById("postMenu_" + postId);
+      if (menu) menu.classList.toggle("open");
     }
 
-    function seleccionarReaccion(opcionBtn, emoji) {
-      const bar = opcionBtn.closest('.sigma-actions-bar');
-      const trigger = bar.querySelector('.react-trigger');
-      const picker = bar.querySelector('.reaction-picker');
-      const symbolSpan = trigger.querySelector('.reaction-symbol');
-      const labelSpan = trigger.querySelector('.reaction-label');
-      const counterSpan = trigger.querySelector('.reaction-counter');
-
-      const seleccionAnterior = trigger.dataset.selected;
-      let count = parseInt(trigger.dataset.count, 10) || 0;
-
-      if (seleccionAnterior === emoji) {
-        trigger.dataset.selected = "";
-        count = Math.max(0, count - 1);
-        trigger.dataset.count = count;
-        trigger.classList.remove('reacted');
-        symbolSpan.innerText = "⚡";
-        labelSpan.innerText = "Reaccionar";
-        counterSpan.innerText = count;
-      } else {
-        if (!seleccionAnterior) {
-          count += 1;
-        }
-        trigger.dataset.selected = emoji;
-        trigger.dataset.count = count;
-        trigger.classList.add('reacted');
-        symbolSpan.innerText = emoji;
-        labelSpan.innerText = "";
-        counterSpan.innerText = count;
-      }
-
-      picker.classList.remove('open');
-    }
-
-    document.addEventListener('click', function() {
-      cerrarPickersActivos();
-      cerrarMenusPostActivos();
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".post-menu-dropdown.open").forEach(menu => menu.classList.remove("open"));
     });
 
-    function toggleComentarios(boton) {
-      const card = boton.closest('.card');
-      const section = card.querySelector('.comments-section');
-      section.classList.toggle('open');
+    function darLikePost(postId) {
+      const post = postsSigma.find(p => p.id === postId);
+      if (!post) return;
+      post.likedByMe = !post.likedByMe;
+      post.likes += post.likedByMe ? 1 : -1;
+      guardarEstadoLocal();
+      renderizarFeed();
+      renderizarPerfilPosts();
     }
 
-    function agregarComentario(boton) {
-      const card = boton.closest('.card');
-      const input = card.querySelector('.comment-input');
-      const texto = input.value.trim();
-      if (!texto) return;
-
-      const list = card.querySelector('.comment-list');
-      const nuevoComentario = document.createElement('div');
-      nuevoComentario.className = 'comment-item';
-      nuevoComentario.innerHTML = `<strong>${usuarioActual}:</strong> ${texto}`;
-      list.appendChild(nuevoComentario);
-
-      const countSpan = card.querySelector('.comment-count');
-      countSpan.innerText = parseInt(countSpan.innerText) + 1;
-
-      input.value = '';
+    function comentarPost(postId) {
+      const post = postsSigma.find(p => p.id === postId);
+      if (!post) return;
+      post.commentsCount += 1;
+      guardarEstadoLocal();
+      renderizarFeed();
+      renderizarPerfilPosts();
     }
 
-    function compartirPost(boton) {
-      const card = boton.closest('.card');
-      const textoPost = card.querySelector('.post-body') ? card.querySelector('.post-body').innerText : 'Contenido multimedia en Sigma Fitness';
-      const textoCompartir = `Sigma Fitness: "${textoPost}" - Únete a la disciplina innegociable.`;
-      const labelSpan = boton.querySelector('.reaction-label');
-      const textoPrevio = labelSpan ? labelSpan.innerText : "Compartir";
+    function abrirModalEditar(postId) {
+      const post = postsSigma.find(p => p.id === postId);
+      if (!post) return;
+      postEditandoId = postId;
+      document.getElementById("editPostTextarea").value = post.text;
+      document.getElementById("editPostModal").classList.add("open");
+    }
 
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(textoCompartir);
-        if (labelSpan) labelSpan.innerText = "Listo";
-        boton.classList.add('reacted');
-        setTimeout(() => {
-          if (labelSpan) labelSpan.innerText = textoPrevio;
-          boton.classList.remove('reacted');
-        }, 1800);
-      } else {
-        alert("Listo para compartir:\n\n" + textoCompartir);
+    function cerrarModalEditar() {
+      postEditandoId = null;
+      document.getElementById("editPostModal").classList.remove("open");
+    }
+
+    function guardarEdicionPost() {
+      if (!postEditandoId) return;
+      const nuevoTexto = document.getElementById("editPostTextarea").value.trim();
+      const post = postsSigma.find(p => p.id === postEditandoId);
+      if (post && nuevoTexto) {
+        post.text = nuevoTexto;
+        guardarEstadoLocal();
+        renderizarFeed();
+        renderizarPerfilPosts();
+      }
+      cerrarModalEditar();
+    }
+
+    function eliminarPost(postId) {
+      postsSigma = postsSigma.filter(p => p.id !== postId);
+      guardarEstadoLocal();
+      renderizarFeed();
+      renderizarPerfilPosts();
+    }
+
+    function abrirModalReportar(postId) {
+      postReportandoId = postId;
+      document.getElementById("reportPostModal").classList.add("open");
+    }
+
+    function cerrarModalReportar() {
+      postReportandoId = null;
+      document.getElementById("reportPostModal").classList.remove("open");
+    }
+
+    function enviarReportePost() {
+      const motivo = document.getElementById("reportReasonSelect").value;
+      const post = postsSigma.find(p => p.id === postReportandoId);
+      if (post) {
+        postsSigma = postsSigma.filter(p => p.id !== postReportandoId);
+        guardarEstadoLocal();
+        renderizarFeed();
+        renderizarPerfilPosts();
+        console.log("Reporte enviado:", post.id, motivo);
+      }
+      cerrarModalReportar();
+    }
+    function renderizarDirectorio() {
+      const container = document.getElementById("directoryListContainer");
+      if (!container) return;
+      const filtro = (document.getElementById("exploreSearchInput")?.value || "").trim().toLowerCase();
+      const filtrados = usuariosSigma.filter(u =>
+        u.nombre.toLowerCase().includes(filtro) ||
+        u.usuario.toLowerCase().includes(filtro) ||
+        (u.especialidad || "").toLowerCase().includes(filtro)
+      );
+
+      container.innerHTML = filtrados.map(u => `
+        <div class="trainer-card">
+          <div class="trainer-info">
+            <div class="avatar-circle">${obtenerIniciales(u.nombre)}</div>
+            <div>
+              <div class="author-name-row">
+                <span class="author-name">${u.nombre}</span>
+                ${u.esPro ? '<span class="pro-badge">PRO</span>' : ""}
+              </div>
+              <div class="post-meta">${u.especialidad || "Atleta Sigma"}</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.35rem;">
+            <button type="button" class="btn-chat-e2ee" onclick="abrirChatSigmaE2EE('${u.id}', '${u.nombre.replace(/'/g, "\\'")}')">🔐 Chat</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function actualizarPerfilUI() {
+      if (!usuarioActual) return;
+      document.getElementById("profileAvatarLg").textContent = obtenerIniciales(usuarioActual.nombre);
+      document.getElementById("profileNameHeading").textContent = usuarioActual.nombre;
+      document.getElementById("profileHandleText").textContent = `${usuarioActual.usuario} • ${usuarioActual.telefono}`;
+      document.getElementById("profileBioText").textContent = usuarioActual.bio || "";
+      renderizarPerfilPosts();
+    }
+
+    function renderizarPerfilPosts() {
+      const container = document.getElementById("profilePostsContainer");
+      if (!container || !usuarioActual) return;
+      const misPosts = postsSigma.filter(p => p.authorId === usuarioActual.id);
+      container.innerHTML = misPosts.length
+        ? misPosts.map(crearTarjetaPostHTML).join("")
+        : '<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Aún no tienes publicaciones en tu perfil.</div>';
+    }
+    let e2eePeerInfo = { id: "andrea", nombre: "Andrea Design" };
+    let e2eeSharedKey = null;
+    const e2eeHistorial = {};
+
+    async function prepararClaveE2EE() {
+      if (!window.crypto || !window.crypto.subtle) return null;
+      const kpA = await window.crypto.subtle.generateKey(
+        { name: "ECDH", namedCurve: "P-256" },
+        true,
+        ["deriveKey"]
+      );
+      const kpB = await window.crypto.subtle.generateKey(
+        { name: "ECDH", namedCurve: "P-256" },
+        true,
+        ["deriveKey"]
+      );
+      return await window.crypto.subtle.deriveKey(
+        { name: "ECDH", public: kpB.publicKey },
+        kpA.privateKey,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["encrypt", "decrypt"]
+      );
+    }
+
+    async function cifrarTextoE2EE(textoPlano) {
+      if (!e2eeSharedKey) e2eeSharedKey = await prepararClaveE2EE();
+      if (!e2eeSharedKey) return { iv: "", cipher: textoPlano };
+      const iv = window.crypto.getRandomValues(new Uint8Array(12));
+      const encoded = new TextEncoder().encode(textoPlano);
+      const encryptedBuf = await window.crypto.subtle.encrypt(
+        { name: "AES-GCM", iv },
+        e2eeSharedKey,
+        encoded
+      );
+      const cipherHex = Array.from(new Uint8Array(encryptedBuf))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+      const ivHex = Array.from(iv)
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+      return { iv: ivHex, cipher: cipherHex };
+    }
+
+    async function descifrarTextoE2EE(paquete) {
+      if (!e2eeSharedKey || !paquete.iv) return paquete.plainText || "";
+      try {
+        const iv = new Uint8Array(paquete.iv.match(/.{1,2}/g).map(h => parseInt(h, 16)));
+        const bytes = new Uint8Array(paquete.cipher.match(/.{1,2}/g).map(h => parseInt(h, 16)));
+        const decryptedBuf = await window.crypto.subtle.decrypt(
+          { name: "AES-GCM", iv },
+          e2eeSharedKey,
+          bytes
+        );
+        return new TextDecoder().decode(decryptedBuf);
+      } catch (err) {
+        return paquete.plainText || "";
       }
     }
+    async function abrirChatSigmaE2EE(peerId, peerNombre) {
+      e2eePeerInfo = { id: peerId, nombre: peerNombre };
+      document.getElementById("sigmaE2EEPeer").textContent = peerNombre;
+      if (!e2eeSharedKey) e2eeSharedKey = await prepararClaveE2EE();
+      if (!e2eeHistorial[peerId]) {
+        const saludo = `Canal directo cifrado listo con ${peerNombre}. Solo ambos dispositivos poseen la llave de sesión.`;
+        const cifrado = await cifrarTextoE2EE(saludo);
+        e2eeHistorial[peerId] = [
+          { sender: "peer", plainText: saludo, iv: cifrado.iv, cipher: cifrado.cipher }
+        ];
+      }
+      document.getElementById("sigmaE2EEModal").classList.add("open");
+      await renderizarChatSigmaE2EE();
+    }
 
-    function unirseReto(boton) {
-      boton.innerText = "Inscrito";
-      boton.style.backgroundColor = "#27272A";
-      boton.disabled = true;
+    function cerrarChatSigmaE2EE() {
+      document.getElementById("sigmaE2EEModal").classList.remove("open");
+    }
+
+    async function renderizarChatSigmaE2EE() {
+      const log = document.getElementById("sigmaE2EELog");
+      if (!log) return;
+      const lista = e2eeHistorial[e2eePeerInfo.id] || [];
+      const htmlItems = [];
+      for (const msg of lista) {
+        const texto = await descifrarTextoE2EE(msg);
+        const esMio = msg.sender === "me";
+        htmlItems.push(`
+          <div class="e2ee-msg ${esMio ? "me" : "peer"}">
+            <div>${texto}</div>
+            <div class="e2ee-hash">AES-GCM: ${msg.cipher.slice(0, 22)}...</div>
+          </div>
+        `);
+      }
+      log.innerHTML = htmlItems.join("");
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function enviarMensajeSigmaE2EE() {
+      const input = document.getElementById("sigmaE2EEInput");
+      const texto = input.value.trim();
+      if (!texto) return;
+      input.value = "";
+
+      const paquete = await cifrarTextoE2EE(texto);
+      e2eeHistorial[e2eePeerInfo.id].push({
+        sender: "me",
+        plainText: texto,
+        iv: paquete.iv,
+        cipher: paquete.cipher
+      });
+      await renderizarChatSigmaE2EE();
+
+      setTimeout(async () => {
+        const respTexto = `Recibido en canal seguro (${e2eePeerInfo.nombre}). ¡Seguimos firmes en Sigma Fitness!`;
+        const respCifrada = await cifrarTextoE2EE(respTexto);
+        e2eeHistorial[e2eePeerInfo.id].push({
+          sender: "peer",
+          plainText: respTexto,
+          iv: respCifrada.iv,
+          cipher: respCifrada.cipher
+        });
+        await renderizarChatSigmaE2EE();
+      }, 650);
+    }
+
+    if (usuarioActual) {
+      iniciarSesionUsuario(usuarioActual);
     }
   </script>
 </body>
