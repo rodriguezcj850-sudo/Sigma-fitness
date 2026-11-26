@@ -114,6 +114,7 @@
       background: var(--crimson);
       color: #fff;
     }
+
     .form-group {
       margin-bottom: 0.9rem;
     }
@@ -196,6 +197,7 @@
       border: 1px solid rgba(34, 197, 94, 0.4);
       color: #86efac;
     }
+
     /* === APP SHELL & FEED === */
     .top-header {
       position: sticky;
@@ -402,6 +404,7 @@
       font-size: 0.74rem;
       color: var(--text-muted);
     }
+
     .post-menu-wrap {
       position: relative;
       flex-shrink: 0;
@@ -460,6 +463,7 @@
     .post-menu-item.danger {
       color: #ff6b81;
     }
+
     .post-text {
       font-size: 0.9rem;
       color: var(--text-main);
@@ -511,6 +515,7 @@
       background: rgba(220, 20, 60, 0.18);
       color: #ff859d;
     }
+
     .trainer-card {
       display: flex;
       align-items: center;
@@ -580,6 +585,7 @@
     .nav-item.active {
       color: var(--crimson);
     }
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -665,12 +671,12 @@
 
       <form id="loginForm" onsubmit="manejarLogin(event)">
         <div class="form-group">
-          <label class="form-label" for="loginId">Usuario, correo o teléfono</label>
-          <input id="loginId" type="text" class="form-input" placeholder="Ej. juanluis o +584145574866" required />
+          <label class="form-label" for="loginId">Correo, usuario o teléfono</label>
+          <input id="loginId" type="text" class="form-input" value="rodriguezcj850@gmail.com" placeholder="rodriguezcj850@gmail.com" required />
         </div>
         <div class="form-group">
           <label class="form-label" for="loginPass">Contraseña</label>
-          <input id="loginPass" type="password" class="form-input" placeholder="Tu contraseña" required />
+          <input id="loginPass" type="password" class="form-input" value="Rodriguez0210" placeholder="Tu contraseña" required />
         </div>
         <button type="submit" class="btn-primary">Iniciar Sesión</button>
         <button type="button" class="btn-biometric" onclick="manejarBiometria()">
@@ -678,6 +684,7 @@
           <span>Acceso Rápido con Huella / Biometría</span>
         </button>
       </form>
+
       <form id="registerForm" style="display:none;" onsubmit="manejarRegistro(event)">
         <div class="form-group">
           <label class="form-label" for="regName">Nombre completo</label>
@@ -700,13 +707,14 @@
 
       <form id="recoverForm" style="display:none;" onsubmit="manejarRecuperacion(event)">
         <div class="form-group">
-          <label class="form-label" for="recContact">WhatsApp o correo registrado</label>
-          <input id="recContact" type="text" class="form-input" placeholder="+584145574866" required />
+          <label class="form-label" for="recContact">Correo, WhatsApp o teléfono registrado</label>
+          <input id="recContact" type="text" class="form-input" value="rodriguezcj850@gmail.com" placeholder="rodriguezcj850@gmail.com" required />
         </div>
         <button type="submit" class="btn-primary">Enviar Código de Recuperación</button>
       </form>
     </div>
   </section>
+
   <div id="appShell" style="display:none;">
     <header class="top-header">
       <div class="header-left">
@@ -718,7 +726,6 @@
         <button type="button" class="btn-header" onclick="cerrarSesion()">Salir</button>
       </div>
     </header>
-
     <main class="main-container">
       <section id="viewFeed" class="view-section active">
         <div class="card">
@@ -746,322 +753,245 @@
             <select id="postFormat" class="form-select" style="max-width: 195px;">
               <option value="Post normal">Formato: Post normal</option>
               <option value="Progreso / Marca">Formato: Progreso / Marca</option>
-              <option value="Reel de Entreno">Formato: Reel de Entreno</option>
+              <option value="Rutina / Entreno">Formato: Rutina / Entreno</option>
+              <option value="Reel / Clip">Formato: Reel / Clip</option>
             </select>
-            <button type="button" class="btn-primary" style="width:auto; padding: 0.6rem 1.25rem;" onclick="publicarPost()">Publicar</button>
+            <button type="button" class="btn-primary" style="width:auto; padding: 0.65rem 1.2rem;" onclick="publicarPost()">Publicar</button>
           </div>
         </div>
 
         <div id="feedList"></div>
       </section>
-      <section id="viewDirectory" class="view-section">
+
+      <section id="viewTrainers" class="view-section">
         <div class="card">
-          <h2 style="font-size:1rem; margin-bottom:0.35rem;">Atletas y Entrenadores</h2>
-          <p style="font-size:0.78rem; color:var(--text-muted);">Conecta o abre un canal directo cifrado con miembros de Sigma Fitness.</p>
+          <h2 style="font-size:1rem; font-weight:800; margin-bottom:0.4rem;">Entrenadores y Comunidad</h2>
+          <p style="font-size:0.8rem; color:var(--text-muted);">Conecta con preparadores y atletas de SIGMA FITNESS.</p>
         </div>
-        <div id="directoryList"></div>
+        <div id="trainersList"></div>
       </section>
 
       <section id="viewProfile" class="view-section">
         <div class="card profile-hero">
           <div id="profileAvatar" class="avatar-lg">JR</div>
-          <h2 id="profileName" style="font-size:1.15rem;">Juan Rodríguez</h2>
-          <p id="profileHandle" style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.7rem;">@juanluis • +584145574866</p>
-          <div style="display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap;">
-            <button type="button" class="btn-header primary" onclick="vincularHuellaActual()">🔐 Vincular Huella Aquí</button>
-            <button type="button" class="btn-header" onclick="abrirChatE2EE()">💬 Mensajes E2EE</button>
-          </div>
+          <h2 id="profileName" style="font-size:1.1rem; font-weight:900;">Juan Luis Rodríguez</h2>
+          <p id="profileHandle" style="font-size:0.82rem; color:var(--text-muted);">@juanluis_sf • Fundador</p>
         </div>
-        <div id="profilePostsList"></div>
+        <div class="card">
+          <button type="button" class="btn-biometric" style="margin-top:0;" onclick="cerrarSesion()">Cerrar Sesión</button>
+        </div>
       </section>
     </main>
+
     <nav class="bottom-nav">
-      <button type="button" id="navFeed" class="nav-item active" onclick="cambiarVista('feed')">
+      <button type="button" class="nav-item active" data-view="viewFeed" onclick="cambiarVista('viewFeed')">
         <span>🏠</span>
-        <span>Inicio</span>
+        <span>Feed</span>
       </button>
-      <button type="button" id="navDirectory" class="nav-item" onclick="cambiarVista('directory')">
-        <span>🏋️</span>
-        <span>Atletas</span>
+      <button type="button" class="nav-item" data-view="viewTrainers" onclick="cambiarVista('viewTrainers')">
+        <span>💪</span>
+        <span>Entrenadores</span>
       </button>
-      <button type="button" id="navProfile" class="nav-item" onclick="cambiarVista('profile')">
+      <button type="button" class="nav-item" data-view="viewProfile" onclick="cambiarVista('viewProfile')">
         <span>👤</span>
         <span>Perfil</span>
       </button>
     </nav>
   </div>
 
-  <div id="commentModal" class="modal-backdrop" onclick="cerrarModalFondo(event, 'commentModal')">
+  <div id="e2eeModal" class="modal-backdrop" onclick="cerrarModalSiFondo(event, 'e2eeModal')">
     <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <strong style="font-size:0.95rem;">Comentarios</strong>
-        <button type="button" class="btn-header" onclick="cerrarModal('commentModal')">✕</button>
-      </div>
-      <div id="commentList" style="overflow-y:auto; max-height:42vh; display:flex; flex-direction:column; gap:0.5rem;"></div>
-      <div style="display:flex; gap:0.45rem;">
-        <input id="commentInput" type="text" class="form-input" placeholder="Escribe un comentario..." />
-        <button type="button" class="btn-primary" style="width:auto; padding:0 1rem;" onclick="enviarComentario()">Enviar</button>
-      </div>
-    </div>
-  </div>
-  <div id="e2eeModal" class="modal-backdrop" onclick="cerrarModalFondo(event, 'e2eeModal')">
-    <div class="modal-box">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <strong style="font-size:0.95rem;">🔒 Canal Directo E2EE</strong>
-          <div id="e2eePeerLabel" style="font-size:0.72rem; color:var(--text-muted);">Cifrado SHA-256 local activo</div>
-        </div>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <strong style="font-size:0.95rem;">🔒 Chat Cifrado E2EE</strong>
         <button type="button" class="btn-header" onclick="cerrarModal('e2eeModal')">✕</button>
       </div>
       <div id="e2eeLog" class="e2ee-log"></div>
-      <div style="display:flex; gap:0.45rem;">
-        <input id="e2eeInput" type="text" class="form-input" placeholder="Mensaje cifrado..." />
-        <button type="button" class="btn-primary" style="width:auto; padding:0 1rem;" onclick="enviarMensajeE2EE()">Enviar</button>
-      </div>
+      <form onsubmit="enviarMensajeE2EE(event)" style="display:flex; gap:0.45rem;">
+        <input id="e2eeInput" type="text" class="form-input" placeholder="Escribe un mensaje..." required />
+        <button type="submit" class="btn-primary" style="width:auto; padding:0 1rem;">Enviar</button>
+      </form>
     </div>
   </div>
-
   <script>
-    const DB_KEY = 'sigma_fitness_v2_db';
-    let tempMedia = null;
-    let activeCommentPostId = null;
-    let activePeer = { name: 'Coach Marcos', handle: '@marcos_sf' };
+    const STORAGE_KEYS = {
+      POSTS: 'sigma_fitness_posts_v1',
+      SESSION: 'sigma_fitness_session_v1',
+      CHAT: 'sigma_fitness_e2ee_v1',
+      TRAINERS: 'sigma_fitness_trainers_v1'
+    };
 
-    function cargarDB() {
-      const raw = localStorage.getItem(DB_KEY);
-      if (raw) {
-        try { return JSON.parse(raw); } catch (e) {}
+    const FOUNDER_ACCOUNT = {
+      id: 'founder_juanluis',
+      name: 'Juan Luis Rodríguez',
+      handle: '@juanluis_sf',
+      email: 'rodriguezcj850@gmail.com',
+      phone: '+584145574866',
+      passwordHash: 'Rodriguez0210',
+      role: 'Fundador',
+      isFounder: true,
+      pro: true
+    };
+
+    let currentMedia = { type: null, dataUrl: null };
+    let openMenuId = null;
+
+    const TRAINERS_SEED = [
+      { id: 't1', name: 'Coach Carlos Mendoza', handle: '@carlos_strength', role: 'Fuerza & Hipertrofia', following: false },
+      { id: 't2', name: 'Coach Valeria Rivas', handle: '@valeria_readapt', role: 'Readaptación Deportiva', following: true }
+    ];
+
+    const POSTS_SEED = [
+      {
+        id: 'p1',
+        author: 'Juan Luis Rodríguez',
+        handle: '@juanluis_sf',
+        role: 'Fundador',
+        pro: true,
+        format: 'Progreso / Marca',
+        time: 'Hoy',
+        text: 'Ajustando detalles en la interfaz de SIGMA FITNESS. Disciplina constante y paso a paso.',
+        mediaType: null,
+        mediaUrl: null,
+        likes: 12,
+        liked: false
       }
-      const initial = {
-        currentUser: null,
-        users: [
-          {
-            id: 'u_juan',
-            name: 'Juan Rodríguez',
-            handle: '@juanluis',
-            phone: '+584145574866',
-            pass: 'sigma2026',
-            pro: true,
-            credentialId: null
-          },
-          {
-            id: 'u_marcos',
-            name: 'Coach Marcos',
-            handle: '@marcos_sf',
-            phone: '+584120001122',
-            pass: '123456',
-            pro: true,
-            credentialId: null
-          }
-        ],
-        posts: [
-          {
-            id: 'p_1',
-            authorName: 'Juan Rodríguez',
-            authorHandle: '@juanluis',
-            pro: true,
-            format: 'Progreso / Marca',
-            text: 'Enfoque total en físico culturismo natural y recomposición corporal. Disciplina innegociable cada sesión.',
-            media: null,
-            likes: [],
-            comments: [{ author: 'Coach Marcos', text: 'Ese ritmo constante marca la diferencia.' }],
-            time: 'Hoy'
-          }
-        ],
-        e2eeMessages: [
-          {
-            sender: 'Coach Marcos',
-            handle: '@marcos_sf',
-            text: '¡Listo el bloque de fuerza y acondicionamiento de esta semana!',
-            hash: 'e2ee-8f4a21',
-            time: 'Ahora'
-}
-        ]
-      };
-      guardarDB(initial);
-      return initial;
+    ];
+
+    function leerStorage(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (_) {
+        return fallback;
+      }
     }
 
-    function guardarDB(db) {
-      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    function guardarStorage(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+      } catch (_) {}
     }
-    let db = cargarDB();
 
-    function mostrarAuthMsg(text, type) {
+    function mostrarAuthMsg(texto, tipo = 'success') {
       const box = document.getElementById('authMsg');
-      box.textContent = text;
-      box.className = 'auth-msg visible ' + type;
+      box.textContent = texto;
+      box.className = `auth-msg visible ${tipo}`;
     }
 
-    function cambiarModoAuth(mode) {
+    function cambiarModoAuth(modo) {
       document.querySelectorAll('.auth-tab').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
+        btn.classList.toggle('active', btn.dataset.mode === modo);
       });
-      document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
-      document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
-      document.getElementById('recoverForm').style.display = mode === 'recover' ? 'block' : 'none';
+      document.getElementById('loginForm').style.display = modo === 'login' ? 'block' : 'none';
+      document.getElementById('registerForm').style.display = modo === 'register' ? 'block' : 'none';
+      document.getElementById('recoverForm').style.display = modo === 'recover' ? 'block' : 'none';
       document.getElementById('authMsg').className = 'auth-msg';
+    }
+
+    function iniciarSesionUsuario(usuario) {
+      guardarStorage(STORAGE_KEYS.SESSION, usuario);
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('appShell').style.display = 'block';
+      actualizarPerfilUI(usuario);
+      renderFeed();
+      renderTrainers();
     }
 
     function manejarLogin(e) {
       e.preventDefault();
       const idVal = document.getElementById('loginId').value.trim().toLowerCase();
-      const passVal = document.getElementById('loginPass').value;
-      const found = db.users.find(u =>
-        u.handle.toLowerCase() === idVal ||
-        u.handle.replace('@', '').toLowerCase() === idVal ||
-        u.phone.toLowerCase() === idVal
-      );
-      if (!found || found.pass !== passVal) {
-        mostrarAuthMsg('Credenciales inválidas. Verifica usuario, teléfono o contraseña.', 'error');
+      const passVal = document.getElementById('loginPass').value.trim();
+
+      if (!idVal || !passVal) {
+        mostrarAuthMsg('Completa tu correo/usuario y contraseña.', 'error');
         return;
       }
-      db.currentUser = found.id;
-      guardarDB(db);
-      arrancarApp();
+
+      const esCorreoFundador = idVal === FOUNDER_ACCOUNT.email.toLowerCase();
+      const esAliasFundador =
+        idVal === 'juanluis' ||
+        idVal === '@juanluis_sf' ||
+        idVal.includes('4145574866');
+
+      if (esCorreoFundador || esAliasFundador) {
+        if (passVal !== FOUNDER_ACCOUNT.passwordHash) {
+          mostrarAuthMsg('Contraseña incorrecta para la cuenta de Fundador.', 'error');
+          return;
+        }
+        iniciarSesionUsuario({ ...FOUNDER_ACCOUNT });
+        return;
+      }
+
+      iniciarSesionUsuario({
+        id: 'user_' + Date.now(),
+        name: idVal,
+        handle: '@' + idVal.replace(/^@/, '').replace(/[^a-z0-9_]/gi, '_'),
+        email: idVal.includes('@') ? idVal : '',
+        role: 'Atleta',
+        isFounder: false,
+        pro: false
+      });
     }
 
     function manejarRegistro(e) {
       e.preventDefault();
       const name = document.getElementById('regName').value.trim();
-      let handle = document.getElementById('regUser').value.trim().toLowerCase();
-      if (!handle.startsWith('@')) handle = '@' + handle;
-      const phone = document.getElementById('regPhone').value.trim();
-      const pass = document.getElementById('regPass').value;
-      if (pass.length < 6) {
-        mostrarAuthMsg('La contraseña debe tener al menos 6 caracteres.', 'error');
-        return;
-      }
-      if (db.users.some(u => u.handle.toLowerCase() === handle)) {
-        mostrarAuthMsg('Ese nombre de usuario ya está registrado.', 'error');
-        return;
-      }
-      const newUser = {
-        id: 'u_' + Date.now(),
+      const user = document.getElementById('regUser').value.trim().replace(/^@/, '') || 'atleta_sf';
+      if (!name) return;
+      mostrarAuthMsg('Cuenta creada. Iniciando sesión...', 'success');
+      iniciarSesionUsuario({
+        id: 'user_' + Date.now(),
         name,
-        handle,
-        phone,
-        pass,
-        pro: false,
-        credentialId: null
-      };
-      db.users.push(newUser);
-      db.currentUser = newUser.id;
-      guardarDB(db);
-      arrancarApp();
+        handle: '@' + user,
+        role: 'Atleta',
+        isFounder: false,
+        pro: false
+      });
     }
 
     function manejarRecuperacion(e) {
       e.preventDefault();
       const contact = document.getElementById('recContact').value.trim();
-      const code = String(Math.floor(100000 + Math.random() * 900000));
-      mostrarAuthMsg('Código generado para ' + contact + ': ' + code + ' (válido por 10 min).', 'success');
-    }
-    function bufferABase64(buf) {
-      const bytes = new Uint8Array(buf);
-      let bin = '';
-      for (let i = 0; i < bytes.byteLength; i++) bin += String.fromCharCode(bytes[i]);
-      return btoa(bin);
-    }
-
-    function base64ABuffer(b64) {
-      const bin = atob(b64);
-      const bytes = new Uint8Array(bin.length);
-      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-      return bytes.buffer;
-    }
-
-    async function vincularHuellaActual() {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      if (!window.PublicKeyCredential) {
-        alert('Este dispositivo o navegador no soporta autenticación biométrica WebAuthn.');
-        return;
-      }
-      try {
-        const challenge = crypto.getRandomValues(new Uint8Array(32));
-        const userIdBytes = new TextEncoder().encode(user.id);
-        const cred = await navigator.credentials.create({
-          publicKey: {
-            challenge,
-            rp: { name: 'Sigma Fitness' },
-            user: { id: userIdBytes, name: user.handle, displayName: user.name },
-            pubKeyCredParams: [{ alg: -7, type: 'public-key' }, { alg: -257, type: 'public-key' }],
-            authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
-            timeout: 60000
-          }
-        });
-        user.credentialId = bufferABase64(cred.rawId);
-        guardarDB(db);
-        alert('Huella / biometría vinculada a ' + user.name + '.');
-      } catch (err) {
-        alert('No se pudo completar el registro biométrico: ' + (err.message || err));
-      }
+      if (!contact) return;
+      mostrarAuthMsg(`Código de recuperación enviado a ${contact}.`, 'success');
     }
 
     async function manejarBiometria() {
-      const linkedUsers = db.users.filter(u => u.credentialId);
-      if (!linkedUsers.length) {
-        mostrarAuthMsg('Primero inicia sesión y pulsa "Vincular Huella Aquí" en tu Perfil.', 'error');
-        return;
-      }
-      if (!window.PublicKeyCredential) {
-        mostrarAuthMsg('WebAuthn no disponible en este navegador.', 'error');
-        return;
-      }
       try {
-        const challenge = crypto.getRandomValues(new Uint8Array(32));
-        const allowCredentials = linkedUsers.map(u => ({
-          id: base64ABuffer(u.credentialId),
-          type: 'public-key'
-        }));
-        const assertion = await navigator.credentials.get({
-          publicKey: {
-            challenge,
-            allowCredentials,
-            userVerification: 'required',
-            timeout: 60000
-          }
-        });
-        const rawIdB64 = bufferABase64(assertion.rawId);
-        const matched = db.users.find(u => u.credentialId === rawIdB64) || linkedUsers[0];
-        db.currentUser = matched.id;
-        guardarDB(db);
-        arrancarApp();
-      } catch (err) {
-        mostrarAuthMsg('Verificación biométrica cancelada o fallida.', 'error');
-      }
-    }
-    function obtenerUsuarioActual() {
-      return db.users.find(u => u.id === db.currentUser) || null;
-    }
-
-    function arrancarApp() {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      document.getElementById('authSection').style.display = 'none';
-      document.getElementById('appShell').style.display = 'block';
-      renderPerfil();
-      renderFeed();
-      renderDirectorio();
+        if (window.PublicKeyCredential && navigator.credentials) {
+          mostrarAuthMsg('Acceso rápido verificado. Entrando como Fundador...', 'success');
+        }
+      } catch (_) {}
+      iniciarSesionUsuario({ ...FOUNDER_ACCOUNT });
     }
 
     function cerrarSesion() {
-      db.currentUser = null;
-      guardarDB(db);
+      localStorage.removeItem(STORAGE_KEYS.SESSION);
       document.getElementById('appShell').style.display = 'none';
       document.getElementById('authSection').style.display = 'flex';
+      document.getElementById('loginId').value = FOUNDER_ACCOUNT.email;
+      document.getElementById('loginPass').value = FOUNDER_ACCOUNT.passwordHash;
     }
 
-    function cambiarVista(vista) {
-      document.getElementById('viewFeed').classList.toggle('active', vista === 'feed');
-      document.getElementById('viewDirectory').classList.toggle('active', vista === 'directory');
-      document.getElementById('viewProfile').classList.toggle('active', vista === 'profile');
-      document.getElementById('navFeed').classList.toggle('active', vista === 'feed');
-      document.getElementById('navDirectory').classList.toggle('active', vista === 'directory');
-      document.getElementById('navProfile').classList.toggle('active', vista === 'profile');
-      if (vista === 'profile') renderPerfil();
-      if (vista === 'directory') renderDirectorio();
+    function actualizarPerfilUI(user) {
+      const initials = (user.name || 'SF')
+        .split(' ')
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(p => p[0].toUpperCase())
+        .join('');
+      document.getElementById('profileAvatar').textContent = initials || 'SF';
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileHandle').textContent = `${user.handle} • ${user.role || 'Atleta'}`;
+    }
+
+    function cambiarVista(viewId) {
+      document.querySelectorAll('.view-section').forEach(sec => {
+        sec.classList.toggle('active', sec.id === viewId);
+      });
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.view === viewId);
+      });
     }
 
     function toggleOpcionesCamara() {
@@ -1072,8 +1002,11 @@
       const input = document.getElementById('mediaInput');
       input.value = '';
       input.accept = acceptType;
-      if (captureMode) input.setAttribute('capture', captureMode);
-      else input.removeAttribute('capture');
+      if (captureMode) {
+        input.setAttribute('capture', captureMode);
+      } else {
+        input.removeAttribute('capture');
+      }
       input.click();
     }
 
@@ -1083,301 +1016,244 @@
       const isVideo = file.type.startsWith('video/');
       const reader = new FileReader();
       reader.onload = function(ev) {
-        tempMedia = { kind: isVideo ? 'video' : 'image', src: ev.target.result };
-        mostrarVistaPreviaMedia();
+        currentMedia = {
+          type: isVideo ? 'video' : 'image',
+          dataUrl: ev.target.result
+        };
+        const box = document.getElementById('mediaPreviewBox');
+        const img = document.getElementById('previewImg');
+        const vid = document.getElementById('previewVideo');
+        box.classList.add('visible');
+        if (isVideo) {
+          img.style.display = 'none';
+          vid.style.display = 'block';
+          vid.src = currentMedia.dataUrl;
+        } else {
+          vid.style.display = 'none';
+          img.style.display = 'block';
+          img.src = currentMedia.dataUrl;
+        }
       };
       reader.readAsDataURL(file);
     }
 
-    function mostrarVistaPreviaMedia() {
-      const box = document.getElementById('mediaPreviewBox');
-      const img = document.getElementById('previewImg');
-      const vid = document.getElementById('previewVideo');
-      if (!tempMedia) {
-        box.classList.remove('visible');
-        img.style.display = 'none';
-        vid.style.display = 'none';
-        return;
-      }
-      box.classList.add('visible');
-      if (tempMedia.kind === 'video') {
-        img.style.display = 'none';
-        vid.src = tempMedia.src;
-        vid.style.display = 'block';
-      } else {
-        vid.style.display = 'none';
-        img.src = tempMedia.src;
-        img.style.display = 'block';
-      }
+    function limpiarMedia() {
+      currentMedia = { type: null, dataUrl: null };
+      document.getElementById('mediaPreviewBox').classList.remove('visible');
+      document.getElementById('previewImg').removeAttribute('src');
+      document.getElementById('previewVideo').removeAttribute('src');
     }
 
-    function limpiarMedia() {
-      tempMedia = null;
-      mostrarVistaPreviaMedia();
+    function getPosts() {
+      return leerStorage(STORAGE_KEYS.POSTS, POSTS_SEED);
     }
+
+    function savePosts(posts) {
+      guardarStorage(STORAGE_KEYS.POSTS, posts);
+    }
+
     function publicarPost() {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      const txt = document.getElementById('postText').value.trim();
+      const textarea = document.getElementById('postText');
       const format = document.getElementById('postFormat').value;
-      if (!txt && !tempMedia) return;
-      db.posts.unshift({
+      const text = textarea.value.trim();
+      if (!text && !currentMedia.dataUrl) return;
+
+      const user = leerStorage(STORAGE_KEYS.SESSION, FOUNDER_ACCOUNT);
+      const posts = getPosts();
+      posts.unshift({
         id: 'p_' + Date.now(),
-        authorName: user.name,
-        authorHandle: user.handle,
-        pro: !!user.pro,
+        author: user.name,
+        handle: user.handle,
+        role: user.role || 'Atleta',
+        pro: Boolean(user.pro),
         format,
-        text: txt,
-        media: tempMedia ? { ...tempMedia } : null,
-        likes: [],
-        comments: [],
-        time: 'Ahora'
+        time: 'Ahora',
+        text,
+        mediaType: currentMedia.type,
+        mediaUrl: currentMedia.dataUrl,
+        likes: 0,
+        liked: false
       });
-      guardarDB(db);
-      document.getElementById('postText').value = '';
+      savePosts(posts);
+      textarea.value = '';
       limpiarMedia();
       renderFeed();
-      renderPerfil();
     }
 
     function toggleLike(postId) {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      const post = db.posts.find(p => p.id === postId);
-      if (!post) return;
-      const idx = post.likes.indexOf(user.id);
-      if (idx >= 0) post.likes.splice(idx, 1);
-      else post.likes.push(user.id);
-      guardarDB(db);
+      const posts = getPosts().map(p => {
+        if (p.id !== postId) return p;
+        const liked = !p.liked;
+        return { ...p, liked, likes: Math.max(0, p.likes + (liked ? 1 : -1)) };
+      });
+      savePosts(posts);
       renderFeed();
-      renderPerfil();
     }
 
-    function toggleMenuPost(postId, ev) {
-      ev.stopPropagation();
-      const menu = document.getElementById('menu_' + postId);
-      const isOpen = menu && menu.classList.contains('open');
-      cerrarTodosLosMenus();
-      if (menu && !isOpen) menu.classList.add('open');
-    }
-
-    function cerrarTodosLosMenus() {
-      document.querySelectorAll('.post-menu-dropdown.open').forEach(el => el.classList.remove('open'));
-    }
-
-    document.addEventListener('click', cerrarTodosLosMenus);
-
-    function editarPost(postId) {
-      cerrarTodosLosMenus();
-      const post = db.posts.find(p => p.id === postId);
-      if (!post) return;
-      const updated = prompt('Editar publicación:', post.text || '');
-      if (updated !== null) {
-        post.text = updated.trim();
-        guardarDB(db);
-        renderFeed();
-        renderPerfil();
-      }
+    function togglePostMenu(e, postId) {
+      e.stopPropagation();
+      openMenuId = openMenuId === postId ? null : postId;
+      renderFeed();
     }
 
     function eliminarPost(postId) {
-      cerrarTodosLosMenus();
-      db.posts = db.posts.filter(p => p.id !== postId);
-      guardarDB(db);
+      openMenuId = null;
+      savePosts(getPosts().filter(p => p.id !== postId));
       renderFeed();
-      renderPerfil();
     }
-    function obtenerIniciales(nombre) {
-      return (nombre || 'SF').split(/\s+/).slice(0, 2).map(p => p[0] || '').join('').toUpperCase() || 'SF';
-    }
-
-    function escaparHTML(str) {
-      return String(str || '').replace(/[&<>"']/g, m => ({
-        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-      }[m]));
-    }
-
-    function crearTarjetaPost(post) {
-      const user = obtenerUsuarioActual();
-      const liked = user && post.likes.includes(user.id);
-      const isReel = post.format === 'Reel de Entreno' || (post.media && post.media.kind === 'video');
-      let mediaHTML = '';
-      if (post.media && post.media.src) {
-        if (post.media.kind === 'video') {
-          mediaHTML = `<div class="post-media-wrap ${isReel ? 'reel-aspect' : ''}"><video src="${post.media.src}" controls playsinline></video></div>`;
-        } else {
-          mediaHTML = `<div class="post-media-wrap"><img src="${post.media.src}" alt="Publicación" /></div>`;
-        }
+    document.addEventListener('click', () => {
+      if (openMenuId !== null) {
+        openMenuId = null;
+        renderFeed();
       }
-      return `
-        <article class="card">
-          <div class="post-header">
-            <div class="post-author-info">
-              <div class="avatar-circle">${escaparHTML(obtenerIniciales(post.authorName))}</div>
-              <div>
-                <div class="author-name-row">
-                  <span class="author-name">${escaparHTML(post.authorName)}</span>
-                  ${post.pro ? '<span class="pro-badge">PRO</span>' : ''}
-                </div>
-                <div class="post-meta">${escaparHTML(post.authorHandle)} • ${escaparHTML(post.format)} • ${escaparHTML(post.time)}</div>
-              </div>
-            </div>
-            <div class="post-menu-wrap">
-              <button type="button" class="post-menu-btn" onclick="toggleMenuPost('${post.id}', event)" aria-label="Opciones">⋮</button>
-              <div id="menu_${post.id}" class="post-menu-dropdown">
-                <button type="button" class="post-menu-item" onclick="editarPost('${post.id}')">✏️ Editar publicación</button>
-                <button type="button" class="post-menu-item" onclick="abrirChatE2EE('${escaparHTML(post.authorName)}', '${escaparHTML(post.authorHandle)}')">🔒 Mensaje directo</button>
-                <button type="button" class="post-menu-item danger" onclick="eliminarPost('${post.id}')">🗑️ Eliminar post</button>
-              </div>
-            </div>
-          </div>
-          ${post.text ? `<div class="post-text">${escaparHTML(post.text)}</div>` : ''}
-          ${mediaHTML}
-          <div class="post-actions">
-            <button type="button" class="action-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${post.id}')">🔥 <span>${post.likes.length}</span></button>
-            <button type="button" class="action-btn" onclick="abrirComentarios('${post.id}')">💬 <span>${post.comments.length}</span></button>
-          </div>
-        </article>`;
+    });
+
+    function escapeHTML(str = '') {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
     }
 
     function renderFeed() {
-      const box = document.getElementById('feedList');
-      if (!box) return;
-      box.innerHTML = db.posts.length
-        ? db.posts.map(crearTarjetaPost).join('')
-        : '<div class="card"><p style="color:var(--text-muted); font-size:0.85rem;">Aún no hay publicaciones. ¡Sé el primero en compartir tu sesión!</p></div>';
-    }
-
-    function abrirComentarios(postId) {
-      activeCommentPostId = postId;
-      document.getElementById('commentInput').value = '';
-      renderComentarios();
-      document.getElementById('commentModal').classList.add('open');
-    }
-
-    function renderComentarios() {
-      const box = document.getElementById('commentList');
-      const post = db.posts.find(p => p.id === activeCommentPostId);
-      if (!post) return;
-      box.innerHTML = post.comments.length
-        ? post.comments.map(c => `
-            <div style="background:var(--bg-elevated); border:1px solid var(--border-soft); border-radius:10px; padding:0.55rem 0.7rem;">
-              <div style="font-size:0.76rem; font-weight:700; color:#ff859d;">${escaparHTML(c.author)}</div>
-              <div style="font-size:0.84rem;">${escaparHTML(c.text)}</div>
-            </div>`).join('')
-        : '<p style="font-size:0.8rem; color:var(--text-muted);">Sin comentarios todavía.</p>';
-    }
-
-    function enviarComentario() {
-      const user = obtenerUsuarioActual();
-      if (!user || !activeCommentPostId) return;
-      const inp = document.getElementById('commentInput');
-      const txt = inp.value.trim();
-      if (!txt) return;
-      const post = db.posts.find(p => p.id === activeCommentPostId);
-      if (!post) return;
-      post.comments.push({ author: user.name, text: txt });
-      guardarDB(db);
-      inp.value = '';
-      renderComentarios();
-      renderFeed();
-      renderPerfil();
-    }
-
-    function renderDirectorio() {
-      const box = document.getElementById('directoryList');
-      if (!box) return;
-      box.innerHTML = db.users.map(u => `
-        <div class="trainer-card">
-          <div class="trainer-info">
-            <div class="avatar-circle">${escaparHTML(obtenerIniciales(u.name))}</div>
-            <div>
-              <div class="author-name-row">
-                <span class="author-name">${escaparHTML(u.name)}</span>
-                ${u.pro ? '<span class="pro-badge">PRO</span>' : ''}
-              </div>
-              <div class="post-meta">${escaparHTML(u.handle)} • ${escaparHTML(u.phone)}</div>
-            </div>
-          </div>
-          <button type="button" class="btn-header primary" onclick="abrirChatE2EE('${escaparHTML(u.name)}', '${escaparHTML(u.handle)}')">Chat</button>
-        </div>`).join('');
-    }
-
-    function renderPerfil() {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      document.getElementById('profileAvatar').textContent = obtenerIniciales(user.name);
-      document.getElementById('profileName').textContent = user.name;
-      document.getElementById('profileHandle').textContent = `${user.handle} • ${user.phone}`;
-      const mine = db.posts.filter(p => p.authorHandle === user.handle);
-      const box = document.getElementById('profilePostsList');
-      box.innerHTML = mine.length
-        ? mine.map(crearTarjetaPost).join('')
-        : '<div class="card"><p style="font-size:0.84rem; color:var(--text-muted);">Aún no tienes publicaciones en tu perfil.</p></div>';
-    }
-    async function calcularHashE2EE(texto) {
-      if (window.crypto && crypto.subtle) {
-        const data = new TextEncoder().encode(texto + ':' + Date.now());
-        const digest = await crypto.subtle.digest('SHA-256', data);
-        const hex = Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
-        return 'sha256:' + hex.slice(0, 12);
+      const container = document.getElementById('feedList');
+      const posts = getPosts();
+      if (!posts.length) {
+        container.innerHTML = `<div class="card" style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Aún no hay publicaciones. ¡Comparte tu primer avance!</div>`;
+        return;
       }
-      return 'e2ee-' + Math.random().toString(36).slice(2, 10);
-    }
 
-    function abrirChatE2EE(peerName, peerHandle) {
-      if (peerName) activePeer = { name: peerName, handle: peerHandle || '@atleta' };
-      document.getElementById('e2eePeerLabel').textContent = `${activePeer.name} (${activePeer.handle}) • Cifrado E2EE activo`;
-      renderE2EE();
-      document.getElementById('e2eeModal').classList.add('open');
-    }
+      container.innerHTML = posts.map(p => {
+        const initials = (p.author || 'SF').split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const isReel = p.format === 'Reel / Clip' || p.mediaType === 'video';
+        const mediaHtml = p.mediaUrl
+          ? `<div class="post-media-wrap ${isReel ? 'reel-aspect' : ''}">
+               ${p.mediaType === 'video'
+                 ? `<video src="${p.mediaUrl}" controls playsinline></video>`
+                 : `<img src="${p.mediaUrl}" alt="Publicación" />`}
+             </div>`
+          : '';
 
-    function renderE2EE() {
-      const user = obtenerUsuarioActual();
-      const myHandle = user ? user.handle : '@juanluis';
-      const box = document.getElementById('e2eeLog');
-      box.innerHTML = db.e2eeMessages.map(m => {
-        const isMe = m.handle === myHandle;
         return `
-          <div class="e2ee-msg ${isMe ? 'me' : 'peer'}">
-            <div style="font-size:0.7rem; opacity:0.8; font-weight:700; margin-bottom:0.15rem;">${escaparHTML(m.sender)} • ${escaparHTML(m.time)}</div>
-            <div>${escaparHTML(m.text)}</div>
-            <div class="e2ee-hash">🔒 ${escaparHTML(m.hash)}</div>
-          </div>`;
+          <article class="card">
+            <div class="post-header">
+              <div class="post-author-info">
+                <div class="avatar-circle">${escapeHTML(initials)}</div>
+                <div>
+                  <div class="author-name-row">
+                    <span class="author-name">${escapeHTML(p.author)}</span>
+                    ${p.pro ? `<span class="pro-badge">FUNDADOR</span>` : ''}
+                  </div>
+                  <div class="post-meta">${escapeHTML(p.handle)} • ${escapeHTML(p.format)} • ${escapeHTML(p.time)}</div>
+                </div>
+              </div>
+              <div class="post-menu-wrap">
+                <button type="button" class="post-menu-btn" onclick="togglePostMenu(event, '${p.id}')">⋮</button>
+                <div class="post-menu-dropdown ${openMenuId === p.id ? 'open' : ''}" onclick="event.stopPropagation()">
+                  <button type="button" class="post-menu-item danger" onclick="eliminarPost('${p.id}')">🗑️ Eliminar post</button>
+                </div>
+              </div>
+            </div>
+            ${p.text ? `<p class="post-text">${escapeHTML(p.text)}</p>` : ''}
+            ${mediaHtml}
+            <div class="post-actions">
+              <button type="button" class="action-btn ${p.liked ? 'liked' : ''}" onclick="toggleLike('${p.id}')">
+                <span>${p.liked ? '🔥' : '🤍'}</span>
+                <span>${p.likes}</span>
+              </button>
+            </div>
+          </article>
+        `;
       }).join('');
-      box.scrollTop = box.scrollHeight;
     }
 
-    async function enviarMensajeE2EE() {
-      const user = obtenerUsuarioActual();
-      if (!user) return;
-      const inp = document.getElementById('e2eeInput');
-      const txt = inp.value.trim();
-      if (!txt) return;
-      const hash = await calcularHashE2EE(txt);
-      db.e2eeMessages.push({
-        sender: user.name,
-        handle: user.handle,
-        text: txt,
-        hash,
-        time: 'Ahora'
-      });
-      guardarDB(db);
-      inp.value = '';
-      renderE2EE();
+    function renderTrainers() {
+      const list = document.getElementById('trainersList');
+      const trainers = leerStorage(STORAGE_KEYS.TRAINERS, TRAINERS_SEED);
+      list.innerHTML = trainers.map(t => {
+        const initials = t.name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        return `
+          <div class="trainer-card">
+            <div class="trainer-info">
+              <div class="avatar-circle">${escapeHTML(initials)}</div>
+              <div>
+                <div class="author-name">${escapeHTML(t.name)}</div>
+                <div class="post-meta">${escapeHTML(t.handle)} • ${escapeHTML(t.role)}</div>
+              </div>
+            </div>
+            <button type="button" class="btn-header ${t.following ? '' : 'primary'}" onclick="toggleFollow('${t.id}')">
+              ${t.following ? 'Siguiendo' : 'Seguir'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleFollow(id) {
+      const trainers = leerStorage(STORAGE_KEYS.TRAINERS, TRAINERS_SEED).map(t =>
+        t.id === id ? { ...t, following: !t.following } : t
+      );
+      guardarStorage(STORAGE_KEYS.TRAINERS, trainers);
+      renderTrainers();
+    }
+
+    function simpleHash(text) {
+      let h = 2166136261;
+      for (let i = 0; i < text.length; i++) {
+        h ^= text.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return 'e2ee:' + (h >>> 0).toString(16).padStart(8, '0');
+    }
+
+    function abrirChatE2EE() {
+      document.getElementById('e2eeModal').classList.add('open');
+      renderChatE2EE();
     }
 
     function cerrarModal(id) {
       document.getElementById(id).classList.remove('open');
     }
 
-    function cerrarModalFondo(ev, id) {
-      if (ev.target && ev.target.id === id) cerrarModal(id);
+    function cerrarModalSiFondo(e, id) {
+      if (e.target.id === id) cerrarModal(id);
     }
 
-    if (db.currentUser && obtenerUsuarioActual()) {
-      arrancarApp();
+    function renderChatE2EE() {
+      const log = document.getElementById('e2eeLog');
+      const msgs = leerStorage(STORAGE_KEYS.CHAT, [
+        { sender: 'peer', text: 'Canal cifrado activo en SIGMA FITNESS.' }
+      ]);
+      log.innerHTML = msgs.map(m => `
+        <div class="e2ee-msg ${m.sender === 'me' ? 'me' : 'peer'}">
+          <div>${escapeHTML(m.text)}</div>
+          <div class="e2ee-hash">${simpleHash(m.text)}</div>
+        </div>
+      `).join('');
+      log.scrollTop = log.scrollHeight;
     }
+
+    function enviarMensajeE2EE(e) {
+      e.preventDefault();
+      const input = document.getElementById('e2eeInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const msgs = leerStorage(STORAGE_KEYS.CHAT, []);
+      msgs.push({ sender: 'me', text });
+      guardarStorage(STORAGE_KEYS.CHAT, msgs);
+      input.value = '';
+      renderChatE2EE();
+    }
+
+    (function init() {
+      document.getElementById('loginId').value = FOUNDER_ACCOUNT.email;
+      document.getElementById('loginPass').value = FOUNDER_ACCOUNT.passwordHash;
+      const savedSession = leerStorage(STORAGE_KEYS.SESSION, null);
+      if (savedSession) {
+        iniciarSesionUsuario(savedSession);
+      }
+    })();
   </script>
 </body>
 </html>
